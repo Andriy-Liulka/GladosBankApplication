@@ -1,0 +1,27 @@
+diff a/GladosBank(Eleks.NET_Camp)/GladosBank(Eleks.NET_Camp).sln b/GladosBank(Eleks.NET_Camp)/GladosBank(Eleks.NET_Camp).sln	(rejected hunks)
+@@ -0,0 +1,25 @@
++﻿
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio Version 16
++VisualStudioVersion = 16.0.31605.320
++MinimumVisualStudioVersion = 10.0.40219.1
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GladosBank.Domain", "GladosBank.Domain\GladosBank.Domain.csproj", "{4207F290-84BD-4487-A041-AD4D65F5DC9C}"
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|Any CPU = Debug|Any CPU
++		Release|Any CPU = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{4207F290-84BD-4487-A041-AD4D65F5DC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{4207F290-84BD-4487-A041-AD4D65F5DC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{4207F290-84BD-4487-A041-AD4D65F5DC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{4207F290-84BD-4487-A041-AD4D65F5DC9C}.Release|Any CPU.Build.0 = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(SolutionProperties) = preSolution
++		HideSolutionNode = FALSE
++	EndGlobalSection
++	GlobalSection(ExtensibilityGlobals) = postSolution
++		SolutionGuid = {B03C719D-A9C7-43E7-B601-ACEAF3C68512}
++	EndGlobalSection
++EndGlobal
