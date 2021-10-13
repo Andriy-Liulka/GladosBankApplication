@@ -8,5 +8,8 @@ namespace GladosBank.Services
 {
     class Class1
     {
+
+
+
     }
 }
