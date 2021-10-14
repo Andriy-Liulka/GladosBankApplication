@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GladosBank.Domain;
 
 namespace GladosBank.Api
 {
@@ -23,6 +24,7 @@ namespace GladosBank.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>();
             services.AddRazorPages();
         }
 

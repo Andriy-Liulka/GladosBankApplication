@@ -2,7 +2,6 @@ D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\Gl
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\ref\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.pdb
-D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.csproj.AssemblyReference.cache
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.GeneratedMSBuildEditorConfig.editorconfig
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.AssemblyInfoInputs.cache
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.AssemblyInfo.cs

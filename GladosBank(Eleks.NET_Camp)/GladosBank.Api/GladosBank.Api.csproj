@@ -16,4 +16,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GladosBank.Domain\GladosBank.Domain.csproj" />
+    <ProjectReference Include="..\GladosBank.Services\GladosBank.Services.csproj" />
+  </ItemGroup>
+
 </Project>
