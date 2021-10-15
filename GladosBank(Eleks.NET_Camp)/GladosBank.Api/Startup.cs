@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GladosBank.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace GladosBank.Api
 {
@@ -26,6 +27,11 @@ namespace GladosBank.Api
         {
             services.AddDbContext<ApplicationContext>();
             services.AddRazorPages();
+            services.AddDbContext<ApplicationContext>(option => 
+            {
+                option.UseSqlServer("MyConnectionString");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
