@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Domain
 {
-    class Admin
+    class Admin : User
     {
-        public int Id { get; set; }
         public void StopServer() { }
         public void DeleteUser() { }
         public void ManageServer() { }

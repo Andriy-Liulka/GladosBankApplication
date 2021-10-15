@@ -8,9 +8,7 @@ namespace GladosBank.Domain
 {
     class Customer : User
     {
-        public int Customer_Id { get; set; }
         public Account _Account { get; set; }
-
         public void TransferMoney() { }
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GladosBank.Domain
+namespace GladosBank.Domain.Models
 {
-    class Documentation
+    class Currency
     {
         public string Id { get; set; }
-        public string DescriptionDocumentation { get; set; }
+        public string Symbol { get; set; }
     }
 }

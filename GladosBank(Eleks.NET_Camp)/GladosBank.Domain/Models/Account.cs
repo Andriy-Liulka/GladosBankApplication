@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GladosBank.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,10 @@ namespace GladosBank.Domain
     class Account
     {
         public int Id { get; set; }
+        public User _User { get; set; }
+        public Currency _Currency { get; set; }
         public decimal Amount { get; set; }
-        public string Currency { get; set; }
+        public string Notes { get; set; }
         private readonly DateTime DateOfCreating;
 
         public Account()

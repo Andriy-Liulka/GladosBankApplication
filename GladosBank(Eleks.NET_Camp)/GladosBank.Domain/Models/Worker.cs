@@ -8,7 +8,6 @@ namespace GladosBank.Domain
 {
     class Worker : User
     {
-        public int User_Id { get; set; }
         public decimal Salary { get; set; }
 
         public static Documentation GetDocumentation() => null;
