@@ -12,6 +12,6 @@ namespace GladosBank.Domain
 
         public static Documentation GetDocumentation() => null;
 
-        public void TransferMoney() { }
+        public void TransferMoney() { } 
     }
 }

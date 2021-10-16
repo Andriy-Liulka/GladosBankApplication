@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Domain
 {
-    class Information
+    public class Information
     {
         public int Id { get; set; }
         public string DescriptionInformation { get; set; }

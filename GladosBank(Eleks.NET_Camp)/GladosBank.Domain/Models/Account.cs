@@ -10,7 +10,7 @@ namespace GladosBank.Domain
     class Account
     {
         public int Id { get; set; }
-        public User _User { get; set; }
+        public Customer Customer_Id { get; set; }
         public Currency _Currency { get; set; }
         public decimal Amount { get; set; }
         public string Notes { get; set; }
