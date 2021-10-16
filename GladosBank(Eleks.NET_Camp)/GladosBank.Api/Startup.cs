@@ -28,7 +28,8 @@ namespace GladosBank.Api
             services.AddRazorPages();
             services.AddDbContext<ApplicationContext>(option => 
             {
-                option.UseSqlServer("MyConnectionString");
+                var cs = Configuration.GetConnectionString("MyConnectionString");
+                option.UseSqlServer(cs);
             });
 
         }
