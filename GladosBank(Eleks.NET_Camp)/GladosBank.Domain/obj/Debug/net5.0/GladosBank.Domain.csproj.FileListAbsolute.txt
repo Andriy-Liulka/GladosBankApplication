@@ -1,4 +1,6 @@
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.deps.json
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.runtimeconfig.json
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.runtimeconfig.dev.json
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\ref\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.pdb
@@ -9,6 +11,4 @@ D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\Gl
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\ref\GladosBank.Domain.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.pdb
-D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.runtimeconfig.json
-D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\bin\Debug\net5.0\GladosBank.Domain.runtimeconfig.dev.json
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Domain\obj\Debug\net5.0\GladosBank.Domain.genruntimeconfig.cache

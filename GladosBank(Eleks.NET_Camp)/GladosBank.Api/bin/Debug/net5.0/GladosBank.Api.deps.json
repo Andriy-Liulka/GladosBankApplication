@@ -34,7 +34,6 @@
       "GladosBank.Api/1.0.0": {
         "dependencies": {
           "GladosBank.Domain": "1.0.0",
-          "GladosBank.Services": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "5.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.11",
@@ -1393,18 +1392,6 @@
         },
         "compile": {
           "GladosBank.Domain.dll": {}
-        }
-      },
-      "GladosBank.Services/1.0.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
-          "Swashbuckle.AspNetCore": "6.2.3"
-        },
-        "runtime": {
-          "GladosBank.Services.dll": {}
-        },
-        "compile": {
-          "GladosBank.Services.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -3823,11 +3810,6 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "GladosBank.Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "GladosBank.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

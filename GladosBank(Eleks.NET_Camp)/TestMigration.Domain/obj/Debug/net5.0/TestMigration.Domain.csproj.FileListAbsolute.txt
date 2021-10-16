@@ -1,0 +1,15 @@
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\TestMigration.Domain.deps.json
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\TestMigration.Domain.runtimeconfig.json
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\TestMigration.Domain.runtimeconfig.dev.json
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\TestMigration.Domain.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\ref\TestMigration.Domain.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\bin\Debug\net5.0\TestMigration.Domain.pdb
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.csproj.AssemblyReference.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.AssemblyInfoInputs.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.AssemblyInfo.cs
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.csproj.CoreCompileInputs.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\ref\TestMigration.Domain.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.pdb
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\TestMigration.Domain\obj\Debug\net5.0\TestMigration.Domain.genruntimeconfig.cache
