@@ -34,6 +34,7 @@
       "GladosBank.Api/1.0.0": {
         "dependencies": {
           "GladosBank.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.11",
           "Microsoft.EntityFrameworkCore.Design": "5.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.11",
@@ -1384,6 +1385,7 @@
       },
       "GladosBank.Domain/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
           "Swashbuckle.AspNetCore": "6.2.3"
         },

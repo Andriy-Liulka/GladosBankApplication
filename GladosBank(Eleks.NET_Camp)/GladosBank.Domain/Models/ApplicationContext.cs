@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GladosBank;
 
 namespace GladosBank.Domain
 {
@@ -19,7 +20,8 @@ namespace GladosBank.Domain
         DbSet<User> Users { get; set; }
         DbSet<Worker> Workers { get; set; }
 
-        public ApplicationContext(DbContextOptions options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+                : base(options)
         {
         }
     }
