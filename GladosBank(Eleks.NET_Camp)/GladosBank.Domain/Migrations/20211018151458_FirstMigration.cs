@@ -2,7 +2,7 @@
 
 namespace GladosBank.Domain.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
