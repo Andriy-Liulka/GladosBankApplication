@@ -12,3 +12,4 @@ D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\Gl
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\ref\GladosBank.Services.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.pdb
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.genruntimeconfig.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.csproj.AssemblyReference.cache
