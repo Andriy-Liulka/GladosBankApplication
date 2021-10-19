@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Domain.Models
 {
-    class Currency
+    public class Currency
     {
         [Key]
-        public string Id { get; set; }
+        public string Code { get; set; }
         public string Symbol { get; set; }
     }
 }

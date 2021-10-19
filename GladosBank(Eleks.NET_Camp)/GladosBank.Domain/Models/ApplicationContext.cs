@@ -12,31 +12,17 @@ namespace GladosBank.Domain
 {
     public class ApplicationContext : DbContext
     {
-        DbSet<Account> Accounts { get; set; }
-        DbSet<Admin> Admins { get; set; }
-        DbSet<Currency> Currency { get; set; }
-        DbSet<Customer> Customers { get; set; }
-        DbSet<Documentation> Documentations { get; set; }
-        DbSet<Information> Informations { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<Worker> Workers { get; set; }
+        
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Currency> Currency { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Documentation> Documentations { get; set; }
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Worker> Workers { get; set; }
 
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
 
-        public ApplicationContext()
-        {
-
-        }
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-        {
-
-        }
-
-       //Connection string @"Server=ANDRIJ-PC\SQLSERVER2021;Database=EleksDOTNETCamp2021DataBase_GladosBank;User Id=andriy;Password=Fylhsq;  Trusted_Connection=True"
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-            optionsBuilder.UseSqlServer("MyConnectionString");
-        }
     }
 }
