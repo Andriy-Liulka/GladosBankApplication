@@ -77,3 +77,5 @@ D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\Gl
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Api\obj\Debug\net5.0\ref\GladosBank.Api.dll
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Api\obj\Debug\net5.0\GladosBank.Api.pdb
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Api\obj\Debug\net5.0\GladosBank.Api.genruntimeconfig.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Api\bin\Debug\net5.0\GladosBank.Services.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Api\bin\Debug\net5.0\GladosBank.Services.pdb

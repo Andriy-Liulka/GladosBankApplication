@@ -1605,6 +1605,21 @@
         "runtime": {
           "bin/placeholder/GladosBank.Domain.dll": {}
         }
+      },
+      "GladosBank.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "GladosBank.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
+          "Swashbuckle.AspNetCore": "6.2.3"
+        },
+        "compile": {
+          "bin/placeholder/GladosBank.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GladosBank.Services.dll": {}
+        }
       }
     }
   },
@@ -6003,11 +6018,17 @@
       "type": "project",
       "path": "../GladosBank.Domain/GladosBank.Domain.csproj",
       "msbuildProject": "../GladosBank.Domain/GladosBank.Domain.csproj"
+    },
+    "GladosBank.Services/1.0.0": {
+      "type": "project",
+      "path": "../GladosBank.Services/GladosBank.Services.csproj",
+      "msbuildProject": "../GladosBank.Services/GladosBank.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "GladosBank.Domain >= 1.0.0",
+      "GladosBank.Services >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.11",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.11",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.11",
@@ -6049,6 +6070,9 @@
           "projectReferences": {
             "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Domain\\GladosBank.Domain.csproj": {
               "projectPath": "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Domain\\GladosBank.Domain.csproj"
+            },
+            "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Services\\GladosBank.Services.csproj": {
+              "projectPath": "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Services\\GladosBank.Services.csproj"
             }
           }
         }

@@ -39,7 +39,8 @@ namespace GladosBank.Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -82,21 +83,6 @@ namespace GladosBank.Domain.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("GladosBank.Domain.Documentation", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Documentations");
-                });
-
             modelBuilder.Entity("GladosBank.Domain.Information", b =>
                 {
                     b.Property<int>("Id")
@@ -123,6 +109,7 @@ namespace GladosBank.Domain.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Symbol")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Code");
@@ -138,19 +125,27 @@ namespace GladosBank.Domain.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsBlocked")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<long>("Phone")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -206,17 +201,6 @@ namespace GladosBank.Domain.Migrations
                 });
 
             modelBuilder.Entity("GladosBank.Domain.Customer", b =>
-                {
-                    b.HasOne("GladosBank.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("GladosBank.Domain.Documentation", b =>
                 {
                     b.HasOne("GladosBank.Domain.User", "User")
                         .WithMany()

@@ -19,8 +19,11 @@ namespace GladosBank.Domain
         [ForeignKey(nameof(Currency))]
         public string CurrencyCode { get; set; }
         public virtual Currency Currency { get; set; }
+        [Required]
         public decimal Amount { get; set; }
+        [MaxLength(500)]
         public string Notes { get; set; }
+        [Required]
         public DateTime DateOfCreating { get; set; }
 
     }

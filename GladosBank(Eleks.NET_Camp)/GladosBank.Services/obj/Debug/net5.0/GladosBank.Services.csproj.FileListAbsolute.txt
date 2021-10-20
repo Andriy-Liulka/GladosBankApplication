@@ -13,3 +13,6 @@ D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\Gl
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.pdb
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.genruntimeconfig.cache
 D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.csproj.AssemblyReference.cache
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\bin\Debug\net5.0\GladosBank.Domain.dll
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\bin\Debug\net5.0\GladosBank.Domain.pdb
+D:\Users\Andrij\Documents\EleksProjectAndriyLiulka\GladosBank(Eleks.NET_Camp)\GladosBank.Services\obj\Debug\net5.0\GladosBank.Services.csproj.CopyComplete

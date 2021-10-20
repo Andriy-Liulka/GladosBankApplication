@@ -31,6 +31,7 @@ namespace GladosBank.Api
                 var cs = Configuration.GetConnectionString("MyConnectionString");
                 option.UseSqlServer(cs);
             });
+            services.AddControllers();
 
         }
 
@@ -57,7 +58,7 @@ namespace GladosBank.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

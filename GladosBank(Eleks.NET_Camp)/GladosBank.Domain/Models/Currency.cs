@@ -11,6 +11,7 @@ namespace GladosBank.Domain.Models
     {
         [Key]
         public string Code { get; set; }
+        [Required]
         public string Symbol { get; set; }
     }
 }

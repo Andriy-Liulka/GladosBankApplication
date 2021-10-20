@@ -1590,6 +1590,21 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "GladosBank.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.11",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
+          "Swashbuckle.AspNetCore": "6.2.3"
+        },
+        "compile": {
+          "bin/placeholder/GladosBank.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GladosBank.Domain.dll": {}
+        }
       }
     }
   },
@@ -5983,10 +5998,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "GladosBank.Domain/1.0.0": {
+      "type": "project",
+      "path": "../GladosBank.Domain/GladosBank.Domain.csproj",
+      "msbuildProject": "../GladosBank.Domain/GladosBank.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "GladosBank.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.11",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.11",
       "Swashbuckle.AspNetCore >= 6.2.3"
@@ -6023,7 +6044,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Domain\\GladosBank.Domain.csproj": {
+              "projectPath": "D:\\Users\\Andrij\\Documents\\EleksProjectAndriyLiulka\\GladosBank(Eleks.NET_Camp)\\GladosBank.Domain\\GladosBank.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
