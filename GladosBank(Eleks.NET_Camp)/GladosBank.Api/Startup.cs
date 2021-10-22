@@ -32,7 +32,7 @@ namespace GladosBank.Api
                 option.UseSqlServer(cs);
             });
             services.AddControllers();
-
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

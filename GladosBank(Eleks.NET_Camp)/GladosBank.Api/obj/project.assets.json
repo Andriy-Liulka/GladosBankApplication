@@ -1596,8 +1596,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "5.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
-          "Swashbuckle.AspNetCore": "6.2.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11"
         },
         "compile": {
           "bin/placeholder/GladosBank.Domain.dll": {}
@@ -1611,8 +1610,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "GladosBank.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
-          "Swashbuckle.AspNetCore": "6.2.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11"
         },
         "compile": {
           "bin/placeholder/GladosBank.Services.dll": {}
