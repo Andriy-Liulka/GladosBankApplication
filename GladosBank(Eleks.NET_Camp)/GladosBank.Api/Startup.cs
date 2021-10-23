@@ -29,7 +29,7 @@ namespace GladosBank.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            //services.AddRazorPages();
             services.AddDbContext<ApplicationContext>(option => 
             {
                 var cs = Configuration.GetConnectionString("MyConnectionString");
