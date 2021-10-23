@@ -21,19 +21,25 @@ namespace GladosBank.Api.Controllers
         
         [HttpPost]
         [ActionName(nameof(Create))]
-        public IActionResult Create()
+        public IActionResult Create(User user)
         {
-
-            return Ok();
-
+            
+            int newUserId = -_service.CreateUser(user);
+            if (newUserId==-1)
+            {
+                return BadRequest("User can't be created !");
+            }
+            _logger.LogInformation("User was created sucessfuly");
+            return Ok(newUserId);
         }
 
-        //[HttpGet]
-        //[ActionName(nameof(Get))]
-        //public async Task<IEnumerable<User>> Get()
-        //{
-        //    return await _service;
-        //}
+        [HttpGet]
+        [ActionName(nameof(Get))]
+        public  IActionResult Get()
+        {
+            User[] users = _service.GetAllUsers();
+            return Ok(users);
+        }
 
 
         private readonly UserService _service;
