@@ -26,10 +26,28 @@ namespace GladosBank.Services
             {
                 return null;
             }
-            return searchedUser
-
+            return searchedUser;
+        }
+        
+        public User[] GetAllUsers()
+        {
+            //ToDO paginning
+            var users = _context.Users.ToArray();
+            //users.ToList<User>().Take<User>(10);
+            return users;
         }
 
+        public int DeleteUser(int userId)
+        {
+            User existingUser = _context.Users.FirstOrDefault<User>(u=>u.Id==userId);
+            if (existingUser==null)
+            {
+                return -1;
+            }
+            _context.Users.Remove(existingUser);
+            _context.SaveChanges();
+            return userId;
+        }
 
         
         private readonly ApplicationContext _context;

@@ -1387,8 +1387,7 @@
       "GladosBank.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "5.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
-          "Swashbuckle.AspNetCore": "6.2.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11"
         },
         "runtime": {
           "GladosBank.Domain.dll": {}
@@ -1400,8 +1399,7 @@
       "GladosBank.Services/1.0.0": {
         "dependencies": {
           "GladosBank.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11",
-          "Swashbuckle.AspNetCore": "6.2.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11"
         },
         "runtime": {
           "GladosBank.Services.dll": {}

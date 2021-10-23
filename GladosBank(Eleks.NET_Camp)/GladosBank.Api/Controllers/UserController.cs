@@ -28,12 +28,12 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [HttpGet]
-        [ActionName(nameof(Get))]
-        public async Task<IEnumerable<User>> Get()
-        {
-            return await _service;
-        }
+        //[HttpGet]
+        //[ActionName(nameof(Get))]
+        //public async Task<IEnumerable<User>> Get()
+        //{
+        //    return await _service;
+        //}
 
 
         private readonly UserService _service;
