@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using GladosBank.Domain;
 using Microsoft.EntityFrameworkCore;
 using GladosBank.Services;
+using System.Reflection;
+using System.IO;
+using Microsoft.OpenApi.Models;
 
 namespace GladosBank.Api
 {
@@ -33,7 +36,10 @@ namespace GladosBank.Api
                 option.UseSqlServer(cs);
             });
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen
+                (
+                sOpt => sOpt.SwaggerDoc("v1",new OpenApiInfo() {Version="v1",Title= "GladosBank.Api" })
+                ); 
             services.AddScoped<UserService>();
         }
 
@@ -43,6 +49,15 @@ namespace GladosBank.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger
+                    (
+                    sOpt => sOpt.SerializeAsV2=true
+                    );
+                app.UseSwaggerUI(sOpt =>
+                {
+                    sOpt.SwaggerEndpoint("/swagger/v1/swagger.json", "GladosBank.Api v1");
+                    sOpt.RoutePrefix = String.Empty;
+                });
             }
             else
             {
