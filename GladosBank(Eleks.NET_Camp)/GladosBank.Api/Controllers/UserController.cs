@@ -5,31 +5,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GladosBank.Services;
 
 namespace GladosBank.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, UserService service)
         {
+            this._service = service;
             _logger = logger;
         }
         
         [HttpPost]
-        [ActionName("GetUsers")]
-        public IActionResult Get()
+        [ActionName(nameof(Create))]
+        public IActionResult Create()
         {
-            var user = new
-            {
-                Login="LoginEntered",
-                Password="PasswordEntered"
-            };
-            return Ok(user);
+
+            return Ok();
 
         }
 
+        [HttpGet]
+        [ActionName(nameof(Get))]
+        public async Task<IEnumerable<User>> Get()
+        {
+            return await _service;
+        }
+
+
+        private readonly UserService _service;
         private readonly ILogger<UserController> _logger;
     }
 }

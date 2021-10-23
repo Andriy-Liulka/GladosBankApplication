@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GladosBank.Domain;
 using Microsoft.EntityFrameworkCore;
+using GladosBank.Services;
 
 namespace GladosBank.Api
 {
@@ -33,6 +34,7 @@ namespace GladosBank.Api
             });
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +51,6 @@ namespace GladosBank.Api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

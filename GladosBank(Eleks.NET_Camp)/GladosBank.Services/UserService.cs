@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    class UserService
+    public class UserService
     {
         public UserService(ApplicationContext context)
         {
@@ -19,9 +19,19 @@ namespace GladosBank.Services
             _context.SaveChanges();
             return user.Id;
         }
+        public User GetUser(int UserId)
+        {
+            User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Id== UserId);
+            if (searchedUser == null)
+            {
+                return null;
+            }
+            return searchedUser
+
+        }
 
 
-
+        
         private readonly ApplicationContext _context;
 
 
