@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GladosBank.Services;
+using GladosBank.Services.Exceptions;
 
 namespace GladosBank.Api.Controllers
 {
@@ -23,12 +24,17 @@ namespace GladosBank.Api.Controllers
         [ActionName(nameof(Create))]
         public IActionResult Create(User user)
         {
-            
-            int newUserId = -_service.CreateUser(user);
-            if (newUserId==-1)
+            int newUserId = default;
+            try
             {
-                return BadRequest("User can't be created !");
+                newUserId = -_service.CreateUser(user);
             }
+            catch (AddingExistUserException exception)
+            {
+
+                return BadRequest(exception.Message);
+            }
+
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
         }
