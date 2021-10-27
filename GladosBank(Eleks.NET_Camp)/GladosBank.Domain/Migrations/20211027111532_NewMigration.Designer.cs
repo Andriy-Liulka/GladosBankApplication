@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GladosBank.Domain.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211020200200_NewMigration")]
+    [Migration("20211027111532_NewMigration")]
     partial class NewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

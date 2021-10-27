@@ -31,7 +31,7 @@ namespace GladosBank.Services
         public bool CheckWhetherSuchUserExist(User user)
         {
             User checkUser = _context.Users.FirstOrDefault<User>(us => us.Id == user.Id);
-            return checkUser.Equals(user);
+            return user.Equals(checkUser);
         }
 
         #endregion

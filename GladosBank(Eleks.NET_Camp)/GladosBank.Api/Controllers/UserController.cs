@@ -29,14 +29,30 @@ namespace GladosBank.Api.Controllers
             {
                 newUserId = -_service.CreateUser(user);
             }
-            catch (AddingExistUserException exception)
+            catch (AddingExistUserException ex)
             {
-
-                return BadRequest(exception.Message);
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
             }
 
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
+        }
+        [HttpPost]
+        [ActionName(nameof(Delete))]
+        public IActionResult Delete(int UserId)
+        {
+            try
+            {
+                _service.DeleteUser(UserId);
+            }
+            catch (InvalidUserIdException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            _logger.LogInformation("User was deleted sucessfuly");
+            return Ok(UserId);
         }
 
         [HttpGet]
