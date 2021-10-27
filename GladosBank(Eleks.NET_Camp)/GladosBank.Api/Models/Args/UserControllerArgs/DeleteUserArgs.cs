@@ -7,5 +7,7 @@ namespace GladosBank.Api.Models.Args.UserControllerArgs
 {
     public class DeleteUserArgs
     {
+        public int UserId { get; set; }
+        public string UserLogin { get; set; }
     }
 }

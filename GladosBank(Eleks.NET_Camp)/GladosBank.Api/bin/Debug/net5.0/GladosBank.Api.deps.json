@@ -33,6 +33,7 @@
     ".NETCoreApp,Version=v5.0": {
       "GladosBank.Api/1.0.0": {
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "GladosBank.Domain": "1.0.0",
           "GladosBank.Services": "1.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.11",

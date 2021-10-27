@@ -6066,6 +6066,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "AutoMapper >= 10.1.1",
       "GladosBank.Domain >= 1.0.0",
       "GladosBank.Services >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.11",
@@ -6126,6 +6127,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[10.1.1, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[5.0.11, )"
