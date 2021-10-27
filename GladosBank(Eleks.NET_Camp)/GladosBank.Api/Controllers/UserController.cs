@@ -9,6 +9,7 @@ using GladosBank.Services;
 using GladosBank.Services.Exceptions;
 using GladosBank.Api.Models.Args.UserControllerArgs;
 using AutoMapper;
+using GladosBank.Domain.Models_DTO;
 
 namespace GladosBank.Api.Controllers
 {
@@ -16,22 +17,30 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper)
+        //TO DO fix bug with adding service of IMapper
+        public UserController(ILogger<UserController> logger, UserService service,IMapper mapper)
         {
             this._service = service;
             _logger = logger;
             _mapper = mapper;
         }
 
-        [HttpPost]
-        [ActionName(nameof(Create))]
-        public IActionResult Create(CreateUserArgs user)
+        [HttpPost(nameof(Create))]
+        public IActionResult Create(User user)
         {
             int newUserId = default;
             var localUser = _mapper.Map<User>(user);
+            //User localUser = new User
+            //{
+            //    Email = user.MyUser.Email,
+            //    Password = user.MyUser.Password,
+            //    IsActive = true,
+            //    Login = user.MyUser.Login,
+            //    Phone = user.MyUser.Phone
+            //};
             try
             {
-                newUserId = -_service.CreateUser(localUser);
+                newUserId = -_service.CreateUser(user);
             }
             catch (AddingExistUserException ex)
             {
