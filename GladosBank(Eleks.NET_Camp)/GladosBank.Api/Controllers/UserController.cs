@@ -26,21 +26,14 @@ namespace GladosBank.Api.Controllers
         }
 
         [HttpPost(nameof(Create))]
-        public IActionResult Create(User user)
+        public IActionResult Create(CreateUserArgs user)
         {
             int newUserId = default;
             var localUser = _mapper.Map<User>(user);
-            //User localUser = new User
-            //{
-            //    Email = user.MyUser.Email,
-            //    Password = user.MyUser.Password,
-            //    IsActive = true,
-            //    Login = user.MyUser.Login,
-            //    Phone = user.MyUser.Phone
-            //};
+
             try
             {
-                newUserId = -_service.CreateUser(user);
+                newUserId = -_service.CreateUser(localUser);
             }
             catch (AddingExistUserException ex)
             {
