@@ -15,12 +15,12 @@ namespace GladosBank.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public sealed class UserController : ControllerBase
     {
         //TO DO fix bug with adding service of IMapper
         public UserController(ILogger<UserController> logger, UserService service,IMapper mapper)
         {
-            this._service = service;
+            _service = service;
             _logger = logger;
             _mapper = mapper;
         }
@@ -29,8 +29,15 @@ namespace GladosBank.Api.Controllers
         public IActionResult Create(CreateUserArgs user)
         {
             int newUserId = default;
-            var localUser = _mapper.Map<User>(user);
+            var config = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg.CreateMap<UserDTO, User>();
+                }
+                );
+            IMapper mapper = new Mapper(config);
 
+            var localUser = mapper.Map<User>(user.MyUser);
             try
             {
                 newUserId = -_service.CreateUser(localUser);
