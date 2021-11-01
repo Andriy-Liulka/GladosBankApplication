@@ -11,7 +11,7 @@ namespace GladosBank.Domain
     public class Admin
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
         public virtual User User { get; set; }
