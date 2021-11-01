@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    public class UserService
+    public sealed class UserService
     {
         public UserService(ApplicationContext context)
         {
@@ -21,12 +21,16 @@ namespace GladosBank.Services
             {
                 throw new AddingExistUserException("You try to add user that already exist of !!");
             }
+            SetDefaultIsActiveToUser(user);
             _context.Users.Add(user);
             _context.SaveChanges();
             
-
-
             return user.Id;
+        }
+
+        private void SetDefaultIsActiveToUser(User user)
+        {
+            user.IsActive = true;
         }
         public bool CheckWhetherSuchUserExist(User user)
         {
