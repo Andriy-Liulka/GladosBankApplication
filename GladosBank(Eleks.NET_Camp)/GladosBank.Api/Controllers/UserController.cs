@@ -35,14 +35,20 @@ namespace GladosBank.Api.Controllers
                     cfg.CreateMap<UserDTO, User>();
                 }
                 );
-            IMapper mapper = new Mapper(config);
+            IMapper _mapper = new Mapper(config);
 
-            var localUser = mapper.Map<User>(user.MyUser);
+            var localUser = _mapper.Map<User>(user.MyUser);
+
             try
             {
-                newUserId = -_service.CreateUser(localUser);
+                newUserId = -_service.CreateUser(localUser, user.MyUser.Role);
             }
             catch (AddingExistUserException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidRoleException ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
@@ -66,15 +72,29 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was deleted sucessfuly");
             return Ok(user.UserId);
         }
-
+        [HttpPost(nameof(Update))]
+        public IActionResult Update(UpdateUserArgs user)
+        {
+            try
+            {
+                _service.UpdateUser(user.Id,user.NewUser);
+            }
+            catch (InvalidUserIdException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            _logger.LogInformation("User was updated sucessfuly");
+            return Ok(user.Id);
+        }
         [HttpGet(nameof(Get))]
         public  IActionResult Get()
         {
-            User[] users = _service.GetAllUsers();
+            IEnumerable<User> users = _service.GetAllUsers();
             return Ok(users);
         }
 
-        private readonly IMapper _mapper;
+        private IMapper _mapper;
         private readonly UserService _service;
         private readonly ILogger<UserController> _logger;
     }
