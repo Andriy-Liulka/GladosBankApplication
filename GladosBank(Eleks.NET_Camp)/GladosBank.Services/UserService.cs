@@ -1,4 +1,5 @@
-﻿using GladosBank.Domain;
+﻿using AutoMapper;
+using GladosBank.Domain;
 using GladosBank.Services.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -15,19 +16,45 @@ namespace GladosBank.Services
             _context = context;
         }
         #region Create
-        public int CreateUser(User user)
+        public int CreateUser(User user,string role)
         {
             if (CheckWhetherSuchUserExist(user))
             {
                 throw new AddingExistUserException("You try to add user that already exist of !!");
             }
             SetDefaultIsActiveToUser(user);
+
             _context.Users.Add(user);
             _context.SaveChanges();
-            
+            SetRoleToSpecifiedUser(user,role);
+            _context.SaveChanges();
             return user.Id;
         }
-
+        private void SetRoleToSpecifiedUser(User user, string role)
+        {
+            switch (role)
+            {
+                case "Customer":
+                    {
+                        _context.Customers.Add(new Customer {UserId= user.Id});
+                        break;
+                    }
+                case "Admin":
+                    {
+                        _context.Admins.Add(new Admin { UserId = user.Id });
+                        break;
+                    }
+                case "Worker":
+                    {
+                        _context.Workers.Add(new Worker { UserId = user.Id,Salary=default });
+                        break;
+                    }
+                default:
+                    {
+                        throw  new InvalidRoleException("GladosBank hasn't such role");
+                    }
+            }
+        }
         private void SetDefaultIsActiveToUser(User user)
         {
             user.IsActive = true;
@@ -45,16 +72,15 @@ namespace GladosBank.Services
             User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Id== UserId);
             if (searchedUser == null)
             {
-                return null;
+                throw new InvalidUserIdException("You entered UserId that doesn't exist of in database !");
             }
             return searchedUser;
         }
         
-        public User[] GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             //ToDO paginning
-            var users = _context.Users.ToArray();
-            //users.ToList<User>().Take<User>(10);
+            var users = _context.Users.ToArray().Skip(0).Take(10);
             return users;
         }
         #endregion
@@ -71,9 +97,30 @@ namespace GladosBank.Services
             return userId;
         }
         #endregion
+        #region Update
+        public int UpdateUser(int UserId, User user)
+        {
+            var existingUser = _context.Users.FirstOrDefault(us => us.Id == UserId);
+            if (existingUser==null)
+            {
+                throw new InvalidUserIdException("You entered UserId that doesn't exist of in database !");
+            }
+            UpdateFields(user, existingUser);
+            _context.Update(existingUser);
+            _context.SaveChanges();
 
+            return UserId;
+        }
+
+        private static void UpdateFields(User source,User distination)
+        {
+            distination.Email = source.Email;
+            distination.IsActive = source.IsActive;
+            distination.Login = source.Login;
+            distination.Password = source.Password;
+            distination.Phone = source.Phone;
+        }
+        #endregion
         private readonly ApplicationContext _context;
-
-
     }
 }
