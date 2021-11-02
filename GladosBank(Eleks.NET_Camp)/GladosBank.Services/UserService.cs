@@ -22,6 +22,11 @@ namespace GladosBank.Services
             {
                 throw new AddingExistUserException("You try to add user that already exist of !!");
             }
+            else if(IsSuchLoginInDatabase(user.Login))
+            {
+                throw new ExistingUserLoginException("Such login already exist of !");
+            }
+
             SetDefaultIsActiveToUser(user);
 
             _context.Users.Add(user);
@@ -29,6 +34,15 @@ namespace GladosBank.Services
             SetRoleToSpecifiedUser(user,role);
             _context.SaveChanges();
             return user.Id;
+        }
+        private bool IsSuchLoginInDatabase(string login)
+        {
+            User existingUser = _context.Users.FirstOrDefault(us=>us.Login.Equals(login));
+            if (existingUser!=null)
+            {
+                return true;
+            }
+            return false;
         }
         private void SetRoleToSpecifiedUser(User user, string role)
         {
@@ -62,6 +76,7 @@ namespace GladosBank.Services
         public bool CheckWhetherSuchUserExist(User user)
         {
             User checkUser = _context.Users.FirstOrDefault<User>(us => us.Id == user.Id);
+
             return user.Equals(checkUser);
         }
 

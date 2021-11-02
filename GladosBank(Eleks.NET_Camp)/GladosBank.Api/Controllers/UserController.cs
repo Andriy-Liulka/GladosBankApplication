@@ -53,6 +53,11 @@ namespace GladosBank.Api.Controllers
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
+            catch(ExistingUserLoginException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
 
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
