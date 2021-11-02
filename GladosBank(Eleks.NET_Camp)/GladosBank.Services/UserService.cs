@@ -80,7 +80,7 @@ namespace GladosBank.Services
         public IEnumerable<User> GetAllUsers()
         {
             //ToDO paginning
-            var users = _context.Users.ToArray().Skip(0).Take(10);
+            var users = _context.Users.ToArray();
             return users;
         }
         #endregion
