@@ -15,6 +15,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
+using Microsoft.Extensions.FileProviders;
 
 namespace GladosBank.Api
 {
@@ -30,17 +31,19 @@ namespace GladosBank.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddRazorPages();
             services.AddDbContext<ApplicationContext>(option => 
             {
                 var cs = Configuration.GetConnectionString("MyConnectionString");
                 option.UseSqlServer(cs);
             });
             services.AddControllers();
+            services.AddDirectoryBrowser();
+
             services.AddSwaggerGen
                 (
-                sOpt => sOpt.SwaggerDoc("v1",new OpenApiInfo() {Version="v1",Title= "GladosBank.Api" })
-                ); 
+                sOpt => sOpt.SwaggerDoc("v1", new OpenApiInfo() { Version = "v1", Title = "GladosBank.Api" })
+                );
+
             services.AddScoped<UserService>();
             services.AddAutoMapper(typeof(Startup));
         }
@@ -53,7 +56,7 @@ namespace GladosBank.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger
                     (
-                    sOpt => sOpt.SerializeAsV2=true
+                    sOpt => sOpt.SerializeAsV2 = true
                     );
                 app.UseSwaggerUI(sOpt =>
                 {
@@ -64,11 +67,14 @@ namespace GladosBank.Api
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseStaticFiles();
+            app.UseDefaultFiles();
+
+            app.UseHttpsRedirection();
+
 
             app.UseRouting();
 
