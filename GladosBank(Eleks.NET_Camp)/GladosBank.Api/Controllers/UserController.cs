@@ -41,7 +41,11 @@ namespace GladosBank.Api.Controllers
 
             try
             {
-                newUserId = -_service.CreateUser(localUser, user.MyUser.Role);
+                newUserId = -_service.CreateUser(localUser, user.Role);
+                if (newUserId==0)
+                {
+                    throw new InvalidUserSavingException("Exception occurs during a saving procedure");
+                }
             }
             catch (AddingExistUserException ex)
             {
@@ -58,10 +62,16 @@ namespace GladosBank.Api.Controllers
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
 
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
         }
+
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
         {
