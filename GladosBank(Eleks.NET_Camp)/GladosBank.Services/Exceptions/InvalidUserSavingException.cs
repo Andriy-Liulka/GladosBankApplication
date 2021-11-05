@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidRoleException : Exception
+    public class InvalidUserSavingException : Exception
     {
-        public InvalidRoleException(string role) : base($"Role of {role} doesn't exist of !!") { }
+        public InvalidUserSavingException(string exceptionMessage) : base(exceptionMessage) { }
     }
 }

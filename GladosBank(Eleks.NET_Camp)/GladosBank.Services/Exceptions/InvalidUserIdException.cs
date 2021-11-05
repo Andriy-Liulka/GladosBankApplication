@@ -8,6 +8,6 @@ namespace GladosBank.Services.Exceptions
 {
     public class InvalidUserIdException : Exception
     {
-        public InvalidUserIdException(string message) : base(message){}
+        public InvalidUserIdException(int UserId) : base($"You entered userId-> \"{UserId}\" that doesn't exist of in database !") {}
     }
 }
