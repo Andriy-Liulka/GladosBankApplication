@@ -23,5 +23,16 @@ namespace GladosBank.Domain
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            var userModel = builder.Entity<User>();
+            var workerModel = builder.Entity<Worker>();
+
+            userModel.Property(x => x.IsActive).HasDefaultValue(true);
+            workerModel.Property(x => x.Salary).HasDefaultValue(0.0);
+
+            base.OnModelCreating(builder);
+        }
+
     }
 }
