@@ -27,22 +27,29 @@ namespace GladosBank.Services
                 throw new ExistingUserLoginException("Such login already exist of !");
             }
 
-            SetDefaultIsActiveToUser(user);
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    SetRoleToSpecifiedUser(user, role);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return user.Id;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return (0);
+                }
+            }
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            SetRoleToSpecifiedUser(user,role);
-            _context.SaveChanges();
-            return user.Id;
+
         }
         private bool IsSuchLoginInDatabase(string login)
         {
-            User existingUser = _context.Users.FirstOrDefault(us=>us.Login.Equals(login));
-            if (existingUser!=null)
-            {
-                return true;
-            }
-            return false;
+            return _context.Users.Any(us=>us.Login.Equals(login));
         }
         private void SetRoleToSpecifiedUser(User user, string role)
         {
@@ -60,24 +67,19 @@ namespace GladosBank.Services
                     }
                 case "Worker":
                     {
-                        _context.Workers.Add(new Worker { UserId = user.Id,Salary=default });
+                        _context.Workers.Add(new Worker { UserId = user.Id });
                         break;
                     }
                 default:
                     {
-                        throw  new InvalidRoleException("GladosBank hasn't such role");
+                        throw  new InvalidRoleException(role);
                     }
             }
         }
-        private void SetDefaultIsActiveToUser(User user)
-        {
-            user.IsActive = true;
-        }
+
         public bool CheckWhetherSuchUserExist(User user)
         {
-            User checkUser = _context.Users.FirstOrDefault<User>(us => us.Id == user.Id);
-
-            return user.Equals(checkUser);
+            return _context.Users.Any<User>(us => us.Id == user.Id);
         }
 
         #endregion
@@ -87,7 +89,7 @@ namespace GladosBank.Services
             User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Id== UserId);
             if (searchedUser == null)
             {
-                throw new InvalidUserIdException("You entered UserId that doesn't exist of in database !");
+                throw new InvalidUserIdException(UserId);
             }
             return searchedUser;
         }
@@ -105,7 +107,7 @@ namespace GladosBank.Services
             User existingUser = _context.Users.FirstOrDefault<User>(u=>u.Id==userId);
             if (existingUser==null)
             {
-                throw new InvalidUserIdException("You entered UserId that doesn't exist of in database !");
+                throw new InvalidUserIdException(userId);
             }
             _context.Users.Remove(existingUser);
             _context.SaveChanges();
@@ -118,7 +120,7 @@ namespace GladosBank.Services
             var existingUser = _context.Users.FirstOrDefault(us => us.Id == UserId);
             if (existingUser==null)
             {
-                throw new InvalidUserIdException("You entered UserId that doesn't exist of in database !");
+                throw new InvalidUserIdException(UserId);
             }
             UpdateFields(user, existingUser);
             _context.Update(existingUser);
