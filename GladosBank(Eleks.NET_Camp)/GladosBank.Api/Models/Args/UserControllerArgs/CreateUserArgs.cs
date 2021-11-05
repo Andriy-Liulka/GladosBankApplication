@@ -9,5 +9,6 @@ namespace GladosBank.Api.Models.Args.UserControllerArgs
     public class CreateUserArgs
     {
         public UserDTO MyUser { get; set; }
+        public string Role { get; set; }
     }
 }
