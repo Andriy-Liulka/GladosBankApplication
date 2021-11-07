@@ -29,14 +29,6 @@ namespace GladosBank.Api.Controllers
         public IActionResult Create(CreateUserArgs user)
         {
             int newUserId = default;
-            //Own automapper
-            var config = new MapperConfiguration(
-                cfg =>
-                {
-                    cfg.CreateMap<UserDTO, User>();
-                }
-                );
-            IMapper _mapper = new Mapper(config);
 
             var localUser = _mapper.Map<User>(user.MyUser);
 
@@ -139,7 +131,7 @@ namespace GladosBank.Api.Controllers
             return Ok(users);
         }
 
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly UserService _service;
         private readonly ILogger<UserController> _logger;
     }
