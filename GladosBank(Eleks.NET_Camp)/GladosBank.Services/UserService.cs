@@ -38,6 +38,10 @@ namespace GladosBank.Services
                     transaction.Commit();
                     return user.Id;
                 }
+                catch (InvalidRoleException ex)
+                {
+                    throw new InvalidRoleException(ex.Message);
+                }
                 catch (Exception)
                 {
                     transaction.Rollback();
