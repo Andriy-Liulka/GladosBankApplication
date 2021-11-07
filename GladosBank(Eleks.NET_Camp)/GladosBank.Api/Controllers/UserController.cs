@@ -98,7 +98,7 @@ namespace GladosBank.Api.Controllers
         {
 
 
-            //string currentLogin = null;
+            //current login must be finded on it's own
             User currentUser = default;
             try
             {
