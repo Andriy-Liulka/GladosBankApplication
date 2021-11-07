@@ -1,0 +1,23 @@
+.submitButton {
+  width: 250px;
+  color: aqua;
+  height: 80px;
+  font-size: 50px;
+}
+
+.cancelButton {
+  width: 250px;
+  color: rgb(135, 60, 158);
+  height: 80px;
+  font-size: 50px;
+}
+
+.combobox {
+  width: 100px;
+  height: 20px;
+}
+
+.textStyle {
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+}

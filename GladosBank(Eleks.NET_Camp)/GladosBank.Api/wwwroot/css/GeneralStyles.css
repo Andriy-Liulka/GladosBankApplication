@@ -1,0 +1,12 @@
+.setInCenter {
+  border: 5px;
+  text-align: center;
+  height: 100px;
+  line-height: 40px;
+}
+
+
+.buttonStyle {
+    width: 150px;
+    height: 50px;
+}

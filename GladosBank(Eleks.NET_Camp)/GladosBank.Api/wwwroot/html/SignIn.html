@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/html/SignIn.html" rel="stylesheet"></link>
+    <link href="../css/SignInStyles.css" rel="stylesheet"></link>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>GladosBank</title>
+</head>
+<body>
+    <script src="../JavaScript/SignIn.js"></script>
+    <div class="setInCenter">
+        <div>
+            <label class="textStyle" for="Login">Login</label>
+            <input id="Login" name="Login" type="text">
+        </div>
+
+        <div>
+            <label class="textStyle" for="Password">Password</label>
+            <input id="Password" name="Password" type="password">
+        </div>
+
+        <button class="SignInButton" onclick="SignInClick()">Sign in</button>
+
+        <form action="/html/Title.html">
+            <button class="CancelButton">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

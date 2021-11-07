@@ -1,0 +1,18 @@
+.SignInButton {
+  width: 180px;
+  color: rgba(202, 180, 52, 0.726);
+  height: 50px;
+  font-size: 40px;
+}
+
+.CancelButton {
+  width: 180px;
+  color: rgb(40, 88, 143);
+  height: 50px;
+  font-size: 40px;
+}
+
+.textStyle {
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+}

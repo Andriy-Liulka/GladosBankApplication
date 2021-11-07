@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/GeneralStyles.css" rel="stylesheet" />
+    <link href="../css/RegistrationStyles.css" rel="stylesheet" />
+    <title>GladosBank</title>
+</head>
+
+<body>
+    <script src="../JavaScript/Registration.js"></script>
+    <div class="setInCenter">
+
+        <div>
+            <label class="textStyle" for="Phone">Phone</label>
+            <input id="Phone" name="Phone" type="text">
+        </div>
+
+        <div>
+            <label class="textStyle" for="Email">Email</label>
+            <input id="Email" name="Email" type="text">
+        </div>
+
+        <div>
+            <label class="textStyle" for="Login">Login</label>
+            <input id="Login" name="Login" type="text">
+        </div>
+
+        <div>
+            <label class="textStyle" for="Password">Password</label>
+            <input id="Password" name="Password" type="password">
+        </div>
+
+        <div>
+            <label class="textStyle" for="Role">Choose role</label>
+            <select class="textStyle" name="Role" id="Role" >
+                <option value="Customer">Customer</option>
+                <option value="Admin">Admin</option>
+                <option value="Worker">Worker</option>
+            </select>
+        </div>
+        <p></p>
+        <button id="Submit" type="button" onclick="SubmitClick()" class="submitButton">Submit</button>
+        <form action="Title.html">
+            <button id="Cancel" type="button" class="cancelButton">Cancel</button>
+        </form>
+    </div>
+</body>
+
+</html>
