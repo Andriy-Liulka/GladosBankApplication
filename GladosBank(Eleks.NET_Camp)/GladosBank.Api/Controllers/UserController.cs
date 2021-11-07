@@ -29,6 +29,7 @@ namespace GladosBank.Api.Controllers
         public IActionResult Create(CreateUserArgs user)
         {
             int newUserId = default;
+            //Own automapper
             var config = new MapperConfiguration(
                 cfg =>
                 {
@@ -71,6 +72,11 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
         }
+        [HttpPost(nameof(Login))]
+        public IActionResult Login(LoginUserArgs largs)
+        {
+            return Ok();
+        }
 
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
@@ -88,11 +94,35 @@ namespace GladosBank.Api.Controllers
             return Ok(user.UserId);
         }
         [HttpPost(nameof(Update))]
-        public IActionResult Update(UpdateUserArgs user)
+        public IActionResult Update(UpdateUserArgs user,string currentLogin)
         {
+
+
+            //string currentLogin = null;
+            User currentUser = default;
             try
             {
-                _service.UpdateUser(user.Id,user.NewUser);
+               currentUser = _service.GetUserByLogin(currentLogin);
+                if (!string.IsNullOrWhiteSpace(user.Login))
+                {
+                    currentUser.Login = user.Login;
+                }
+                if (!string.IsNullOrWhiteSpace(user.Phone))
+                {
+                    currentUser.Phone = user.Phone;
+                }
+                if (!string.IsNullOrWhiteSpace(user.Email))
+                {
+                    currentUser.Email = user.Email;
+                }
+                
+
+                _service.UpdateUser(currentUser.Id, currentUser);
+            }
+            catch (InvalidUserLoginException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
             }
             catch (InvalidUserIdException ex)
             {
@@ -100,7 +130,7 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
             _logger.LogInformation("User was updated sucessfuly");
-            return Ok(user.Id);
+            return Ok(currentUser?.Id);
         }
         [HttpGet(nameof(Get))]
         public  IActionResult Get()

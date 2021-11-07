@@ -84,12 +84,12 @@ namespace GladosBank.Services
 
         #endregion
         #region Get
-        public User GetUser(int UserId)
+        public User GetUserByLogin(string Login)
         {
-            User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Id== UserId);
+            User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Login== Login);
             if (searchedUser == null)
             {
-                throw new InvalidUserIdException(UserId);
+                throw new InvalidUserLoginException(Login);
             }
             return searchedUser;
         }
