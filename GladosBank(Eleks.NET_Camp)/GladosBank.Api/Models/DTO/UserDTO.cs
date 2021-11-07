@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Domain.Models_DTO
 {
-    public class UserDTO
+    public sealed class UserDTO
     {
         public string Phone { get; set; }
         public string Email { get; set; }

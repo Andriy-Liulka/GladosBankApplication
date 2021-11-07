@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Api.Models.Args.UserControllerArgs
 {
-    public class DeleteUserArgs
+    public sealed class DeleteUserArgs
     {
         public int UserId { get; set; }
-        public string UserLogin { get; set; }
     }
 }

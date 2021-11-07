@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Api.Models.Args.UserControllerArgs
 {
-    public class UpdateUserArgs
+    public sealed class UpdateUserArgs
     {
-        public int Id { get; set; }
-        public User NewUser { get; set; }
+        public string Login { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     }
 }
