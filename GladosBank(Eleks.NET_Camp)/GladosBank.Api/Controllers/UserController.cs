@@ -10,6 +10,8 @@ using GladosBank.Services.Exceptions;
 using GladosBank.Api.Models.Args.UserControllerArgs;
 using AutoMapper;
 using GladosBank.Domain.Models_DTO;
+using Microsoft.AspNetCore.Authorization;
+using GladosBank.Api.Config.Athentication;
 
 namespace GladosBank.Api.Controllers
 {
@@ -18,13 +20,15 @@ namespace GladosBank.Api.Controllers
     public sealed class UserController : ControllerBase
     {
         //TO DO fix bug with adding service of IMapper
-        public UserController(ILogger<UserController> logger, UserService service,IMapper mapper)
+        public UserController(ILogger<UserController> logger, UserService service,IMapper mapper, JwtGenerator jwtGenerator)
         {
             _service = service;
             _logger = logger;
             _mapper = mapper;
+            _jwtGenerator = jwtGenerator;
         }
-
+        [Authorize]
+        [AllowAnonymous]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateUserArgs user)
         {
@@ -64,11 +68,30 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
         }
+        [Authorize]
+        [AllowAnonymous]
         [HttpPost(nameof(Login))]
         public IActionResult Login(LoginUserArgs largs)
         {
-            return Ok();
+            User existingUser=default;
+            try
+            {
+                existingUser = _service.GetUserByLogin(largs.Login);
+            }
+            catch (InvalidUserLoginException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            if (!largs.PasswordHash.Equals(existingUser.PasswordHash))
+            {
+                return BadRequest("Incorrect password or login !");
+            }
+            var token = _jwtGenerator.CreateJwtToken(existingUser);
+            return Ok(token);
         }
+
+
 
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
@@ -132,6 +155,7 @@ namespace GladosBank.Api.Controllers
         }
 
         private readonly IMapper _mapper;
+        private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
         private readonly ILogger<UserController> _logger;
     }

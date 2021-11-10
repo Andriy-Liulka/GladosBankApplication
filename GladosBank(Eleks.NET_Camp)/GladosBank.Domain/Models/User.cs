@@ -26,9 +26,7 @@ namespace GladosBank.Domain
         [MinLength(5)]
         public string Login { get; set; }
         [Required]
-        [MinLength(5)]
-        [MaxLength(100)]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public  bool IsActive { get; set; }
     }
 }

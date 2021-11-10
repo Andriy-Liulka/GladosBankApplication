@@ -138,7 +138,7 @@ namespace GladosBank.Services
             distination.Email = source.Email;
             distination.IsActive = source.IsActive;
             distination.Login = source.Login;
-            distination.Password = source.Password;
+            distination.PasswordHash = source.PasswordHash;
             distination.Phone = source.Phone;
         }
         #endregion
