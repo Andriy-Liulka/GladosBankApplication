@@ -16,6 +16,9 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using GladosBank.Api.Config.Athentication;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GladosBank.Api
 {
@@ -41,8 +44,57 @@ namespace GladosBank.Api
 
             services.AddSwaggerGen
                 (
-                sOpt => sOpt.SwaggerDoc("v1", new OpenApiInfo() { Version = "v1", Title = "GladosBank.Api" })
-                );
+                sOpt =>
+                {
+                    sOpt.SwaggerDoc("v1", new OpenApiInfo() { Version = "v1", Title = "GladosBank.Api" });
+                    var securityDefinitionId = "custom jwt auth";
+
+                    var securityDefinition = new OpenApiSecurityScheme
+                    {
+                        Description = "Jwt Tokens using",
+                        Name = securityDefinitionId,
+                        In = ParameterLocation.Header,
+                        Scheme = "bearer",
+                        Type = SecuritySchemeType.Http,
+                    };
+
+                    OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                    {
+                        Reference = new OpenApiReference()
+                        {
+                            Id = securityDefinitionId,
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    };
+
+                    var securityRequirements = new OpenApiSecurityRequirement()
+                {
+                    {securityScheme, new string[] { }},
+                };
+
+                    sOpt.AddSecurityDefinition(securityDefinitionId, securityDefinition);
+                    sOpt.AddSecurityRequirement(securityRequirements);
+
+
+                });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = JwtAuthenticationOptions.Audience,
+                        ValidIssuer = JwtAuthenticationOptions.Issuer,
+                        IssuerSigningKey = JwtAuthenticationOptions.GetSymmetricSecurityKey()
+                    };
+                });
+            services.AddSingleton<JwtGenerator>();
+
+           services.AddCors();
 
             services.AddScoped<UserService>();
             services.AddAutoMapper(typeof(Startup));
@@ -54,10 +106,8 @@ namespace GladosBank.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger
-                    (
-                    sOpt => sOpt.SerializeAsV2 = true
-                    );
+                app.UseSwagger();
+
                 app.UseSwaggerUI(sOpt =>
                 {
                     sOpt.SwaggerEndpoint("/swagger/v1/swagger.json", "GladosBank.Api v1");
@@ -69,6 +119,12 @@ namespace GladosBank.Api
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseCors(pb=> 
+            {
+                pb.AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowAnyMethod();
+            });
 
             app.UseStaticFiles();
             app.UseDefaultFiles();
@@ -79,6 +135,7 @@ namespace GladosBank.Api
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

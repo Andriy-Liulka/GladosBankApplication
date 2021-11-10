@@ -8,6 +8,8 @@ namespace GladosBank.Api.Models.Args.UserControllerArgs
 {
     public sealed class LoginUserArgs
     {
+        [MaxLength(200)]
+        [MinLength(1)]
         [Required]
         public string Login { get; set; }
         [Required]
