@@ -12,9 +12,11 @@ using AutoMapper;
 using GladosBank.Domain.Models_DTO;
 using Microsoft.AspNetCore.Authorization;
 using GladosBank.Api.Config.Athentication;
+using System.Security.Claims;
 
 namespace GladosBank.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public sealed class UserController : ControllerBase
@@ -27,7 +29,6 @@ namespace GladosBank.Api.Controllers
             _mapper = mapper;
             _jwtGenerator = jwtGenerator;
         }
-        [Authorize]
         [AllowAnonymous]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateUserArgs user)
@@ -68,29 +69,29 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was created sucessfuly");
             return Ok(newUserId);
         }
-        [Authorize]
         [AllowAnonymous]
         [HttpPost(nameof(Login))]
-        public IActionResult Login(LoginUserArgs largs)
+        public IActionResult Login(LoginUserArgs args)
         {
             User existingUser=default;
             try
             {
-                existingUser = _service.GetUserByLogin(largs.Login);
+                existingUser = _service.GetUserByLogin(args.Login);
             }
             catch (InvalidUserLoginException ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
-            if (!largs.PasswordHash.Equals(existingUser.PasswordHash))
+            if (!args.PasswordHash.Equals(existingUser.PasswordHash))
             {
                 return BadRequest("Incorrect password or login !");
             }
             var token = _jwtGenerator.CreateJwtToken(existingUser);
-            return Ok(token);
-        }
+            var result = new {Login= args.Login, JwtToken =token };
 
+            return Ok(result);
+        }
 
 
         [HttpPost(nameof(Delete))]
@@ -112,6 +113,12 @@ namespace GladosBank.Api.Controllers
         public IActionResult Update(UpdateUserArgs user,string currentLogin)
         {
 
+            IEnumerable<Claim> claims=this.Request.HttpContext.User.Claims;
+
+            foreach (var item in claims)
+            {
+                var t=item.Value;
+            }  
 
             //current login must be finded on it's own
             User currentUser = default;

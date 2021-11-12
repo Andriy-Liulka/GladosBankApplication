@@ -89,12 +89,14 @@ namespace GladosBank.Api
                         ValidateIssuerSigningKey = true,
                         ValidAudience = JwtAuthenticationOptions.Audience,
                         ValidIssuer = JwtAuthenticationOptions.Issuer,
-                        IssuerSigningKey = JwtAuthenticationOptions.GetSymmetricSecurityKey()
+                        IssuerSigningKey = JwtAuthenticationOptions.GetSecurityKey()
                     };
                 });
-            services.AddSingleton<JwtGenerator>();
 
-           services.AddCors();
+            services.AddSingleton<JwtGenerator>(options=>new JwtGenerator());
+
+
+            services.AddCors();
 
             services.AddScoped<UserService>();
             services.AddAutoMapper(typeof(Startup));
@@ -133,9 +135,9 @@ namespace GladosBank.Api
 
 
             app.UseRouting();
-
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
