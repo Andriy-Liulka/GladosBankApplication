@@ -17,7 +17,7 @@ namespace GladosBank.Api.Config.Athentication
             _privateKey = JwtAuthenticationOptions.GetSecurityKey();
         }
 
-        public string CreateJwtToken(User user)
+        public string CreateJwtToken(User user,string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenBody = new SecurityTokenDescriptor
@@ -28,9 +28,10 @@ namespace GladosBank.Api.Config.Athentication
                 {
                     new Claim(ClaimTypes.Name, user.Login),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.MobilePhone, user.Phone)
+                    new Claim(ClaimTypes.MobilePhone, user.Phone),
+                    new Claim(ClaimTypes.Role,role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(30),
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 SigningCredentials=new SigningCredentials(_privateKey, SecurityAlgorithms.RsaSha256)
             };
             SecurityToken token = tokenHandler.CreateToken(tokenBody);

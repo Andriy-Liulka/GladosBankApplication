@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -24,6 +24,16 @@
   <ItemGroup>
     <ProjectReference Include="..\GladosBank.Domain\GladosBank.Domain.csproj" />
     <ProjectReference Include="..\GladosBank.Services\GladosBank.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Accounts\Admin\css\" />
+    <Folder Include="wwwroot\Accounts\Admin\JavaScript\" />
+    <Folder Include="wwwroot\Accounts\Customer\css\" />
+    <Folder Include="wwwroot\Accounts\Customer\JavaScript\" />
+    <Folder Include="wwwroot\Accounts\General\css\" />
+    <Folder Include="wwwroot\Accounts\Worker\css\" />
+    <Folder Include="wwwroot\Accounts\Worker\JavaScript\" />
   </ItemGroup>
 
 </Project>
