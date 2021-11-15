@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GladosBank.Api.Models.DTO;
 using GladosBank.Domain;
 using GladosBank.Domain.Models_DTO;
 using System;
@@ -12,7 +13,8 @@ namespace GladosBank.Api.Config.Authomapper
     {
         public UserProfile()
         {
-            this.CreateMap<UserDTO, User>();
+            this.CreateMap<UserDto, User>();
+            this.CreateMap<AccountDto, Account>();
         }
     }
 }
