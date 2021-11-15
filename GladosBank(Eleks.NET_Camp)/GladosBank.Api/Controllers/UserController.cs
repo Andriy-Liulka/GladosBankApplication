@@ -13,10 +13,11 @@ using GladosBank.Domain.Models_DTO;
 using Microsoft.AspNetCore.Authorization;
 using GladosBank.Api.Config.Athentication;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GladosBank.Api.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public sealed class UserController : ControllerBase
@@ -39,7 +40,7 @@ namespace GladosBank.Api.Controllers
 
             try
             {
-                newUserId = -_service.CreateUser(localUser, user.Role);
+                newUserId = _service.CreateUser(localUser, user.Role);
                 if (newUserId==0)
                 {
                     throw new InvalidUserSavingException("Exception occurs during a saving procedure");
@@ -87,13 +88,24 @@ namespace GladosBank.Api.Controllers
             {
                 return BadRequest("Incorrect password or login !");
             }
-            var token = _jwtGenerator.CreateJwtToken(existingUser);
+            string Role = default;
+            try
+            {
+                Role = _service.GetRole(args.Login);
+            }
+            catch (DonotHaveRoleException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            
+            var token = _jwtGenerator.CreateJwtToken(existingUser,Role);
             var result = new {Login= args.Login, JwtToken =token };
 
             return Ok(result);
         }
 
-
+        [Authorize(Roles ="Admin")]
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
         {
@@ -109,11 +121,15 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was deleted sucessfuly");
             return Ok(user.UserId);
         }
+        [Authorize]
         [HttpPost(nameof(Update))]
-        public IActionResult Update(UpdateUserArgs user,string currentLogin)
+        public IActionResult Update(UpdateUserArgs user)
         {
 
             IEnumerable<Claim> claims=this.Request.HttpContext.User.Claims;
+            Claim claim=claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
+            string currentLogin = claim.Value;
+
 
             foreach (var item in claims)
             {
@@ -154,6 +170,7 @@ namespace GladosBank.Api.Controllers
             _logger.LogInformation("User was updated sucessfuly");
             return Ok(currentUser?.Id);
         }
+        [Authorize]
         [HttpGet(nameof(Get))]
         public  IActionResult Get()
         {
@@ -161,6 +178,21 @@ namespace GladosBank.Api.Controllers
             return Ok(users);
         }
 
+
+        [HttpGet(nameof(GetUserDataFromJwt))]
+        public IActionResult GetUserDataFromJwt(string JwtToken)
+        {
+            var token = JwtToken;
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(token);
+
+            string name=jwtSecurityToken.Claims.FirstOrDefault(us => us.Type == "unique_name").Value;
+            string email = jwtSecurityToken.Claims.FirstOrDefault(us=>us.Type=="email").Value;
+            string role = jwtSecurityToken.Claims.FirstOrDefault(us => us.Type == "role").Value;
+
+            var returnedData = new {Name=name,Email=email,Role=role };
+            return Ok(returnedData);
+        }
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
