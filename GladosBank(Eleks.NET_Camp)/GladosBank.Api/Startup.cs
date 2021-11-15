@@ -99,6 +99,8 @@ namespace GladosBank.Api
             services.AddCors();
 
             services.AddScoped<UserService>();
+            services.AddScoped<AccountService>();
+            
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -142,6 +144,7 @@ namespace GladosBank.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                
             });
         }
     }
