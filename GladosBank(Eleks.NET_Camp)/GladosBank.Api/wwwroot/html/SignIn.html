@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/html/SignIn.html" rel="stylesheet"></link>
-    <link href="../css/SignInStyles.css" rel="stylesheet"></link>
+    <link href="../css/SignInStyles.css" rel="stylesheet" />
+    <link href="../css/GeneralStyles.css" rel="stylesheet" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/SignIn.js"></script>
+    <link href="/html/SignIn.html" rel="stylesheet" />
+    <script src="../JavaScript/Config/Md5FunctionHashing.js"></script>
+    <scrit src=""></scrit>
     <title>GladosBank</title>
 </head>
 <body>
     <script src="../JavaScript/SignIn.js"></script>
+    <p><br><br><br><br></p>
     <div class="setInCenter">
         <div>
             <label class="textStyle" for="Login">Login</label>
@@ -22,11 +28,12 @@
             <input id="Password" name="Password" type="password">
         </div>
 
-        <button class="SignInButton" onclick="SignInClick()">Sign in</button>
+        <button id="SignIn" class="SignInButton" onclick="SignInClick()">Sign in</button>
 
         <form action="/html/Title.html">
             <button class="CancelButton">Cancel</button>
         </form>
+        <p id="ErrorLinkLog" style="color:red; font-size:20px"><br><br><br></p>
     </div>
 </body>
 </html>

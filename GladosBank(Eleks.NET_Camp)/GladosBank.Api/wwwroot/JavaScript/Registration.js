@@ -5,6 +5,12 @@
     var passwordDto = document.getElementById("Password").value;
     var roleDto = document.getElementById("Role").value;
 
+    if (phoneDto == "" || emailDto == "" || loginDto == "" || passwordDto == "" || roleDto=="") {
+        alert("All fields must be filled!");
+        return false;
+    }
+
+    var hashedPassword = MD5(passwordDto);
     var userInfo =
     {
         MyUser:
@@ -12,16 +18,26 @@
             Phone: phoneDto,
             Email: emailDto,
             Login: loginDto,
-            Password: passwordDto,
+            PasswordHash: hashedPassword,
         },
         Role: roleDto
     };
+    console.log(axios);
+    GoToNextPage(userInfo);
 
+}
 
-    axios.post("https://localhost:5001/api/User/Create", userInfo);
+function GoToNextPage(userInfo) {
+    axios.post("https://localhost:5001/api/User/Create", userInfo).then((responce) => {
+        var getResponse = responce.status;
 
-
-
+        if (getResponse == 200) {
+            document.getElementById("ErrorLinkLog").innerHTML = "";
+            window.location = "../html/SignIn.html";
+        }
+    }).catch((error) => {
+        document.getElementById("ErrorLinkReg").innerHTML = "You entered login that already exist of !";
+    });
 }
 //axios.get("https://localhost:5001/api/User/Get").then(response =>
 //{
