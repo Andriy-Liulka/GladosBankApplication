@@ -15,9 +15,12 @@ namespace GladosBank.Services
         {
             _context = context;
         }
-        #region Create
+        #region Create  
         public int CreateUser(User user,string role)
         {
+            //Just to work,becouse FluentAPI has buggs.
+            user.IsActive = true;
+
             if (CheckWhetherSuchUserExist(user))
             {
                 throw new AddingExistUserException("You try to add user that already exist of !!");
@@ -51,6 +54,8 @@ namespace GladosBank.Services
 
 
         }
+
+
         private bool IsSuchLoginInDatabase(string login)
         {
             return _context.Users.Any(us=>us.Login.Equals(login));
@@ -71,7 +76,8 @@ namespace GladosBank.Services
                     }
                 case "Worker":
                     {
-                        _context.Workers.Add(new Worker { UserId = user.Id });
+                        //Just to work,becouse FluentAPI has buggs.
+                        _context.Workers.Add(new Worker { UserId = user.Id,Salary=0 });
                         break;
                     }
                 default:
@@ -79,6 +85,7 @@ namespace GladosBank.Services
                         throw  new InvalidRoleException(role);
                     }
             }
+
         }
 
         public bool CheckWhetherSuchUserExist(User user)
@@ -97,7 +104,23 @@ namespace GladosBank.Services
             }
             return searchedUser;
         }
-        
+        public string GetRole(string login)
+        {
+            var existingUserId = _context.Users.FirstOrDefault(us=>us.Login == login).Id;
+            if(_context.Customers.Any(us=>us.UserId == existingUserId))
+            {
+                return "Customer";
+            }
+            else if (_context.Workers.Any(us => us.UserId == existingUserId))
+            {
+                return "Worker";
+            }
+            else if (_context.Workers.Any(us => us.UserId == existingUserId))
+            {
+                return "Admin";
+            }
+            throw new DonotHaveRoleException(login);
+        }
         public IEnumerable<User> GetAllUsers()
         {
             //ToDO paginning
