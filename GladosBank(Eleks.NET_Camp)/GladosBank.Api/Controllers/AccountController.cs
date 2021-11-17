@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace GladosBank.Api.Controllers
 {
     [ApiController]
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         public AccountController(ILogger<AccountController> logger,AccountService service, IMapper mapper)
@@ -28,9 +28,15 @@ namespace GladosBank.Api.Controllers
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateAccountArgs args)
         {
-            
+            IEnumerable<Claim> claims = this.Request.HttpContext.User.Claims;
+            Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
+            var userLogin = claim.Value;
+
             var localAccount = _mapper.Map<Account>(args.Account);
-            localAccount.CustomerId = args.CustomerId;
+
+            localAccount.DateOfCreating = DateTime.Now;
+            localAccount.CustomerId = _service.GetCustomerIdFromLogin(userLogin);
+
 
             try
             {
@@ -49,14 +55,23 @@ namespace GladosBank.Api.Controllers
             
             return Ok(localAccount.Id);
         }
+
         [Authorize(Roles = "Customer")]
         [HttpGet(nameof(Get))]
+        [AllowAnonymous]
         public IActionResult Get()
         {
 
             IEnumerable<Claim> claims = this.Request.HttpContext.User.Claims;
             Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
-            string currentLogin = claim.Value;
+            string currentLogin = claim?.Value;
+
+            if (currentLogin==null)
+            {
+                _logger.LogInformation("Unauthorized");
+                return BadRequest("Unauthorized");
+            }
+
             IEnumerable<Account> accounts = default;
             try
             {
@@ -71,6 +86,13 @@ namespace GladosBank.Api.Controllers
 
         }
 
+        [Authorize(Roles = "Customer")]
+        [HttpGet(nameof(GetAllCurrencies))]
+        public IActionResult GetAllCurrencies()
+        {
+            var currenciesList=_service.GetAllCurrencies();
+            return Ok(currenciesList);
+        }
 
         private readonly ILogger<AccountController> _logger;
         private readonly AccountService _service;
