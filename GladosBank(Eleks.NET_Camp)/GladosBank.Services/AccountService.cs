@@ -1,5 +1,6 @@
 ﻿
 using GladosBank.Domain;
+using GladosBank.Domain.Models;
 using GladosBank.Services.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -44,25 +45,32 @@ namespace GladosBank.Services
 
         #endregion
         #region Get
-        
-        public IEnumerable<Account> GetAllAccounts(string login)
+        public int GetCustomerIdFromLogin(string login)
         {
-            //var accounts = _context.Users.Join(_context.Customers,us=>us.Id,us2=>us2.UserId,).ToArray();
-
             var account =
                 from user in _context.Users
                 join Customers in _context.Customers on user.Id equals Customers.UserId
-                select new { CustomerId = Customers.Id,Login=user.Login };
+                select new { CustomerId = Customers.Id, Login = user.Login };
 
             var currentCustomerId = account.FirstOrDefault(ac => ac.Login.Equals(login));
+            return currentCustomerId.CustomerId;
+        }
+        public IEnumerable<Account> GetAllAccounts(string login)
+        {
+            int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
             {
                 throw new IsntCustomerException(login);
             }
-            var accounts=_context.Accounts.Where(ci => ci.CustomerId == currentCustomerId.CustomerId);
+            var accounts=_context.Accounts.Where(ci => ci.CustomerId == currentCustomerId);
 
             return accounts;
         }
+        public IEnumerable<Currency> GetAllCurrencies()
+        {
+            return _context.Currency;
+        }
+
         #endregion
         #region Update
 

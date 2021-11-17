@@ -28,14 +28,14 @@
 }
 
 function GoToNextPage(userInfo) {
-    axios.post("https://localhost:5001/api/User/Create", userInfo).then((responce) => {
-        var getResponse = responce.status;
+    axios.post("https://localhost:5001/api/User/Create", userInfo).then((response) => {
+        var getResponse = response.status;
 
         if (getResponse == 200) {
-            document.getElementById("ErrorLinkLog").innerHTML = "";
             window.location = "../html/SignIn.html";
         }
     }).catch((error) => {
+        console.log(error);
         document.getElementById("ErrorLinkReg").innerHTML = "You entered login that already exist of !";
     });
 }

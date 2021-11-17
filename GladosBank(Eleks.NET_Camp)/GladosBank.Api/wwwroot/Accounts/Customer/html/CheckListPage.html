@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <!--<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/AddAndRemoveAccount.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <title>Your account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <br>
+        </div>
+
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+            <br>
+            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Calcel</b></button>
+        </div>
+        <div id="board" style="float: right; min-width: 1000px; min-height: 825px; background-color:rgb(30, 194, 126);">
+        </div>
+        <script>
+            /**/
+
+            axios.get("https://localhost:5001/api/Account/Get", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }})
+                .then((responce) => {
+                    var getResponse = responce.status;
+                    var accounts = responce.data;
+                    console.log(getResponse);
+                    console.log(accounts);
+                    console.log("Cycle:");
+                    for (var i = 0; i < accounts.length; i++) {
+                            document.getElementById("board").innerHTML += `<div style="margin-left: 10px; color:black;background-color: red; width: 400px; min-height: 150px;">`+
+                                `<p>Amount-> ${accounts[i].amount} ${accounts[i].currency}</p>`+
+                                `<p>Date-> ${accounts[i].dateOfCreating}</p>`+
+                                `<p>Note-> ${accounts[i].notes}</p>`+
+                                                                        `</div>`;
+                    }
+
+
+                }).catch((error) => {
+                    console.log(error);
+                });
+        </script>
+    </div>
+
+</body>
+</html>
