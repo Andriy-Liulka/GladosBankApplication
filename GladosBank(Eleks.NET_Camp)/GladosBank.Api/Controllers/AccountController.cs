@@ -72,7 +72,7 @@ namespace GladosBank.Api.Controllers
                 return BadRequest("Unauthorized");
             }
 
-            IEnumerable<Account> accounts = default;
+            IEnumerable<object> accounts = default;
             try
             {
                 accounts = _service.GetAllAccounts(currentLogin);

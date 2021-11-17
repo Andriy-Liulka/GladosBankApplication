@@ -55,14 +55,25 @@ namespace GladosBank.Services
             var currentCustomerId = account.FirstOrDefault(ac => ac.Login.Equals(login));
             return currentCustomerId.CustomerId;
         }
-        public IEnumerable<Account> GetAllAccounts(string login)
+        public IEnumerable<object> GetAllAccounts(string login)
         {
             int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
             {
                 throw new IsntCustomerException(login);
             }
-            var accounts=_context.Accounts.Where(ci => ci.CustomerId == currentCustomerId);
+            var accounts =
+                (from account in _context.Accounts
+                join currency in _context.Currency
+                on account.CurrencyCode equals currency.Code select new
+                {
+                    CustomerId = account.CustomerId,
+                    CurrencyCode = $"{currency.Symbol} ({currency.Code})",
+                    Amount = account.Amount,
+                    Notes = account.Notes,
+                    DateOfCreating=account.DateOfCreating
+                }).ToArray();
+
 
             return accounts;
         }
