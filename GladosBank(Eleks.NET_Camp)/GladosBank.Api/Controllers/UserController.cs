@@ -178,7 +178,7 @@ namespace GladosBank.Api.Controllers
             return Ok(users);
         }
 
-
+        [Authorize]
         [HttpGet(nameof(GetUserDataFromJwt))]
         public IActionResult GetUserDataFromJwt(string JwtToken)
         {

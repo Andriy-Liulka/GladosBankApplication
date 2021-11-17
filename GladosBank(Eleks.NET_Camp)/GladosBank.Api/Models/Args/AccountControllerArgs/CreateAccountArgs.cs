@@ -11,7 +11,5 @@ namespace GladosBank.Api.Models.Args.AccountControllerArgs
     {
         [Required]
         public AccountDto Account { get; set; }
-        [Required]
-        public int CustomerId { get; set; }
     }
 }

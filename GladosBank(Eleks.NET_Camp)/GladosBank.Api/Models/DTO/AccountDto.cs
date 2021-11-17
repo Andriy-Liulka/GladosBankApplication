@@ -10,6 +10,5 @@ namespace GladosBank.Api.Models.DTO
         public string CurrencyCode { get; set; }
         public decimal Amount { get; set; }
         public string Notes { get; set; }
-        public DateTime DateOfCreating { get; set; }
     }
 }
