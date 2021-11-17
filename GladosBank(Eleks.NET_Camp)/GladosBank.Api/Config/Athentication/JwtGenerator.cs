@@ -31,7 +31,7 @@ namespace GladosBank.Api.Config.Athentication
                     new Claim(ClaimTypes.MobilePhone, user.Phone),
                     new Claim(ClaimTypes.Role,role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials=new SigningCredentials(_privateKey, SecurityAlgorithms.RsaSha256)
             };
             SecurityToken token = tokenHandler.CreateToken(tokenBody);
