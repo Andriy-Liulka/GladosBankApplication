@@ -2,6 +2,7 @@
 using GladosBank.Domain;
 using GladosBank.Domain.Models;
 using GladosBank.Services.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,33 +48,43 @@ namespace GladosBank.Services
         #region Get
         public int GetCustomerIdFromLogin(string login)
         {
-            var account =
-                from user in _context.Users
-                join Customers in _context.Customers on user.Id equals Customers.UserId
-                select new { CustomerId = Customers.Id, Login = user.Login };
 
-            var currentCustomerId = account.FirstOrDefault(ac => ac.Login.Equals(login));
-            return currentCustomerId.CustomerId;
+            #region AnotherPossibleSolution
+            //var account =
+            //                from user in _context.Users
+            //                join Customers in _context.Customers on user.Id equals Customers.UserId
+            //                select new { CustomerId = Customers.Id, Login = user.Login };
+            #endregion
+            var account = _context.Customers.Include(us => us.User).SingleOrDefault(cs=>cs.User.Login.Equals(login));
+
+            return account.Id;
         }
-        public IEnumerable<object> GetAllAccounts(string login)
+        public IEnumerable<Account> GetAllAccounts(string login)
         {
             int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
             {
                 throw new IsntCustomerException(login);
             }
-            var accounts =
-                (from account in _context.Accounts
-                join currency in _context.Currency
-                on account.CurrencyCode equals currency.Code select new
-                {
-                    CustomerId = account.CustomerId,
-                    CurrencyCode = $"{currency.Symbol} ({currency.Code})",
-                    Amount = account.Amount,
-                    Notes = account.Notes,
-                    DateOfCreating=account.DateOfCreating
-                }).ToArray();
 
+            var accounts = _context.Accounts.Include(acc => acc.Currency).Where(acc => acc.CustomerId.Equals(currentCustomerId)).ToArray();
+
+            #region AnotherPossibleSolution
+            //One of possible solutions
+            //var accounts =
+            //    (from account in _context.Accounts
+            //    join currency in _context.Currency
+            //    on account.CurrencyCode equals currency.Code where account
+            //     .CustomerId.Equals(currentCustomerId) select new
+            //    {
+            //        AccountId=account.Id,
+            //        CustomerId = account.CustomerId,
+            //        CurrencyCode = $"{currency.Symbol} ({currency.Code})",
+            //        Amount = account.Amount,
+            //        Notes = account.Notes,
+            //        DateOfCreating=account.DateOfCreating
+            //    }).ToArray();
+            #endregion
 
             return accounts;
         }
@@ -84,10 +95,34 @@ namespace GladosBank.Services
 
         #endregion
         #region Update
-
+        public int ReplenishAccount(int Id,decimal amount)
+        {
+            var account=_context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(Id));
+            if (account == null)
+            {
+                throw new InvalidAccountIdExcepion(Id);
+            }
+            account.Amount += amount;
+            _context.Accounts.Update(account);
+            _context.SaveChanges();
+            return Id;
+        }
         #endregion
         #region Delete
-
+        public int DeleteAccount(int accountId)
+        {
+           var account= _context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(accountId));
+            if (account!=null)
+            {
+                _context.Accounts.Remove(account);
+                _context.SaveChanges();
+                return account.Id;
+            }
+            else
+            {
+                throw new InvalidAccountIdExcepion(accountId);
+            }
+        }
         #endregion
         private readonly ApplicationContext _context;
     }
