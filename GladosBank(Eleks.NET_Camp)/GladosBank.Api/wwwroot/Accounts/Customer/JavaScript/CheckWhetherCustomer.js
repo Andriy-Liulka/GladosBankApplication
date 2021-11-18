@@ -1,7 +1,6 @@
 ﻿
 var token = localStorage.getItem('jwtToken');
-axios.get("https://localhost:5001/api/User/GetUserDataFromJwt", {
-    params: { jwtToken: token },
+axios.get("https://localhost:5001/api/User/GetUserData", {
     headers: { Authorization: `Bearer ${token}` }
 })
     .then((responce) => {

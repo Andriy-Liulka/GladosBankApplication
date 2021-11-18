@@ -35,11 +35,13 @@
                     console.log(accounts);
                     console.log("Cycle:");
                     for (var i = 0; i < accounts.length; i++) {
-                            document.getElementById("board").innerHTML += `<div style="margin-left: 10px; color:black;background-color: red; width: 400px; min-height: 150px;">`+
-                                `<p>Amount-> ${accounts[i].amount} ${accounts[i].currencyCode}</p>`+
+                        document.getElementById("board").innerHTML += `<div id=${accounts[i].id} style = "margin-left: 10px; color:black;background-color: red; width: 400px; min-height: 150px;" >` +
+                            `<p>Amount-> ${accounts[i].amount} ${accounts[i].currencyCode} `+
+                            `<button id=${accounts[i].id} onclick="DeleteClick(this.id)" style="margin-top: 7px;">Delete</button>&nbsp&nbsp&nbsp` +
+                            `<button id=${accounts[i].id} onclick="RedirectReplenishPage(this.id)" style="margin-top: 7px;">Replenish</button> </p>` +
                                 `<p>Date-> ${accounts[i].dateOfCreating}</p>`+
                                 `<p>Note-> ${accounts[i].notes}</p>`+
-                                                                        `</div>`;
+                                `</div>`;
                     }
 
 

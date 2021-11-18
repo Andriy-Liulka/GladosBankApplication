@@ -76,12 +76,26 @@ function RedirectBasePage() {
     window.location = "CustomerBasePage.html";
 }
 
+function RedirectReplenishPage(id) {
+    window.location = "ReplenishAccountOage.html";
+
+    localStorage.setItem("AccountId", id);
+}
+
 function AddClick(){
-    var amount = document.getElementById("Amount").value;
+    var amount = 0;
     var note = document.getElementById("Note").value;
     var currency = document.getElementById("Currency").value;
 
-    if (amount == "" || note == "" || currency == "") {
+    if (currency == "") {
+        alert("Currency can't be empty !");
+        return false;
+    }
+
+    document.getElementById("Note").value="";
+    document.getElementById("Currency").value = "";
+
+    if (note == "" || currency == "") {
         alert("All fields must be filled!");
         return false;
     }
@@ -97,7 +111,9 @@ function AddClick(){
     };
 
     axios.post("https://localhost:5001/api/Account/Create", accountArgs,
-        { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
+        {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
+        })
         .then((response) => {
         var responceResult = response.status;
         if (responceResult==200) {
@@ -109,5 +125,66 @@ function AddClick(){
             console.log(error);
         });
 
+
+}
+
+function DeleteClick(id) {
+    var element = document.getElementById(id);
+    element.remove();
+    var accountId =
+    {
+        "id": parseInt(id)
+    }
+
+    axios.post("https://localhost:5001/api/Account/Delete", accountId ,
+        {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` },
+        })
+        .then((response) => {
+            var responceResult = response.status;
+            if (responceResult == 200) {
+                console.log("Added successfully");
+                console.log(responceResult);
+            }
+            console.log(response);
+        })
+        .catch((error) => {
+             console.log(error);
+        });
+}
+
+function ReplenishAccountClick() {
+    var item = localStorage.getItem('AccountId');
+    var id = parseInt(item);
+
+    var amount = document.getElementById('Amount').value;
+
+    if (amount == "" || amount == null) {
+        alert("Amount can't be empty !");
+        return false;
+    }
+
+    var replenishAccountArgs = {
+        "id": id,
+        "amount": amount
+    }
+
+    axios.post("https://localhost:5001/api/Account/Replenish", replenishAccountArgs,
+        {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` },
+        })
+        .then((response) => {
+            var responceResult = response.status;
+            if (responceResult == 200) {
+                console.log("Replenished successfully");
+                console.log(responceResult);
+            }
+            console.log(response);
+            document.getElementById('ErrorList').value = "Cannot add modey";
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        });
 
 }
