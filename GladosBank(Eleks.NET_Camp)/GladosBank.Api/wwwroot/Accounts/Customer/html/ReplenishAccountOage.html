@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/AddAndRemoveAccount.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <title>Your account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <br>
+        </div>
+
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Calcel</b></button>
+        </div>
+
+        <div style="background-color: rgb(78, 182, 58); width: 1100px; min-height: 200px; float:right; margin-top:100px; margin-left:100px; margin-right:100px;">
+            <div style="margin-top: 30px; margin-left: 30px">
+                <label style="font-size: 30px;color: rgb(110, 29, 134);" for="Amount">Amount</label>
+                <input style="font-size:30px;" id="Amount" name="Amount" type="text">
+                <button onclick="ReplenishAccountClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; background-color:orange"><b>Replenish</b></button>
+            </div>
+            <p id="ErrorList"></p>
+        </div>
+
+    </div>
+
+</body>
+</html>
