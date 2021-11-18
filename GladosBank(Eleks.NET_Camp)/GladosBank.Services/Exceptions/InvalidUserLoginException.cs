@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidUserLoginException : Exception
+    public class InvalidUserLoginException : BusinessLogicException
     {
         public InvalidUserLoginException(string Login) : base($"You entered Login-> \"{Login}\" that doesn't exist of in database !") { }
     }

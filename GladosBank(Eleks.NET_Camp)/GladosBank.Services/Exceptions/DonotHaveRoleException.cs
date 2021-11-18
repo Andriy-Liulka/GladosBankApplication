@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class DonotHaveRoleException : Exception
+    public class DonotHaveRoleException : BusinessLogicException
     {
         public DonotHaveRoleException(string login) : base($"{login} doesn't have role !") { }
     }

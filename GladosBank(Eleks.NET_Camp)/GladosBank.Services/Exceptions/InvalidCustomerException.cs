@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidCustomerException: Exception
+    public class InvalidCustomerException: BusinessLogicException
     {
         public InvalidCustomerException(int id) : base($"Customer with id->{id} doesn't not exist of!!") { }
     }

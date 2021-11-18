@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidRoleException : Exception
+    public class InvalidRoleException : BusinessLogicException
     {
         public InvalidRoleException(string role) : base($"Role of {role} doesn't exist of !!") { }
     }

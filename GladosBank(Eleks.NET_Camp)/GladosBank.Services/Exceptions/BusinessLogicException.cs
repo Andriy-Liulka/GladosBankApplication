@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class ExistingAccountException : BusinessLogicException
+    public abstract class BusinessLogicException : Exception
     {
-        public ExistingAccountException(int id) :base($"Account with Id-> {id} already exist of !") {}
+        protected BusinessLogicException(string message):base(message){}
     }
 }

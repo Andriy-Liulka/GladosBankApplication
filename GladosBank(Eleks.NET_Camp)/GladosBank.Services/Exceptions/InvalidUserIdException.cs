@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidUserIdException : Exception
+    public class InvalidUserIdException : BusinessLogicException
     {
         public InvalidUserIdException(int UserId) : base($"You entered userId-> \"{UserId}\" that doesn't exist of in database !") {}
     }

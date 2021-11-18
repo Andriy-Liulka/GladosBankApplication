@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidUserSavingException : Exception
+    public class InvalidUserSavingException : BusinessLogicException
     {
         public InvalidUserSavingException(string exceptionMessage) : base(exceptionMessage) { }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class ExistingUserLoginException : Exception
+    public class ExistingUserLoginException : BusinessLogicException
     {
         public ExistingUserLoginException(string message) : base(message) { }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class InvalidCurrencyException : Exception
+    public class InvalidCurrencyException : BusinessLogicException
     {
         public InvalidCurrencyException(string Currency) : base($"Customer with currency->{Currency} doesn't not exist of!!") { }
     }
