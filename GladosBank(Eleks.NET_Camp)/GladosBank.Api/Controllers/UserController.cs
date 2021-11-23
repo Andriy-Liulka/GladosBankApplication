@@ -31,6 +31,7 @@ namespace GladosBank.Api.Controllers
             _jwtGenerator = jwtGenerator;
             _dataService = dataService;
         }
+
         [AllowAnonymous]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateUserArgs user)
@@ -73,6 +74,8 @@ namespace GladosBank.Api.Controllers
                     return BadRequest("Incorrect password or login !");
                 }
 
+                _service.IsActive(args.Login);
+
                 var Role = _service.GetRole(args.Login);
 
                 var token = _jwtGenerator.CreateJwtToken(existingUser, Role);
@@ -82,6 +85,20 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
+                switch (ex)
+                {
+                    case InvalidUserLoginException:
+                    {
+                        _logger.LogInformation("Incorrect login or password");
+                        return BadRequest("Incorrect login or password");
+                    }
+                    case UserWasBannedException:
+                    {
+                        _logger.LogInformation("Your account was banned");
+                        return BadRequest("Your account was banned");
+                    }
+
+                }
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
@@ -102,17 +119,18 @@ namespace GladosBank.Api.Controllers
                 _logger.LogInformation("User was deleted sucessfuly");
                 return Ok(user.UserId);
             }
-            catch (ExistingAccountException ex)
+            catch (BusinessLogicException ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
-            catch (InvalidCustomerException ex)
+            catch (Exception ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
+
         [Authorize]
         [HttpPost(nameof(Update))]
         public IActionResult Update(UpdateUserArgs user)
@@ -137,9 +155,15 @@ namespace GladosBank.Api.Controllers
                     currentUser.Email = user.Email;
                 }
                 _service.UpdateUser(currentUser.Id, currentUser);
-                _logger.LogInformation("User was updated sucessfuly");
+                
 
-                return Ok(currentUser?.Id);
+                var token = _jwtGenerator.CreateJwtToken(currentUser, user.Role);
+
+                var returnData = new { Id = currentUser?.Id, Token = token };
+
+
+                _logger.LogInformation("User was updated sucessfuly");
+                return Ok(returnData);
             }
             catch (BusinessLogicException ex)
             {
@@ -153,31 +177,53 @@ namespace GladosBank.Api.Controllers
             }
 
         }
+
         [Authorize]
         [HttpGet(nameof(Get))]
         public  IActionResult Get()
         {
-            IEnumerable<User> users = _service.GetAllUsers();
-            _logger.LogInformation("You have got all users !");
-            return Ok(users);
+            try
+            {
+                var users = _service.GetAllUsers();
+                _logger.LogInformation("You have got all users !");
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize]
         [HttpGet(nameof(GetUserData))]
         public IActionResult GetUserData()
         {
-            IEnumerable<Claim> claims = this.Request.HttpContext.User.Claims;
+            try
+            {
+                var claims = this.Request.HttpContext.User.Claims;
 
-            var userLogin = _dataService.GetLogin(claims);
+                var userLogin = _dataService.GetLogin(claims);
 
-            var userEmail = _dataService.GetEmail(claims);
+                var userEmail = _dataService.GetEmail(claims);
 
-            var userRole = _dataService.GetRole(claims);
+                var userRole = _dataService.GetRole(claims);
 
-            var returnedData = new {Name= userLogin, Email= userEmail, Role= userRole };
-            _logger.LogInformation("You got all user data !");
-            return Ok(returnedData);
+                var userPhone = _dataService.GetPhone(claims);
+
+                var returnedData = new {Phone= userPhone, Name = userLogin, Email = userEmail, Role = userRole };
+
+                _logger.LogInformation("You got all user data !");
+                return Ok(returnedData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+
         }
+
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
