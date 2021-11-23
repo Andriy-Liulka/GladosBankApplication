@@ -26,6 +26,7 @@ namespace GladosBank.Api.Controllers
             _mapper = mapper;
             _dataService = dataService;
         }
+
         [Authorize(Roles ="Customer")]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateAccountArgs args)
@@ -44,23 +45,23 @@ namespace GladosBank.Api.Controllers
                 _logger.LogInformation($"Account with id->{localAccount.Id} was created successfully");
                 return Ok(localAccount.Id);
             }
-            catch (ExistingAccountException ex)
+            catch (BusinessLogicException ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
-            catch (InvalidCustomerException ex)
+            catch (Exception ex)
             {
                 _logger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
-            
+
         }
 
         [Authorize(Roles = "Customer")]
         [HttpGet(nameof(Get))]
         [AllowAnonymous]
-        public  IActionResult Get()
+        public async  Task<IActionResult> Get()
         {
             try
             {
@@ -75,7 +76,7 @@ namespace GladosBank.Api.Controllers
 
                 IEnumerable<Account> accounts = default;
 
-                accounts = _service.GetAllAccounts(currentLogin);
+                accounts = await _service.GetAllAccounts(currentLogin);
                 _logger.LogInformation("Have got all accounts");
                 return Ok(accounts);
             }
@@ -95,9 +96,68 @@ namespace GladosBank.Api.Controllers
         [HttpGet(nameof(GetAllCurrencies))]
         public IActionResult GetAllCurrencies()
         {
-            var currenciesList=_service.GetAllCurrencies();
-            _logger.LogInformation("You have got all currencies !");
-            return Ok(currenciesList);
+            try
+            {
+                var currenciesList = _service.GetAllCurrenciesService();
+                _logger.LogInformation("You have got all currencies !");
+                return Ok(currenciesList);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [Authorize(Roles = "Customer")]
+        [HttpGet(nameof(GetCurrencyCodeFromAccountId))]
+        public IActionResult GetCurrencyCodeFromAccountId(int id)
+        {
+            try
+            {
+                var currency = _service.GetCurrencyFromId(id);
+                _logger.LogInformation("You have got all currencies !");
+                return Ok(currency);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [Authorize(Roles = "Customer")]
+        [HttpGet(nameof(GetAccountsForCurrencyCode))]
+        public IActionResult GetAccountsForCurrencyCode([FromQuery]GetAccountsForCurrencyArgs args)
+        {
+            try
+            {
+                var accounts = _service.GetAllAccountsForCurrencyCode(args.CurrencyCode, args.Login);
+
+                _logger.LogInformation("You have got all currencies !");
+                return Ok(accounts);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize(Roles = "Customer")]
@@ -123,6 +183,7 @@ namespace GladosBank.Api.Controllers
 
 
         }
+
         [Authorize(Roles = "Customer")]
         [HttpPost(nameof(Replenish))]
         public IActionResult Replenish(ReplenishAccountArgs account)
@@ -144,6 +205,32 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize(Roles = "Customer")]
+        [HttpPost(nameof(TransactMoney))]
+        public IActionResult TransactMoney(TransferMoneyArgs args)
+        {
+            try
+            {
+                if(!_dataService.IsYourAccount(Request.HttpContext.User.Claims, args.sourceId))
+                {
+                    throw new NotYourAccountException(args.sourceId);
+                }
+                (int,int) resultIds=_service.TransferMoney(args.Amount,args.sourceId,args.destinationId);
+                return Ok($"Updated successfully from {resultIds.Item1} to {resultIds.Item2}");
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
         private readonly ILogger<AccountController> _logger;
         private readonly AccountService _service;
         private readonly DataService _dataService;
