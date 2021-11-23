@@ -36,7 +36,7 @@ function GoToNextPage(userInfo) {
         }
     }).catch((error) => {
         console.log(error);
-        document.getElementById("ErrorLinkReg").inner = "You entered login that already exist of !";
+        document.getElementById("ErrorLinkReg").innerText = "You entered login that already exist of !";
     });
 }
 
