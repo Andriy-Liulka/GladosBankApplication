@@ -13,17 +13,18 @@ namespace GladosBank.Services
 {
     public sealed class AccountService
     {
-        public AccountService(ApplicationContext context)
+        public AccountService(ApplicationContext context, UserService userService)
         {
+            _userService = userService;
             _context = context;
         }
         #region Create
         public int CreateAccount(Account account)
         {
 
-            bool accountExist=_context.Accounts.Any(us=>us.Id== account.Id);
-            if (accountExist == true) 
-            { 
+            bool accountExist = _context.Accounts.Any(us => us.Id == account.Id);
+            if (accountExist == true)
+            {
                 throw new ExistingAccountException(account.Id);
             }
 
@@ -55,11 +56,11 @@ namespace GladosBank.Services
             //                join Customers in _context.Customers on user.Id equals Customers.UserId
             //                select new { CustomerId = Customers.Id, Login = user.Login };
             #endregion
-            var account = _context.Customers.Include(us => us.User).SingleOrDefault(cs=>cs.User.Login.Equals(login));
+            var account = _context.Customers.Include(us => us.User).SingleOrDefault(cs => cs.User.Login.Equals(login));
 
             return account.Id;
         }
-        public IEnumerable<Account> GetAllAccounts(string login)
+        public async Task<IEnumerable<Account>> GetAllAccounts(string login)
         {
             int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
@@ -67,7 +68,7 @@ namespace GladosBank.Services
                 throw new IsntCustomerException(login);
             }
 
-            var accounts = _context.Accounts.Include(acc => acc.Currency).Where(acc => acc.CustomerId.Equals(currentCustomerId)).ToArray();
+            var accounts =await _context.Accounts.Include(acc => acc.Currency).Where(acc => acc.CustomerId.Equals(currentCustomerId)).ToArrayAsync();
 
             #region AnotherPossibleSolution
             //One of possible solutions
@@ -88,16 +89,38 @@ namespace GladosBank.Services
 
             return accounts;
         }
-        public IEnumerable<Currency> GetAllCurrencies()
+        public IEnumerable<Currency> GetAllCurrenciesService()
         {
             return _context.Currency;
         }
+        public string GetCurrencyFromId(int id)
+        {
+            var currency = _context.Accounts.SingleOrDefault(us => us.Id.Equals(id)).CurrencyCode;
+            if (currency == null)
+            {
+                throw new InvalidAccountIdExcepion(id);
+            }
+            return currency;
+        }
+
+        public IEnumerable<Account> GetAllAccountsForCurrencyCode(string currencyCode, string login)
+        {
+            var userId = _userService.GetUserByLogin(login).Id;
+
+            var accounts = _context.Accounts
+                .Include(cus => cus.Customer)
+                .ThenInclude(us => us.User)
+                .Where(ac => ac.CurrencyCode.Equals(currencyCode)).Where(cus => cus.Customer.UserId.Equals(userId)).ToArray();
+
+            return accounts;
+        }
+
 
         #endregion
         #region Update
-        public int ReplenishAccount(int Id,decimal amount)
+        public int ReplenishAccount(int Id, decimal amount)
         {
-            var account=_context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(Id));
+            var account = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(Id));
             if (account == null)
             {
                 throw new InvalidAccountIdExcepion(Id);
@@ -111,8 +134,8 @@ namespace GladosBank.Services
         #region Delete
         public int DeleteAccount(int accountId)
         {
-           var account= _context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(accountId));
-            if (account!=null)
+            var account = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(accountId));
+            if (account != null)
             {
                 _context.Accounts.Remove(account);
                 _context.SaveChanges();
@@ -124,6 +147,43 @@ namespace GladosBank.Services
             }
         }
         #endregion
+        public  (int,int) TransferMoney(decimal amount,int sourceId,int destinationId)
+        {
+            var source=_context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(sourceId));
+            var destination = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(destinationId));
+            if (!source.CurrencyCode.Equals(destination.CurrencyCode))
+            {
+                throw new DifferentCurrencyException(source.CurrencyCode,destination.CurrencyCode);
+            }
+            if (source.Amount< amount)
+            {
+                throw new TooLittleAccountAmountException();
+            }
+
+            using (var transaction=_context.Database.BeginTransaction())
+            {
+                try
+                {
+                    source.Amount -= amount;
+                    destination.Amount += amount;
+
+                    _context.Update(source);
+                    _context.Update(destination);
+
+                    _context.SaveChanges();
+                    _context.Database.CommitTransaction();
+
+                    return (sourceId, destinationId);
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return (0, 0);
+                }
+            }
+        }
+
         private readonly ApplicationContext _context;
+        private readonly UserService _userService;
     }
 }
