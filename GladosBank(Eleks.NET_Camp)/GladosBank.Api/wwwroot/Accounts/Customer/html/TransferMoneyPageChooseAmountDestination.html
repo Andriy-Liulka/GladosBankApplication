@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/AddAndRemoveAccount.js"></script>
+    <script src="../JavaScript/TransferMoney.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <title>Your account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <script>
+                document.getElementById("TitleWithNameandRole").innerHTML += `<span style="background-color: red; "> ${localStorage.getItem('CurrentUserLogin')}</span> `;
+            </script>
+            <br>
+        </div>
+
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; margin-top:10px; float:left">
+            <button onclick="RedirectTransferMoneyPage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin: 20px;"><b>Calcel</b></button>
+        </div>
+
+        <div id="board" class="chooseAmountCentralElementBackground" style="margin-top: 30px; min-height: 825px; min-width: 500px; margin: 10px; margin-right:600px; float:right; ">
+            <br>
+            <label style="font-size: 30px;color: rgb(110, 29, 134);" for="Amount">Amount</label>
+            <br>
+            <input style="font-size:30px;" id="Amount" name="Amount" type="text">
+            <br>
+            <label style="font-size: 30px;color: rgb(110, 29, 134);" for="Distant">Account on which send money</label>
+            <br>
+            <input style="font-size:30px;" id="Distant" name="Distant" type="text">
+            <br>
+            <br>
+            <button onclick="SendClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; background-color:orange"><b>Send</b></button>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/AddAndRemoveAccount.js"></script>
+    <script src="../JavaScript/TransferMoney.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <title>Your account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <script>
+                document.getElementById("TitleWithNameandRole").innerHTML += `<span style="background-color: red; "> ${localStorage.getItem('CurrentUserLogin')}</span> `;
+            </script>
+            <br>
+        </div>
+
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; margin-top:10px; float:left">
+            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin: 20px;"><b>Calcel</b></button>
+        </div>
+
+        <div id="board" style="margin-top: 30px; background-color: rgb(47, 173, 196); min-height: 825px; min-width: 400px; margin: 10px; margin-right:600px; float:right; ">
+            <p style="font-size: 30px; text-align: center; background-color: orangered">Choose account</p>
+        </div>
+
+        <script>
+
+            axios.get("https://localhost:5001/api/Account/Get", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
+                .then((responce) => {
+                    var getResponse = responce.status;
+                    var accounts = responce.data;
+                    console.log(getResponse);
+                    console.log(accounts);
+                    console.log("Cycle:");
+                    for (var i = 0; i < accounts.length; i++) {
+                        document.getElementById("board").innerHTML += `<div onclick="TransferMoneyClick(this.id)" id=${accounts[i].id} style = "margin: 10px; color:black;background-color: red; width: 400px; min-height: 80px;" >` +
+                            `<p>Amount-> ${accounts[i].amount} ${accounts[i].currencyCode} ` +
+                            `<p>Note-> ${accounts[i].notes}</p>` +
+                            `</div>`;
+                    }
+
+
+                }).catch((error) => {
+                    console.log(error);
+                });
+        </script>
+
+    </div>
+
+</body>
+</html>
