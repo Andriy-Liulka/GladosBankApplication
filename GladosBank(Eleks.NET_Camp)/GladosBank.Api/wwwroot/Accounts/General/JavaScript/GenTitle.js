@@ -8,6 +8,15 @@ axios.get("https://localhost:5001/api/User/GetUserData", {
         var getResponse = responce.status;
         if (getResponse == 200) {
             let role = responce.data.role;
+            let login = responce.data.name;
+            let phone = responce.data.phone;
+            let email = responce.data.email;
+
+            localStorage.setItem("CurrentUserLogin", login);
+            localStorage.setItem("CurrentUserPhone", phone);
+            localStorage.setItem("CurrentUserEmail", email);
+            localStorage.setItem("Role", role);
+
             if (role == "Customer") {
                 window.location = "../../Customer/html/CustomerBasePage.html";
             }

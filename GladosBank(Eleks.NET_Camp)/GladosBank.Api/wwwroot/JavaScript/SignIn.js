@@ -20,18 +20,20 @@ function SignInClick() {
 
 function SendRequest(userAuthenticationParameters) {
 
-    axios.post("https://localhost:5001/api/User/Login", userAuthenticationParameters).then((responce) => {
-        var getResponse = responce.status;
+    axios.post("https://localhost:5001/api/User/Login", userAuthenticationParameters).then((response) => {
+        var getResponse = response.status;
         if (getResponse == 200) {
-            var JwtToken = responce.data.jwtToken;
+            var JwtToken = response.data.jwtToken;
 
             localStorage.setItem("jwtToken", JwtToken);
             
-            document.getElementById("ErrorLinkLog").innerHTML = "";
+            document.getElementById("ErrorLinkLog").innerText = "";
 
             window.location = "../Accounts/General/html/GenTitlePage.html";
         }
-    }).catch((error)=>{
-        document.getElementById("ErrorLinkLog").innerHTML = "Incorrect login ot password !";
+    }).catch((error) => {
+
+        document.getElementById("ErrorLinkLog").innerText = error.response.data;
+        
     });
 }

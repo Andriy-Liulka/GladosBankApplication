@@ -36,12 +36,7 @@ function GoToNextPage(userInfo) {
         }
     }).catch((error) => {
         console.log(error);
-        document.getElementById("ErrorLinkReg").innerHTML = "You entered login that already exist of !";
+        document.getElementById("ErrorLinkReg").inner = "You entered login that already exist of !";
     });
 }
-//axios.get("https://localhost:5001/api/User/Get").then(response =>
-//{
-//    let users = response.data;
-//    console.log(users);
-//});
 
