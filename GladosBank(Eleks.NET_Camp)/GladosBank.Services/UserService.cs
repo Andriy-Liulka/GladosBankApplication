@@ -115,7 +115,7 @@ namespace GladosBank.Services
             {
                 return "Worker";
             }
-            else if (_context.Workers.Any(us => us.UserId == existingUserId))
+            else if (_context.Admins.Any(us => us.UserId == existingUserId))
             {
                 return "Admin";
             }
@@ -144,7 +144,7 @@ namespace GladosBank.Services
         #region Update
         public int UpdateUser(int UserId, User user)
         {
-            var existingUser = _context.Users.FirstOrDefault(us => us.Id == UserId);
+            var existingUser = _context.Users.SingleOrDefault(us => us.Id == UserId);
             if (existingUser==null)
             {
                 throw new InvalidUserIdException(UserId);
@@ -165,6 +165,24 @@ namespace GladosBank.Services
             distination.Phone = source.Phone;
         }
         #endregion
+        #region CheckNess
+        public bool IsActive(string login)
+        {
+           var existingUser= _context.Users.SingleOrDefault(us => us.Login.Equals(login));
+
+           if (existingUser == null)
+           {
+               throw new InvalidUserLoginException(login);
+           }
+
+            if (!existingUser.IsActive)
+            {
+                throw new UserWasBannedException(login);
+            }
+            return true;
+        }
+        #endregion
+
         private readonly ApplicationContext _context;
     }
 }
