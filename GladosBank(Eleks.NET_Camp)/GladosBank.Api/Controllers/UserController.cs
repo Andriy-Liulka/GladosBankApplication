@@ -178,7 +178,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         [HttpGet(nameof(Get))]
         public  IActionResult Get()
         {
