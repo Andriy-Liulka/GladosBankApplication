@@ -1,4 +1,5 @@
 ﻿using GladosBank.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,26 @@ namespace GladosBank.Services
         {
             Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Role));
             return claim?.Value;
+        }
+
+        public string GetPhone(IEnumerable<Claim> claims)
+        {
+            Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.MobilePhone));
+            return claim?.Value;
+        }
+
+        public bool IsYourAccount(IEnumerable<Claim> claims,int accountId)
+        {
+            Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
+            string Login= claim?.Value;
+
+            return _context.Accounts
+                .Include(cus => cus.Customer)
+                .ThenInclude(us => us.User)
+                .Where(acc=>acc.Id.Equals(accountId))
+                .Any(us => us.Customer.User.Login.Equals(Login));
+
+            
         }
 
         private readonly ApplicationContext _context;
