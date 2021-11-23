@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="../JavaScript/AddAndRemoveAccount.js"></script>
+    <script src="../JavaScript/TransferMoney.js"></script>
+    <script src="../JavaScript/UpdateAccount.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
+    <title>Your account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <script>
+                document.getElementById("TitleWithNameandRole").innerHTML += `<span style="background-color: red; "> ${localStorage.getItem('CurrentUserLogin')}</span> `;
+            </script>
+            <br>
+        </div>
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+            <br>
+            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin:20px;"><b>Calcel</b></button>
+        </div>
+
+        <div id="board" class="menuBackground" style="margin-top: 30px; min-height: 825px; max-width: 600px; margin: auto; margin-right:auto;  background-color: red; ">
+            <br><br><br><br>
+            <div style="margin-left: 100px;">
+                <div style="margin: auto;">
+                    <br>
+                    <label for="loginUpdate" style="font-size: 25px; color:rgb(45, 148, 167) ;">&nbspLogin:</label>
+                    <br>
+                    <input type="text" id="loginUpdate" name="loginUpdate" style="background-color: red; font-size: 25px;">
+                    <br><br>
+                </div>
+
+                <div style="margin: auto;">
+                    <br>
+                    <label for="emailUpdate" style="font-size: 25px; color:rgb(45, 148, 167) ;">&nbspEmail:</label>
+                    <br>
+                    <input type="text" id="emailUpdate" name="emailUpdate" style="background-color: red; font-size: 25px;">
+                    <br><br>
+                </div>
+
+                <div style="margin: auto;">
+                    <br>
+                    <label for="phoneUpdate" style="font-size: 25px; color:rgb(45, 148, 167) ;">&nbspPhone:</label>
+                    <br>
+                    <input type="text" id="phoneUpdate" name="phoneUpdate" style="background-color: red; font-size: 25px;">
+                    <br><br>
+                </div>
+                <div style=" float:right;  margin-right: 15px;  margin-top: 5px; ">
+                    <button onclick="ConfirmNewUserDataClick()" id="AddButton" style="height: 55px; width: 120px; background-color:rgb(219, 169, 31); font-size: 30px; margin-right : 280px;">Confirm</button>
+                </div>
+                <script>
+
+                    var currentLogin = localStorage.getItem('CurrentUserLogin');
+                    var currentPhone = localStorage.getItem('CurrentUserPhone');
+                    var currentEmail = localStorage.getItem('CurrentUserEmail');
+
+                    document.getElementById("loginUpdate").value = currentLogin;
+                    document.getElementById("phoneUpdate").value = currentPhone;
+                    document.getElementById("emailUpdate").value = currentEmail;
+                    
+                </script>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</body>
+</html>

@@ -1,53 +1,4 @@
-﻿var div = document.createElement("div");
-var htmlString =
-    "<br>" +
-    '<div style="background-color: rgb(32, 77, 95); width: 1100px; min-height: 200px; float:right">' +
-    '<div style="float: left;">' +
-    '<label for="Amount" style="font-size: 30px;">&nbsp Amount</label>' +
-    '<input id="Amount" name="Amount" type="text" style="width: 230px; font-size: 20px;">' +
-    "</div>" +
-    '<div style=" float:right;  margin-right: 15px;  margin-top: 5px; ">' +
-    '<button id="AddButton" style="height: 35px; width: 100px; background-color:rgb(219, 169, 31); font-size: 20px;">Add</button>' +
-    "</div>" +
-    '<div style="float:inline-start;">' +
-    '<label style="font-size: 30px;" for="Currency">&nbsp&nbspChoose currency</label>' +
-    '<select  name="Currency" id="Currency">' +
-    "</select>" +
-    "</div>" +
-    "<br>" +
-    "<div>" +
-    '<textarea id="Note"  type="textarea" style="float: left; margin-left: 15px; font-size: 23px; width: 1060px; height: 125px;">' +
-    "</textarea>" +
-    "</div>" +
-    "</div>";
-
-var htmlString2 =
-    '<div id="board" style="float: right; min-width: 1000px; min-height: 825px; background-color:rgb(30, 194, 126);">' +
-    "</div>";
-
-function AddAccountClick() {
-    $(function () {
-        $("body").append(div);
-        $(div).html(htmlString);
-    });
-
-    daySelect = document.getElementById('Currency');
-    daySelect.options[daySelect.options.length] = new Option('Text 1', 'Value1');
-    
-    //var min = 1,
-    //    max = 100,
-    //    select = document.getElementById("Currency");
-
-    //for (var i = min; i <= max; i++) {
-    //    var opt = document.createElement("option");
-    //    opt.value = i;
-    //    opt.innerHTML = i;
-    //    select.appendChild(opt);
-    //}
-
-}
-
-
+﻿
 
 function AddAccountRemoveElementClick() {
     $(function () {
@@ -62,6 +13,30 @@ function AddAccountRemoveElementClick() {
 
 }
 
+function RedirectGenTitlePage() {
+    window.location = "../../General/html/GenTitlePage.html";
+}
+
+function RedirectUpdateCustomerDataPage() {
+    window.location = "UpdateCustomerDataPage.html";
+}
+
+
+function RedirectTransferPageChooseDistinationPage() {
+    window.location = "TransferPageChooseDistination.html";
+}
+
+function RedirectTransferMoneyPageChooseAmountDestinationPage() {
+    window.location = "TransferMoneyPageChooseAmountDestination.html";
+}
+
+function RedirectTransferMoneyPage() {
+    window.location = "TransferMoneyPage.html";
+}
+
+function RedirectTransferMoneyPageChooseAmountDestinationPage() {
+    window.location = "TransferMoneyPageChooseAmountDestination.html";
+}
 
 function RedirectAddPage() {
     window.location = "PageWithAdd.html";
@@ -77,7 +52,7 @@ function RedirectBasePage() {
 }
 
 function RedirectReplenishPage(id) {
-    window.location = "ReplenishAccountOage.html";
+    window.location = "ReplenishAccountPage.html";
 
     localStorage.setItem("AccountId", id);
 }
@@ -178,13 +153,15 @@ function ReplenishAccountClick() {
             if (responceResult == 200) {
                 console.log("Replenished successfully");
                 console.log(responceResult);
+                document.getElementById('Amount').value = "";
+                document.getElementById('ErrorList').innerHTML = "";
             }
             console.log(response);
-            document.getElementById('ErrorList').value = "Cannot add modey";
+            document.getElementById('ErrorList').value = "Cannot add money";
         })
         .catch((error) => {
             console.log(error);
-            alert("Error");
+            document.getElementById('ErrorList').innerHTML = "Cannot add money";
         });
 
 }

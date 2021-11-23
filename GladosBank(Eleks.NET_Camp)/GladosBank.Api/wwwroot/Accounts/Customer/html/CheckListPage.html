@@ -15,13 +15,16 @@
     <div id="MainDiv">
         <div class="headerBackground">
             <br>
-            <h1 style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Customer account</span></h1>
+            <script>
+                document.getElementById("TitleWithNameandRole").innerHTML += `<span style="background-color: red; "> ${localStorage.getItem('CurrentUserLogin')}</span> `;
+            </script>
             <br>
         </div>
 
         <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
             <br>
-            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Calcel</b></button>
+            <button onclick="RedirectBasePage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin:20px;"><b>Calcel</b></button>
         </div>
         <div id="board" style="float: right; min-width: 1000px; min-height: 825px; background-color:rgb(30, 194, 126);">
         </div>
