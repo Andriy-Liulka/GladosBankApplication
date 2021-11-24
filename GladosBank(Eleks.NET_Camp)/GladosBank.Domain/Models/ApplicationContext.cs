@@ -20,6 +20,7 @@ namespace GladosBank.Domain
         public DbSet<Information> Informations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Worker> Workers { get; set; }
+        public DbSet<OperationsHistory> OperationsHistory { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
 
