@@ -27,8 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Accounts\Admin\css\" />
-    <Folder Include="wwwroot\Accounts\Admin\JavaScript\" />
+    <Folder Include="wwwroot\Accounts\Admin\img\" />
     <Folder Include="wwwroot\Accounts\General\css\" />
     <Folder Include="wwwroot\Accounts\Worker\css\" />
     <Folder Include="wwwroot\Accounts\Worker\JavaScript\" />
