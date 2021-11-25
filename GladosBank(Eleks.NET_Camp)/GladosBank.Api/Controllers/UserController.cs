@@ -17,13 +17,13 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace GladosBank.Api.Controllers
 {
-    
+
     [ApiController]
     [Route("api/[controller]")]
     public sealed class UserController : ControllerBase
     {
         //TO DO fix bug with adding service of IMapper
-        public UserController(ILogger<UserController> logger, UserService service,IMapper mapper, JwtGenerator jwtGenerator, DataService dataService)
+        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper, JwtGenerator jwtGenerator, DataService dataService)
         {
             _service = service;
             _logger = logger;
@@ -43,7 +43,7 @@ namespace GladosBank.Api.Controllers
             try
             {
                 newUserId = _service.CreateUser(localUser, user.Role);
-                if (newUserId==0)
+                if (newUserId == 0)
                 {
                     throw new InvalidUserSavingException("Exception occurs during a saving procedure");
                 }
@@ -88,15 +88,15 @@ namespace GladosBank.Api.Controllers
                 switch (ex)
                 {
                     case InvalidUserLoginException:
-                    {
-                        _logger.LogInformation("Incorrect login or password");
-                        return BadRequest("Incorrect login or password");
-                    }
+                        {
+                            _logger.LogInformation("Incorrect login or password");
+                            return BadRequest("Incorrect login or password");
+                        }
                     case UserWasBannedException:
-                    {
-                        _logger.LogInformation("Your account was banned");
-                        return BadRequest("Your account was banned");
-                    }
+                        {
+                            _logger.LogInformation("Your account was banned");
+                            return BadRequest("Your account was banned");
+                        }
 
                 }
                 _logger.LogInformation(ex.Message);
@@ -109,7 +109,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
         {
@@ -137,11 +137,11 @@ namespace GladosBank.Api.Controllers
         {
             try
             {
-                IEnumerable<Claim> claims=this.Request.HttpContext.User.Claims;
+                IEnumerable<Claim> claims = this.Request.HttpContext.User.Claims;
                 string currentLogin = _dataService.GetLogin(claims);
                 User currentUser = default;
 
-               currentUser = _service.GetUserByLogin(currentLogin);
+                currentUser = _service.GetUserByLogin(currentLogin);
                 if (!string.IsNullOrWhiteSpace(user.Login))
                 {
                     currentUser.Login = user.Login;
@@ -155,7 +155,7 @@ namespace GladosBank.Api.Controllers
                     currentUser.Email = user.Email;
                 }
                 _service.UpdateUser(currentUser.Id, currentUser);
-                
+
 
                 var token = _jwtGenerator.CreateJwtToken(currentUser, user.Role);
 
@@ -178,9 +178,9 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet(nameof(Get))]
-        public  IActionResult Get()
+        public IActionResult Get()
         {
             try
             {
@@ -195,6 +195,21 @@ namespace GladosBank.Api.Controllers
             }
         }
 
+        [Authorize(Roles = "Worker,Admin")]
+        [HttpGet(nameof(GetPaginatedList))]
+        public async Task<IActionResult> GetPaginatedList([FromQuery]PaginatedArgs args)
+        {
+            try
+            {
+                var users =await _service.GetPaginatedUsersList(args.pageIndex, args.pageSize);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
         [Authorize]
         [HttpGet(nameof(GetUserData))]
         public IActionResult GetUserData()

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GladosBank.Domain;
 using GladosBank.Services.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +126,13 @@ namespace GladosBank.Services
         {
             //ToDO paginning
             var users = _context.Users.ToArray();
+            return users;
+        }
+
+        public async Task<IEnumerable<User>> GetPaginatedUsersList(int pageIndex,int pageSize)
+        {
+            int generalSkipSize = pageIndex * pageSize;
+            var users =await _context.Users.Take((generalSkipSize) +pageSize).Skip(generalSkipSize).ToArrayAsync();
             return users;
         }
         #endregion
