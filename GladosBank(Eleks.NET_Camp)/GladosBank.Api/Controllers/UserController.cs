@@ -210,6 +210,7 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [Authorize]
         [HttpGet(nameof(GetUserData))]
         public IActionResult GetUserData()
@@ -238,6 +239,29 @@ namespace GladosBank.Api.Controllers
             }
 
         }
+
+        [Authorize(Roles ="Admin")]
+        [HttpPost(nameof(BlockUnblockUser))]
+        public IActionResult BlockUnblockUser([FromQuery]int UserId)
+        {
+            try
+            {
+                var existingUserId = _service.BlockUnblockUser(UserId);
+                return Ok(existingUserId);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
 
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;

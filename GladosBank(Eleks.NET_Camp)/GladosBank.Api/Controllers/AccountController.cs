@@ -137,6 +137,7 @@ namespace GladosBank.Api.Controllers
             }
 
         }
+
         [Authorize(Roles = "Customer")]
         [HttpGet(nameof(GetAccountsForCurrencyCode))]
         public IActionResult GetAccountsForCurrencyCode([FromQuery]GetAccountsForCurrencyArgs args)

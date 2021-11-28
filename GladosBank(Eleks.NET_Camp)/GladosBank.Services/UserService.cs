@@ -132,7 +132,10 @@ namespace GladosBank.Services
         public async Task<IEnumerable<User>> GetPaginatedUsersList(int pageIndex,int pageSize)
         {
             int generalSkipSize = pageIndex * pageSize;
-            var users =await _context.Users.Take((generalSkipSize) +pageSize).Skip(generalSkipSize).ToArrayAsync();
+            var users = await _context.Users
+                .Take((generalSkipSize) + pageSize)
+                .Skip(generalSkipSize)
+                .ToArrayAsync();
             return users;
         }
         #endregion
@@ -171,6 +174,18 @@ namespace GladosBank.Services
             distination.Login = source.Login;
             distination.PasswordHash = source.PasswordHash;
             distination.Phone = source.Phone;
+        }
+        public int BlockUnblockUser(int userId)
+        {
+            User existingUser = _context.Users.SingleOrDefault(us=>us.Id.Equals(userId));
+            if (existingUser == null)
+            {
+                throw new InvalidAccountIdExcepion(userId);
+            }
+            existingUser.IsActive = !existingUser.IsActive;
+            _context.Users.Update(existingUser);
+            _context.SaveChanges();
+            return existingUser.Id;
         }
         #endregion
         #region CheckNess
