@@ -1,0 +1,8 @@
+﻿table td:empty {
+    width: 50px;
+}
+
+table td {
+    padding-right: 100px;
+    padding-left: 20px;
+}

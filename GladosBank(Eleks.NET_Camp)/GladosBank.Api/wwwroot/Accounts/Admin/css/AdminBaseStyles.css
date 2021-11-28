@@ -1,2 +1,18 @@
-﻿body {
+﻿.generalBackground {
+    background-image: url(../img/1563795495_4.jpg);
+    background-size: cover;
+}
+
+.headerBackground {
+    background-image: url(../img/0_7c779_5df17311_orig.jpg);
+    background-size: cover;
+}
+
+.setInCenter {
+    text-align: center;
+}
+
+.center {
+    border: 8px solid #ffff00;
+    text-align: center;
 }

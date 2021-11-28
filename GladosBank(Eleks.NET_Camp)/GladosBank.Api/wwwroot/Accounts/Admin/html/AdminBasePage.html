@@ -1,11 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
-    <script src="../../../JavaScript/SignOut.js"></script>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../css/AdminBaseStyles.css">
+    <script src="../JavaScript/RedirectFunctions.js"></script>
     <title>Admin account</title>
 </head>
 <body class="generalBackground">
@@ -21,10 +20,16 @@
         </div>
 
         <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+
             <br>
-            <button onclick="" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Check list of users</b></button>
+            <button onclick="RedirectCheckUsersListClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Check list of users</b></button>
             <br><br>
+            <script>
+                localStorage.setItem("pageIndex", 0);
+            </script>
+
         </div>
+
     </div>
 
 </body>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/AdminBaseStyles.css">
+    <link rel="stylesheet" href="../css/TableStyles.css">
+    <script src="../JavaScript/RedirectFunctions.js"></script>
+    <script src="../JavaScript/GetUserFunctions.js"></script>
+    <script src="../JavaScript/NextPageFunctions.js"></script>
+    <script src="../JavaScript/ChangeStateFunctions.js"></script>
+    <link rel="stylesheet" href="../css/ArrowsStyles.css">
+    <title>Admin account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherAdmin.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Admin account</span></h1>
+            <br>
+        </div>
+
+        <div id="MenuDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+
+            <br>
+            <button onclick="RedirectAdminBasePageClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Cancel</b></button>
+            <br><br>
+
+        </div>
+        <div class="center" id="UsersListDiv" style="background-color: black;  margin: auto; width: 1000px;">
+            <script>FillTable();</script>
+        </div>
+
+        <div class="setInCenter" style=" padding: 30px; ">
+
+            <button onclick="ToBeginClick()" class="styleForArrows" style="width: 100px; height: 30px; font-size: 20px;">&lt;-</button>
+            <button onclick="ToEndClick()" class="styleForArrows" style="width:100px;height:30px; font-size:20px;">-&gt;</button>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
