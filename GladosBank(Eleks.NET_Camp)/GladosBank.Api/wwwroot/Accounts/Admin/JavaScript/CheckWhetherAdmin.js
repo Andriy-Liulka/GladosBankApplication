@@ -10,7 +10,7 @@ axios.get("https://localhost:5001/api/User/GetUserData", {
         }
         else {
             console.log(getResponse);
-            window.location = "../../../html/SignIn.html";
+            SignOut();
         }
 
     }).catch((error) => {

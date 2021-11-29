@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../css/AdminBaseStyles.css">
     <script src="../JavaScript/RedirectFunctions.js"></script>
+    <script src="../../../JavaScript/SignOut.js"></script>
     <title>Admin account</title>
 </head>
 <body class="generalBackground">
@@ -24,6 +25,7 @@
             <br>
             <button onclick="RedirectCheckUsersListClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Check list of users</b></button>
             <br><br>
+            <button onclick="SignOut()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Sign out</b></button>
             <script>
                 localStorage.setItem("pageIndex", 0);
             </script>
