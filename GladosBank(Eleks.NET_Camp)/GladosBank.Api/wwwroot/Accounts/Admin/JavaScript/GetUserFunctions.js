@@ -37,21 +37,22 @@
                 if (accounts[index] == undefined) {
                     break;
                 }
-                if (accounts[index].login == currentUser) {
-                    index++;
-                    i--;
-                    //continue;
-                }
+                //if (accounts[index].login == currentUser) {
+                //    index++;
+                //    i--;
+                //    //continue;
+                //}
                 tableContent += "<tr>";
                 for (var j = 0; j < 2; j++) {
                     if (accounts[index] == undefined) {
                         tableContent += "</tr>";
                         break;
                     }
-                    if (accounts[index].login == currentUser) {
+                    if (accounts[index].login === currentUser) {
                         //tableContent += "</tr>";
                         index++;
-                        j--;
+                        //j--;
+                        //i--;
                         //continue;
                     }
 
@@ -71,14 +72,13 @@
                     index++;
                 }
                 tableContent += "</tr>";
-                
             }
 
             tableContent += "</Table>";
 
             document.getElementById("UsersListDiv").innerHTML = tableContent;
 
-        })
+            })
         .catch((error) => {
             console.log(error);
         });
