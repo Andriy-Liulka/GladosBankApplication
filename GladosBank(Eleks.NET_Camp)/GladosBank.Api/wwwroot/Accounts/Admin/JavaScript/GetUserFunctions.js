@@ -37,11 +37,6 @@
                 if (accounts[index] == undefined) {
                     break;
                 }
-                //if (accounts[index].login == currentUser) {
-                //    index++;
-                //    i--;
-                //    //continue;
-                //}
                 tableContent += "<tr>";
                 for (var j = 0; j < 2; j++) {
                     if (accounts[index] == undefined) {
@@ -49,11 +44,7 @@
                         break;
                     }
                     if (accounts[index].login === currentUser) {
-                        //tableContent += "</tr>";
                         index++;
-                        //j--;
-                        //i--;
-                        //continue;
                     }
 
                     tableContent += "<td>";
