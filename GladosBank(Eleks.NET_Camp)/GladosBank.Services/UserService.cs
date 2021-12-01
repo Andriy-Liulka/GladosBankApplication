@@ -138,6 +138,18 @@ namespace GladosBank.Services
                 .ToArrayAsync();
             return users;
         }
+        public async Task<IEnumerable<Customer>> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize)
+        {
+            int generalSkipSize = pageIndex * pageSize;
+            var customers=await _context.Customers
+                .Include(us=>us.User)
+                .Take((generalSkipSize) + pageSize)
+                .Skip(generalSkipSize)
+                .ToArrayAsync();
+
+            return customers;
+        }
+        
         #endregion
         #region Delete
         public int DeleteUser(int userId)

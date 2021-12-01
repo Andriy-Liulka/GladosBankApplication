@@ -195,13 +195,28 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Worker,Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet(nameof(GetPaginatedList))]
         public async Task<IActionResult> GetPaginatedList([FromQuery]PaginatedArgs args)
         {
             try
             {
                 var users =await _service.GetPaginatedUsersList(args.pageIndex, args.pageSize);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize(Roles = "Worker")]
+        [HttpGet(nameof(GetPaginatedListOfCustomers))]
+        public async Task<IActionResult> GetPaginatedListOfCustomers([FromQuery] PaginatedArgs args)
+        {
+            try
+            {
+                var users = await _service.GetPaginatedUsersListOfCustomers(args.pageIndex, args.pageSize);
                 return Ok(users);
             }
             catch (Exception ex)
