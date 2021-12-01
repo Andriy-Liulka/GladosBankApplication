@@ -1,0 +1,38 @@
+﻿.generalBackground {
+    background-image: url(../img/1557841362_krasivye-foto_xaxa-net.ru-38.jpg);
+    background-size: cover;
+}
+
+.headerBackground {
+    background-image: url(../img/smeshnye-kartinki-spyashhih-3.jpg);
+    background-size: cover;
+}
+
+.setInCenter {
+    text-align: center;
+}
+
+.center {
+    border: 8px solid #ffff00;
+    text-align: center;
+    
+}
+
+
+.customersListFormStyle {
+    border: 30px solid;
+    border-image: url(../img/1618473669_19-funart_pro-p-oboi-fon-krasivaya-abstraktsiya-19.jpg) 10;
+    background-color: white;
+    width: 850px;
+    margin-top: 50px;
+    float: right;
+    margin-right:20px;
+}
+
+
+.customersListArrowsStyle {
+    width: 910px;
+    height:20px;
+    float: right;
+    margin-right: 20px;
+}

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/WorkerBaseStyles.css">
+    <script src="../JavaScript/RedirectFunctions.js"></script>
+    <script src="../../../JavaScript/SignOut.js"></script>
+    <script src="../JavaScript/GetCustomersFunctions.js"></script>
+    <script src="../JavaScript/NextCustomersPageFunctions.js"></script>
+    <title>Worker account</title>
+</head>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherWorker.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Worker account</span></h1>
+            <br>
+        </div>
+
+        <div id="MenuDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+
+            <br>
+            <button onclick="RedirectWorkerBasePageClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Cancel</b></button>
+            <br><br>
+
+        </div>
+
+        <div class="customersListArrowsStyle" style="margin-top:10px;">
+
+            <div style="text-align: center;">
+                <button onclick="ToBeginCustomerListClick()()" style="width: 100px; height: 30px; font-size: 20px; background-color: cadetblue">&lt;-</button>
+                <button onclick="ToEndCustomerListClick()" style="width:100px;height:30px; font-size:20px; background-color:cadetblue">-&gt;</button>
+            </div>
+
+        </div>
+
+        <div class="customersListFormStyle" id="CustomersListDiv">
+            <script>FillTableCustomers();</script>
+        </div>
+
+    </div>
+
+</body>
+</html>

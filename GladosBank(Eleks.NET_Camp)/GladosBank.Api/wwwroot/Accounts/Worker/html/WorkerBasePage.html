@@ -1,10 +1,39 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
     <meta charset="utf-8" />
-    <title>Your account</title>
+    <link rel="stylesheet" href="../css/WorkerBaseStyles.css">
+    <script src="../JavaScript/RedirectFunctions.js"></script>
+    <script src="../../../JavaScript/SignOut.js"></script>
+    <title>Worker account</title>
 </head>
-<body>
-    <p>Worker account</p>
+<body class="generalBackground">
+    <script src="../JavaScript/CheckWhetherWorker.js"></script>
+    <div id="MainDiv">
+        <div class="headerBackground">
+            <br>
+            <h1 id="TitleWithNameandRole" style="text-align:center;"><span style=" background-color: rgb(47, 173, 196);">Worker account</span></h1>
+            <script>
+                document.getElementById("TitleWithNameandRole").innerHTML += `<span style="background-color: red; "> ${localStorage.getItem('CurrentUserLogin')}</span> `;
+            </script>
+            <br>
+        </div>
+
+        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; float:left">
+
+            <br>
+            <button onclick="RedirectCheckCustomersListClick()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Check list of customers</b></button>
+            <br><br>
+            <button onclick="SignOut()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif;"><b>Sign out</b></button>
+            <script>
+                localStorage.setItem("pageIndex", 0);
+            </script>
+
+        </div>
+
+    </div>
+
 </body>
 </html>
+

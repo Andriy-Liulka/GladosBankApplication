@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Accounts\General\css\" />
-    <Folder Include="wwwroot\Accounts\Worker\css\" />
   </ItemGroup>
 
 </Project>
