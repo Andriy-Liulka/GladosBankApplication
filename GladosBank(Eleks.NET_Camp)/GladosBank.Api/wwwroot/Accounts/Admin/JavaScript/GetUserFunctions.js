@@ -1,4 +1,4 @@
-﻿function FillTable() {
+﻿function FillTableUsers() {
     var pageSize = Number(localStorage.getItem("PaginationPageSize"));
     var pageIndex = Number(localStorage.getItem("PaginationPageIndex"));
 

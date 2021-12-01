@@ -7,7 +7,7 @@ function ToBeginClick() {
         localStorage.setItem("PaginationPageIndex", numberIndex - 1);
     }
 
-    FillTable();
+    FillTableUsers();
 }
 
 function ToEndClick() {
@@ -15,5 +15,5 @@ function ToEndClick() {
     var numberIndex = Number(pageIndex);
     localStorage.setItem("PaginationPageIndex", numberIndex + 1);
 
-    FillTable();
+    FillTableUsers();
 }
