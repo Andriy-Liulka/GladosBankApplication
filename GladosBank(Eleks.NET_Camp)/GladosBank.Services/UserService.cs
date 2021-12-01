@@ -24,11 +24,11 @@ namespace GladosBank.Services
 
             if (CheckWhetherSuchUserExist(user))
             {
-                throw new AddingExistUserException("You try to add user that already exist of !!");
+                throw new AddingExistUserException();
             }
             else if(IsSuchLoginInDatabase(user.Login))
             {
-                throw new ExistingUserLoginException("Such login already exist of !");
+                throw new ExistingUserLoginException(user.Login);
             }
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -172,6 +172,10 @@ namespace GladosBank.Services
             {
                 throw new InvalidUserIdException(UserId);
             }
+            if (SuchLoginExistOf(user.Login))
+            {
+                throw new ExistingUserLoginException(user.Login);
+            }
             UpdateFields(user, existingUser);
             _context.Update(existingUser);
             _context.SaveChanges();
@@ -215,6 +219,11 @@ namespace GladosBank.Services
                 throw new UserWasBannedException(login);
             }
             return true;
+        }
+
+        public bool SuchLoginExistOf(string login)
+        {
+            return _context.Users.Any(us=>us.Login.Equals(login));
         }
         #endregion
 
