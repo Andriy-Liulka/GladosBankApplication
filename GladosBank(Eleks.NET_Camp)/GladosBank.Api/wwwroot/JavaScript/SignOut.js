@@ -1,5 +1,5 @@
 ﻿function SignOut() {
-    localStorage.setItem("jwtToken", "");
+    localStorage.clear();
     window.location = "../../../html/SignIn.html";
     
 }
