@@ -8,6 +8,6 @@ namespace GladosBank.Services.Exceptions
 {
     public class ExistingUserLoginException : BusinessLogicException
     {
-        public ExistingUserLoginException(string message) : base(message) { }
+        public ExistingUserLoginException(string login) : base($"User with login {login} already exist of") { }
     }
 }
