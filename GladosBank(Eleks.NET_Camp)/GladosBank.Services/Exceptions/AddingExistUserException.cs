@@ -8,6 +8,6 @@ namespace GladosBank.Services.Exceptions
 {
     public class AddingExistUserException : BusinessLogicException
     {
-        public AddingExistUserException(string message) : base(message) { }
+        public AddingExistUserException() : base("You try to add user that already exist of !") { }
     }
 }
