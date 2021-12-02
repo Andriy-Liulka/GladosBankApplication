@@ -21,6 +21,15 @@ namespace GladosBank.Services
             Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
             return claim?.Value;
         }
+        public int GetCustomerId(IEnumerable<Claim> claims)
+        {
+            string login = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name))?.Value;
+            int customerId = _context.Customers
+                .Include(cus => cus.User)
+                .SingleOrDefault(us=>us.User.Login.Equals(login))
+                .Id;
+            return customerId;
+        }
 
         public string GetEmail(IEnumerable<Claim> claims)
         {

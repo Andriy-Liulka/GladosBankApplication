@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using GladosBank.Api.Config.Athentication;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using GladosBank.Api.Models.Args.AccountControllerArgs;
 
 namespace GladosBank.Api.Controllers
 {
@@ -277,7 +278,34 @@ namespace GladosBank.Api.Controllers
             
         }
 
+        [Authorize(Roles = "Customer")]
+        [HttpPost(nameof(KeepHistoryOfOperation))]
+        public IActionResult KeepHistoryOfOperation(KeepHistoryOfOperationArgs args)
+        {
+            try
+            {
+                IEnumerable<Claim> claims = Request.HttpContext.User.Claims;
+                int customerId=_dataService.GetCustomerId(claims);
 
+                OperationsHistory newHistory = _mapper.Map<OperationsHistory>(args);
+                newHistory.DateTime = DateTime.UtcNow;
+                newHistory.CustomerId = customerId;
+
+                var savedElementId=_service.KeepHistoryElementOfOperation(newHistory);
+
+                return Ok(savedElementId);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;

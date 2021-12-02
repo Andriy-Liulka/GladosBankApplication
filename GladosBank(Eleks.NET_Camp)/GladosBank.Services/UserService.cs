@@ -94,6 +94,24 @@ namespace GladosBank.Services
             return _context.Users.Any<User>(us => us.Id == user.Id);
         }
 
+        public int KeepHistoryElementOfOperation(OperationsHistory operation)
+        {
+            if (!OperationPossible(operation.CustomerId))
+            {
+                throw new InvalidCustomerException(operation.CustomerId);
+            }
+            _context.OperationsHistory.Add(operation);
+            _context.SaveChanges();
+            var operationId= _context.OperationsHistory
+                .FirstOrDefault(cus => cus.CustomerId
+                .Equals(operation.CustomerId)).Id;
+            return operationId;
+        }
+        public bool OperationPossible(int CustomerId)
+        {
+            return _context.Customers.Any(cus=>cus.Id.Equals(CustomerId));
+
+        }
         #endregion
         #region Get
         public User GetUserByLogin(string Login)
