@@ -114,7 +114,16 @@ namespace GladosBank.Services
 
             return accounts;
         }
-
+        public async Task<IEnumerable<OperationsHistory>> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
+        {
+            int generalSkipSize = pageIndex * pageSize;
+            var historyElements = await _context.OperationsHistory
+                .Take((generalSkipSize) + pageSize)
+                .Skip(generalSkipSize)
+                .Where(op => op.CustomerId.Equals(customerId))
+                .ToArrayAsync();
+            return historyElements;
+        }
 
         #endregion
         #region Update
@@ -147,7 +156,8 @@ namespace GladosBank.Services
             }
         }
         #endregion
-        public  (int,int) TransferMoney(decimal amount,int sourceId,int destinationId)
+        #region Transaction
+        public (int,int) TransferMoney(decimal amount,int sourceId,int destinationId)
         {
             var source=_context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(sourceId));
             var destination = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(destinationId));
@@ -182,7 +192,7 @@ namespace GladosBank.Services
                 }
             }
         }
-
+        #endregion
         private readonly ApplicationContext _context;
         private readonly UserService _userService;
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GladosBank.Api.Models.Args.AccountControllerArgs;
+using GladosBank.Api.Models.Args.UserControllerArgs;
 using GladosBank.Domain;
 using GladosBank.Services;
 using GladosBank.Services.Exceptions;
@@ -219,6 +220,26 @@ namespace GladosBank.Api.Controllers
                 }
                 (int,int) resultIds=_service.TransferMoney(args.Amount,args.sourceId,args.destinationId);
                 return Ok($"Updated successfully from {resultIds.Item1} to {resultIds.Item2}");
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize(Roles = "Worker")]
+        [HttpGet(nameof(GetTransactionHistoryElements))]
+        public async Task<IActionResult> GetTransactionHistoryElements([FromQuery]PaginatedArgs args,int customerId)
+        {
+            try
+            {
+                var historyElements =await _service.GetTransactionHistoryElementService(args.pageIndex, args.pageSize, customerId);
+                return Ok(historyElements);
             }
             catch (BusinessLogicException ex)
             {
