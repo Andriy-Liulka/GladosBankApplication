@@ -10,7 +10,7 @@
         return false;
     }
 
-    var hashedPassword = MD5(passwordDto);
+    var hashedPassword = sha256(passwordDto);
     var userInfo =
     {
         MyUser:

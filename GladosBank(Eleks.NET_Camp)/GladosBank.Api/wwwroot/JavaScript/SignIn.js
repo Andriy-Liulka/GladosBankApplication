@@ -7,7 +7,7 @@ function SignInClick() {
         return false;
     }
 
-    var passowrdHash = MD5(password);
+    var passowrdHash = sha256(password);
     var userAuthenticationParameters =
     {
         Login: login,
