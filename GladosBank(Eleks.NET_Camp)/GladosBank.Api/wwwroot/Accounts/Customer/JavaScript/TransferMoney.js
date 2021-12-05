@@ -96,8 +96,10 @@ function TransactMoney(id) {
         .then((responce) => {
             var getResponse = responce.status;
             if (getResponse == 200) {
-                RedirectBasePage();
+                
+                TransferMoneyRecord(sourceId, distinationId);
                 alert("Transaction finiched successfully !");
+                RedirectBasePage();
             }
         })
         .catch((error) => {

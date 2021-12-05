@@ -153,6 +153,9 @@ function ReplenishAccountClick() {
             if (responceResult == 200) {
                 console.log("Replenished successfully");
                 console.log(responceResult);
+
+                AccountReplenishmentRecord(item, amount);
+
                 document.getElementById('Amount').value = "";
                 document.getElementById('ErrorList').innerHTML = "";
             }
