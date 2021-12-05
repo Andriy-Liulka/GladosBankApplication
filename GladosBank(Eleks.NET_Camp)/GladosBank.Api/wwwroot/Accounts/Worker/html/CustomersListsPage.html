@@ -8,10 +8,17 @@
     <script src="../../../JavaScript/SignOut.js"></script>
     <script src="../JavaScript/GetCustomersFunctions.js"></script>
     <script src="../JavaScript/NextCustomersPageFunctions.js"></script>
+    <script src="../JavaScript/GetTransactionHistoryClick.js"></script>
+    <script src="../JavaScript/NextHistoryElementsPageFunctions.js"></script>
     <title>Worker account</title>
 </head>
 <body class="generalBackground">
     <script src="../JavaScript/CheckWhetherWorker.js"></script>
+    <script>
+        localStorage.setItem("CurrentCustomerIdForTransactionHistory", 0);
+        localStorage.setItem("PaginationTransferHistoryPageIndex", 0);
+
+    </script>
     <div id="MainDiv">
         <div class="headerBackground">
             <br>
@@ -29,18 +36,29 @@
 
         <div class="customersListArrowsStyle" style="margin-top:10px;">
 
-            <div style="text-align: center;">
-                <button onclick="ToBeginCustomerListClick()()" style="width: 100px; height: 30px; font-size: 20px; background-color: cadetblue">&lt;-</button>
-                <button onclick="ToEndCustomerListClick()" style="width:100px;height:30px; font-size:20px; background-color:cadetblue">-&gt;</button>
+            <div style="text-align: center; display:flex; justify-content: space-around;">
+                <div>
+                    <button onclick="ToBeginHistoryListClick()" style="width: 80px; height: 30px; font-size: 20px; background-color: rgb(153, 31, 117)">&lt;-</button>
+                    <button onclick="ToEndHistoryListClick()" style="width: 80px; height: 30px; font-size: 20px; background-color: rgb(153, 31, 117)">-&gt;</button>
+                </div>
+                <div>
+                    <button onclick="ToBeginCustomerListClick()" style="width: 100px; height: 30px; font-size: 20px; background-color: cadetblue">&lt;-</button>
+                    <button onclick="ToEndCustomerListClick()" style="width:100px;height:30px; font-size:20px; background-color:cadetblue">-&gt;</button>
+                </div>
+            </div>
+
+
+            <div style="display: flex;">
+                <div id="historyElementsStorage" style="width: 600px; height:800px; background-color: coral; margin-top: 50px;">
+
+                </div>
+                <div class="customersListFromStyle" id="CustomersListDiv">
+                    <script>FillTableCustomers();</script>
+                </div>
+
             </div>
 
         </div>
-
-        <div class=".customersListFromStyle" id="CustomersListDiv">
-            <script>FillTableCustomers();</script>
-        </div>
-
     </div>
-
 </body>
 </html>
