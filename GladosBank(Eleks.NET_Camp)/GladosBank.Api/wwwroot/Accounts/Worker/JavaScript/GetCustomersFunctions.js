@@ -46,11 +46,10 @@
                     if (accounts[index].user.login === currentUser) {
                         index++;
                     }
-
                     tableContent += "<td>";
 
                     tableContent +=
-                        `<div  style = "margin: 10px; color:black;background-color: rgb(153, 164, 89); width: 400px; height: 200px;" >` +
+                        `<div id="${accounts[index].id}" onClick="GetTransactionHistoryElementsClick(this.id)"  style = "margin: 10px; color:black;background-color: rgb(153, 164, 89); width: 400px; height: 200px;" >` +
                     `<p>Account owner ->${accounts[index].user.login}</p>` +
                     `<p>PhoneNumber->${accounts[index].user.phone}</p>` +
                     `<p>email->${accounts[index].user.email}</p>` +
