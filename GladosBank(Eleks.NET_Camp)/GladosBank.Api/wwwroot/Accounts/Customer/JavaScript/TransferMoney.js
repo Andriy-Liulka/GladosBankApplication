@@ -98,7 +98,7 @@ function TransactMoney(id) {
             if (getResponse == 200) {
                 
                 TransferMoneyRecord(sourceId, distinationId);
-                alert("Transaction finiched successfully !");
+                alert("Transaction finished successfully !");
                 RedirectBasePage();
             }
         })
