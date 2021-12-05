@@ -118,9 +118,9 @@ namespace GladosBank.Services
         {
             int generalSkipSize = pageIndex * pageSize;
             var historyElements = await _context.OperationsHistory
+                .Where(op => op.CustomerId.Equals(customerId))
                 .Take((generalSkipSize) + pageSize)
                 .Skip(generalSkipSize)
-                .Where(op => op.CustomerId.Equals(customerId))
                 .ToArrayAsync();
             return historyElements;
         }
