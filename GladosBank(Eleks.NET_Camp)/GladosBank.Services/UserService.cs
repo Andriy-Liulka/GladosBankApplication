@@ -77,8 +77,7 @@ namespace GladosBank.Services
                     }
                 case "Worker":
                     {
-                        //Just to work,becouse FluentAPI has buggs.
-                        _context.Workers.Add(new Worker { UserId = user.Id,Salary=0 });
+                        _context.Workers.Add(new Worker { UserId = user.Id });
                         break;
                     }
                 default:
