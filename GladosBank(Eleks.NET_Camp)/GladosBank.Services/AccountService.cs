@@ -56,7 +56,9 @@ namespace GladosBank.Services
             //                join Customers in _context.Customers on user.Id equals Customers.UserId
             //                select new { CustomerId = Customers.Id, Login = user.Login };
             #endregion
-            var account = _context.Customers.Include(us => us.User).SingleOrDefault(cs => cs.User.Login.Equals(login));
+            var account = _context.Customers
+                .Include(us => us.User)
+                .SingleOrDefault(cs => cs.User.Login.Equals(login));
 
             return account.Id;
         }
@@ -68,7 +70,10 @@ namespace GladosBank.Services
                 throw new IsntCustomerException(login);
             }
 
-            var accounts =await _context.Accounts.Include(acc => acc.Currency).Where(acc => acc.CustomerId.Equals(currentCustomerId)).ToArrayAsync();
+            var accounts =await _context.Accounts
+                .Include(acc => acc.Currency)
+                .Where(acc => acc.CustomerId.Equals(currentCustomerId))
+                .ToArrayAsync();
 
             #region AnotherPossibleSolution
             //One of possible solutions
