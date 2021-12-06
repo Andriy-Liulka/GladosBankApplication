@@ -26,13 +26,20 @@ namespace GladosBank.Domain
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //var userModel = builder.Entity<User>();
-            //var workerModel = builder.Entity<Worker>();
+            var userModel = builder.Entity<User>();
+            var workerModel = builder.Entity<Worker>();
 
-            //userModel.Property(x => x.IsActive).HasDefaultValue(true);
-            //workerModel.Property(x => x.Salary).HasDefaultValue(0.0);
+            userModel.Property(x => x.IsActive)
+                .HasDefaultValue(true)
+                .ValueGeneratedOnAddOrUpdate();
 
-            //base.OnModelCreating(builder);
+            workerModel.Property(x => x.Salary)
+                .HasDefaultValue(0.0)
+                .ValueGeneratedNever();
+
+            base.OnModelCreating(builder);
+
+
         }
 
     }
