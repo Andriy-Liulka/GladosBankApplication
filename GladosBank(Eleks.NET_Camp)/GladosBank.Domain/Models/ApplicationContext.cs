@@ -13,14 +13,14 @@ namespace GladosBank.Domain
     public class ApplicationContext : DbContext
     {
         
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Admin> Admins { get; set; }
-        public DbSet<Currency> Currency { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Information> Informations { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Worker> Workers { get; set; }
-        public DbSet<OperationsHistory> OperationsHistory { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Currency> Currency { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Information> Informations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Worker> Workers { get; set; }
+        public virtual DbSet<OperationsHistory> OperationsHistory { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
 
@@ -31,7 +31,7 @@ namespace GladosBank.Domain
 
             userModel.Property(x => x.IsActive)
                 .HasDefaultValue(true)
-                .ValueGeneratedOnAddOrUpdate();
+                .ValueGeneratedNever();
 
             workerModel.Property(x => x.Salary)
                 .HasDefaultValue(0.0)
