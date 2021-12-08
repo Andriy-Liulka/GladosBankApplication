@@ -101,7 +101,7 @@ namespace GladosBank.Services
         }
         public IEnumerable<Currency> GetAllCurrenciesService()
         {
-            return _context.Currency;
+            return _context.Currency.ToArray();
         }
         public string GetCurrencyFromId(int id)
         {
