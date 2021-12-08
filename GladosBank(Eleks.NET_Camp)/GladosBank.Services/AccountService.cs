@@ -47,6 +47,7 @@ namespace GladosBank.Services
 
         #endregion
         #region Get
+
         public int GetCustomerIdFromLogin(string login)
         {
 
@@ -112,7 +113,6 @@ namespace GladosBank.Services
             }
             return currency;
         }
-
         public IEnumerable<Account> GetAllAccountsForCurrencyCode(string currencyCode, string login)
         {
             var userId = _userService.GetUserByLogin(login).Id;
@@ -137,6 +137,7 @@ namespace GladosBank.Services
 
         #endregion
         #region Update
+
         public int ReplenishAccount(int Id, decimal amount)
         {
             var account = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(Id));
@@ -149,8 +150,10 @@ namespace GladosBank.Services
             _context.SaveChanges();
             return Id;
         }
+
         #endregion
         #region Delete
+
         public int DeleteAccount(int accountId)
         {
             var account = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(accountId));
@@ -165,6 +168,7 @@ namespace GladosBank.Services
                 throw new InvalidAccountIdExcepion(accountId);
             }
         }
+
         #endregion
         #region Transaction
         public (int, int) TransferMoney(decimal amount, int sourceId, int destinationId)
