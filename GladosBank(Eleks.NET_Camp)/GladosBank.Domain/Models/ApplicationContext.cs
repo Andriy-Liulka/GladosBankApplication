@@ -23,6 +23,7 @@ namespace GladosBank.Domain
         public virtual DbSet<OperationsHistory> OperationsHistory { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options){}
+        public ApplicationContext(){}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
