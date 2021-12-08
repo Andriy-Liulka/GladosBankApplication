@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    public sealed class AccountService
+    public sealed class AccountService : IAccountService
     {
         public AccountService(ApplicationContext context, UserService userService)
         {
@@ -58,11 +58,12 @@ namespace GladosBank.Services
             #endregion
             var account = _context.Customers
                 .Include(us => us.User)
-                .SingleOrDefault(cs => cs.User.Login.Equals(login));
+                .FirstOrDefault(cs => cs.User.Login.Equals(login));
+                //SingleOrDefault
 
             return account.Id;
         }
-        public async Task<IEnumerable<Account>> GetAllAccounts(string login)
+        public  IEnumerable<Account> GetAllUserAccounts(string login)
         {
             int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
@@ -70,10 +71,14 @@ namespace GladosBank.Services
                 throw new IsntCustomerException(login);
             }
 
-            var accounts =await _context.Accounts
+                var accounts = _context.Accounts
                 .Include(acc => acc.Currency)
                 .Where(acc => acc.CustomerId.Equals(currentCustomerId))
-                .ToArrayAsync();
+                .ToList();
+
+                return accounts;
+
+
 
             #region AnotherPossibleSolution
             //One of possible solutions
@@ -92,7 +97,7 @@ namespace GladosBank.Services
             //    }).ToArray();
             #endregion
 
-            return accounts;
+            
         }
         public IEnumerable<Currency> GetAllCurrenciesService()
         {
@@ -119,14 +124,14 @@ namespace GladosBank.Services
 
             return accounts;
         }
-        public async Task<IEnumerable<OperationsHistory>> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
+        public  IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
         {
             int generalSkipSize = pageIndex * pageSize;
-            var historyElements = await _context.OperationsHistory
+            var historyElements =  _context.OperationsHistory
                 .Where(op => op.CustomerId.Equals(customerId))
                 .Take((generalSkipSize) + pageSize)
                 .Skip(generalSkipSize)
-                .ToArrayAsync();
+                .ToArray();
             return historyElements;
         }
 
@@ -162,20 +167,20 @@ namespace GladosBank.Services
         }
         #endregion
         #region Transaction
-        public (int,int) TransferMoney(decimal amount,int sourceId,int destinationId)
+        public (int, int) TransferMoney(decimal amount, int sourceId, int destinationId)
         {
-            var source=_context.Accounts.FirstOrDefault(acc=>acc.Id.Equals(sourceId));
+            var source = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(sourceId));
             var destination = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(destinationId));
             if (!source.CurrencyCode.Equals(destination.CurrencyCode))
             {
-                throw new DifferentCurrencyException(source.CurrencyCode,destination.CurrencyCode);
+                throw new DifferentCurrencyException(source.CurrencyCode, destination.CurrencyCode);
             }
-            if (source.Amount< amount)
+            if (source.Amount < amount)
             {
                 throw new TooLittleAccountAmountException();
             }
 
-            using (var transaction=_context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {

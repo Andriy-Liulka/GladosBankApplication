@@ -62,7 +62,7 @@ namespace GladosBank.Api.Controllers
         [Authorize(Roles = "Customer")]
         [HttpGet(nameof(Get))]
         [AllowAnonymous]
-        public async  Task<IActionResult> Get()
+        public  IActionResult Get()
         {
             try
             {
@@ -77,7 +77,7 @@ namespace GladosBank.Api.Controllers
 
                 IEnumerable<Account> accounts = default;
 
-                accounts = await _service.GetAllAccounts(currentLogin);
+                accounts = _service.GetAllUserAccounts(currentLogin);
                 _logger.LogInformation("Have got all accounts");
                 return Ok(accounts);
             }
@@ -234,11 +234,11 @@ namespace GladosBank.Api.Controllers
         }
         [Authorize(Roles = "Worker")]
         [HttpGet(nameof(GetTransactionHistoryElements))]
-        public async Task<IActionResult> GetTransactionHistoryElements([FromQuery]PaginatedArgs args,int customerId)
+        public  IActionResult GetTransactionHistoryElements([FromQuery]PaginatedArgs args,int customerId)
         {
             try
             {
-                var historyElements =await _service.GetTransactionHistoryElementService(args.pageIndex, args.pageSize, customerId);
+                var historyElements = _service.GetTransactionHistoryElementService(args.pageIndex, args.pageSize, customerId);
                 return Ok(historyElements);
             }
             catch (BusinessLogicException ex)
