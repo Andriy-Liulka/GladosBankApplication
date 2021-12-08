@@ -11,10 +11,10 @@ namespace GladosBank.Services
         int DeleteAccount(int accountId);
         IEnumerable<Account> GetAllAccountsForCurrencyCode(string currencyCode, string login);
         IEnumerable<Currency> GetAllCurrenciesService();
-        Task<IEnumerable<Account>> GetAllUserAccounts(string login);
+        IEnumerable<Account> GetAllUserAccounts(string login);
         string GetCurrencyFromId(int id);
         int GetCustomerIdFromLogin(string login);
-        Task<IEnumerable<OperationsHistory>> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId);
+        IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId);
         int ReplenishAccount(int Id, decimal amount);
         (int, int) TransferMoney(decimal amount, int sourceId, int destinationId);
     }
