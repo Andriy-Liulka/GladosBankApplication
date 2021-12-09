@@ -1,6 +1,5 @@
 ﻿using GladosBank.Domain;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
@@ -11,8 +10,8 @@ namespace GladosBank.Services
         int CreateUser(User user, string role);
         int DeleteUser(int userId);
         IEnumerable<User> GetAllUsers();
-        Task<IEnumerable<User>> GetPaginatedUsersList(int pageIndex, int pageSize);
-        Task<IEnumerable<Customer>> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize);
+        IEnumerable<User> GetPaginatedUsersList(int pageIndex, int pageSize);
+        IEnumerable<Customer> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize);
         string GetRole(string login);
         User GetUserByLogin(string Login);
         bool IsActive(string login);
