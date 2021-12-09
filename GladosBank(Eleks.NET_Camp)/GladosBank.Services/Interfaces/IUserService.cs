@@ -16,8 +16,10 @@ namespace GladosBank.Services
         string GetRole(string login);
         User GetUserByLogin(string Login);
         bool IsActive(string login);
+        bool IsSuchLoginInDatabase(string login);
         int KeepHistoryElementOfOperation(OperationsHistory operation);
         bool OperationPossible(int CustomerId);
+        void SetRoleToSpecifiedUser(User user, string role);
         bool SuchLoginExistOf(string login);
         int UpdateUser(int UserId, User user);
     }
