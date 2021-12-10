@@ -20,7 +20,7 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        public AccountController(ILogger<AccountController> logger,AccountService service, IMapper mapper, DataService dataService)
+        public AccountController(ILogger<AccountController> logger,AccountService service, IMapper mapper, ClaimReader dataService)
         {
             _logger = logger;
             _service = service;
@@ -255,7 +255,7 @@ namespace GladosBank.Api.Controllers
 
         private readonly ILogger<AccountController> _logger;
         private readonly AccountService _service;
-        private readonly DataService _dataService;
+        private readonly ClaimReader _dataService;
         private readonly IMapper _mapper;
 
     }

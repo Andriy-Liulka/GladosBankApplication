@@ -100,7 +100,7 @@ namespace GladosBank.Api
 
             services.AddScoped<UserService>();
             services.AddScoped<AccountService>();
-            services.AddScoped<DataService>();
+            services.AddScoped<ClaimReader>();
 
             services.AddAutoMapper(typeof(Startup));
         }
