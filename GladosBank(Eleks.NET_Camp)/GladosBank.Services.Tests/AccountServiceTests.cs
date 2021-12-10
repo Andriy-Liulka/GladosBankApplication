@@ -55,7 +55,6 @@ namespace GladosBank.Services.Tests
             //Assert
             Assert.Equal(3, customerId);
         }
-
         [Fact]
         public void GetAllUserAccountsTest()
         {
@@ -91,7 +90,6 @@ namespace GladosBank.Services.Tests
             Assert.Equal("UAN", (accounts as IList<Account>)[0].CurrencyCode);
             Assert.Equal("USD", (accounts as IList<Account>)[1].CurrencyCode);
         }
-
         [Fact]
         public void GetAllCurrenciesServiceTest()
         {
@@ -115,7 +113,6 @@ namespace GladosBank.Services.Tests
             Assert.Equal("USD", currencies[1].Code);
             Assert.Equal("EUR", currencies[2].Code);
         }
-
         [Fact]
         public void CreateAccountTest()
         {
@@ -177,7 +174,6 @@ namespace GladosBank.Services.Tests
             Assert.True(mockContext.Object.Accounts.Any(acc=>acc.Id.Equals(existingAccountId)));
             #endregion
         }
-
         [Fact]
         public void ReplenishAccountTest()
         {
@@ -199,7 +195,6 @@ namespace GladosBank.Services.Tests
 
             Assert.Equal(1100, mockContext.Object.Accounts.FirstOrDefault(id=>id.Id.Equals(replenichedAccountId)).Amount);
         }
-
         [Fact]
         public void DeleteAccountTest()
         {
