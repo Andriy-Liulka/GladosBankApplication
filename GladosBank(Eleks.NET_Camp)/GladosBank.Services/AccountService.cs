@@ -183,6 +183,10 @@ namespace GladosBank.Services
             {
                 throw new TooLittleAccountAmountException();
             }
+            if (sourceId == destinationId)
+            {
+                throw new ThaSameAccountException();
+            }
 
             using (var transaction = _context.Database.BeginTransaction())
             {
