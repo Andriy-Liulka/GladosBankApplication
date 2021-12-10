@@ -46,7 +46,7 @@ function SendClick() {
 function TransferMoneyGetAllPossibleDistinationAccounts() {
     var currency = localStorage.getItem("TransferCurrency");
     var destinationLogin = localStorage.getItem("DestinationLogin");
-    axios.get("https://localhost:5001/api/Account/GetAccountsForCurrencyCode",
+    axios.get("https://localhost:5001/api/Account/GetAccountsFromCurrencyCode",
         {
             params:
             {
