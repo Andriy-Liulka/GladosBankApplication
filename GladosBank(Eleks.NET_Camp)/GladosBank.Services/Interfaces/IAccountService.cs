@@ -17,5 +17,6 @@ namespace GladosBank.Services
         IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId);
         int ReplenishAccount(int Id, decimal amount);
         bool TransferMoney(decimal amount, Account source, Account destination);
+        bool TransferMoneySaver(decimal amount, Account source, Account destination);
     }
 }

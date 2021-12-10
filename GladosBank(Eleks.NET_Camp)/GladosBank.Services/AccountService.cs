@@ -180,7 +180,7 @@ namespace GladosBank.Services
         #region Transaction
         public bool TransferMoneySaver(decimal amount, Account source, Account destination)
         {
-            bool result=TransferMoney(amount, source, destination);
+            bool result = TransferMoney(amount, source, destination);
             _context.Update(source);
             _context.Update(destination);
 
@@ -192,7 +192,7 @@ namespace GladosBank.Services
             source = source ?? throw new ArgumentNullException(nameof(source), $"Account with id {source.Id} doesn't exist of");
             destination = destination ?? throw new ArgumentNullException(nameof(destination), $"Account with id {destination.Id} doesn't exist of");
 
-            if (amount<=0)
+            if (amount <= 0)
             {
                 throw new ArgumentOutOfRangeException("Amount too little !");
             }
