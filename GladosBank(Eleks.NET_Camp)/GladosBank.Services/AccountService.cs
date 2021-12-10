@@ -60,11 +60,11 @@ namespace GladosBank.Services
             var account = _context.Customers
                 .Include(us => us.User)
                 .FirstOrDefault(cs => cs.User.Login.Equals(login));
-                //SingleOrDefault
+            //SingleOrDefault
 
             return account.Id;
         }
-        public  IEnumerable<Account> GetAllUserAccounts(string login)
+        public IEnumerable<Account> GetAllUserAccounts(string login)
         {
             int? currentCustomerId = GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
@@ -72,12 +72,12 @@ namespace GladosBank.Services
                 throw new IsntCustomerException(login);
             }
 
-                var accounts = _context.Accounts
-                .Include(acc => acc.Currency)
-                .Where(acc => acc.CustomerId.Equals(currentCustomerId))
-                .ToList();
+            var accounts = _context.Accounts
+            .Include(acc => acc.Currency)
+            .Where(acc => acc.CustomerId.Equals(currentCustomerId))
+            .ToList();
 
-                return accounts;
+            return accounts;
 
 
 
@@ -98,7 +98,7 @@ namespace GladosBank.Services
             //    }).ToArray();
             #endregion
 
-            
+
         }
         public IEnumerable<Currency> GetAllCurrenciesService()
         {
@@ -124,17 +124,20 @@ namespace GladosBank.Services
 
             return accounts;
         }
-        public  IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
+        public IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
         {
             int generalSkipSize = pageIndex * pageSize;
-            var historyElements =  _context.OperationsHistory
+            var historyElements = _context.OperationsHistory
                 .Where(op => op.CustomerId.Equals(customerId))
                 .Take((generalSkipSize) + pageSize)
                 .Skip(generalSkipSize)
                 .ToArray();
             return historyElements;
         }
-
+        public Account GetAccountFromId(int accountId)
+        {
+            return _context.Accounts.SingleOrDefault(acc => acc.Id.Equals(accountId));
+        }
         #endregion
         #region Update
 
@@ -145,7 +148,7 @@ namespace GladosBank.Services
             {
                 throw new InvalidAccountIdExcepion(Id);
             }
-            if (amount <=0)
+            if (amount <= 0)
             {
                 throw new SmallAmountException(amount.ToString());
             }
@@ -175,10 +178,24 @@ namespace GladosBank.Services
 
         #endregion
         #region Transaction
-        public (int, int) TransferMoney(decimal amount, int sourceId, int destinationId)
+        public bool TransferMoneySaver(decimal amount, Account source, Account destination)
         {
-            var source = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(sourceId));
-            var destination = _context.Accounts.FirstOrDefault(acc => acc.Id.Equals(destinationId));
+            bool result=TransferMoney(amount, source, destination);
+            _context.Update(source);
+            _context.Update(destination);
+
+            _context.SaveChanges();
+            return result;
+        }
+        public bool TransferMoney(decimal amount, Account source, Account destination)
+        {
+            source = source ?? throw new ArgumentNullException(nameof(source), $"Account with id {source.Id} doesn't exist of");
+            destination = destination ?? throw new ArgumentNullException(nameof(destination), $"Account with id {destination.Id} doesn't exist of");
+
+            if (amount<=0)
+            {
+                throw new ArgumentOutOfRangeException("Amount too little !");
+            }
             if (!source.CurrencyCode.Equals(destination.CurrencyCode))
             {
                 throw new DifferentCurrencyException(source.CurrencyCode, destination.CurrencyCode);
@@ -187,31 +204,21 @@ namespace GladosBank.Services
             {
                 throw new TooLittleAccountAmountException();
             }
-            if (sourceId == destinationId)
+            if (source.Id == destination.Id)
             {
-                throw new ThaSameAccountException();
+                throw new TheSameAccountException();
             }
 
-            using (var transaction = _context.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    source.Amount -= amount;
-                    destination.Amount += amount;
+                source.Amount -= amount;
+                destination.Amount += amount;
 
-                    _context.Update(source);
-                    _context.Update(destination);
-
-                    _context.SaveChanges();
-                    _context.Database.CommitTransaction();
-
-                    return (sourceId, destinationId);
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    return (0, 0);
-                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
         #endregion

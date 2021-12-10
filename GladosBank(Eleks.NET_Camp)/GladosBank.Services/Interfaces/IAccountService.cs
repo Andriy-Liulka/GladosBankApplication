@@ -1,7 +1,6 @@
 ﻿using GladosBank.Domain;
 using GladosBank.Domain.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
@@ -9,6 +8,7 @@ namespace GladosBank.Services
     {
         int CreateAccount(Account account);
         int DeleteAccount(int accountId);
+        Account GetAccountFromId(int accountId);
         IEnumerable<Account> GetAllAccountsForCurrencyCode(string currencyCode, string login);
         IEnumerable<Currency> GetAllCurrenciesService();
         IEnumerable<Account> GetAllUserAccounts(string login);
@@ -16,6 +16,6 @@ namespace GladosBank.Services
         int GetCustomerIdFromLogin(string login);
         IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId);
         int ReplenishAccount(int Id, decimal amount);
-        (int, int) TransferMoney(decimal amount, int sourceId, int destinationId);
+        bool TransferMoney(decimal amount, Account source, Account destination);
     }
 }
