@@ -145,6 +145,10 @@ namespace GladosBank.Services
             {
                 throw new InvalidAccountIdExcepion(Id);
             }
+            if (amount <=0)
+            {
+                throw new SmallAmountException(amount.ToString());
+            }
             account.Amount += amount;
             _context.Accounts.Update(account);
             _context.SaveChanges();
