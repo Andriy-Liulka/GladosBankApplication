@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services.Exceptions
 {
-    public class ThaSameAccountException : BusinessLogicException
+    public class TheSameAccountException : BusinessLogicException
     {
-        public ThaSameAccountException() : base($"SourceAccount and DistinationAccount are the same !") { }
+        public TheSameAccountException() : base($"SourceAccount and DistinationAccount are the same !") { }
     }
 }
