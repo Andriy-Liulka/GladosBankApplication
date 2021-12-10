@@ -24,7 +24,7 @@ namespace GladosBank.Api.Controllers
     public sealed class UserController : ControllerBase
     {
         //TO DO fix bug with adding service of IMapper
-        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper, JwtGenerator jwtGenerator, DataService dataService)
+        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper, JwtGenerator jwtGenerator, ClaimReader dataService)
         {
             _service = service;
             _logger = logger;
@@ -309,7 +309,7 @@ namespace GladosBank.Api.Controllers
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
-        private readonly DataService _dataService;
+        private readonly ClaimReader _dataService;
         private readonly ILogger<UserController> _logger;
     }
 }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    public sealed class DataService : IDataService
+    public sealed class ClaimReader
     {
-        public DataService(ApplicationContext context)
+        public ClaimReader(ApplicationContext context)
         {
             _context = context;
         }
