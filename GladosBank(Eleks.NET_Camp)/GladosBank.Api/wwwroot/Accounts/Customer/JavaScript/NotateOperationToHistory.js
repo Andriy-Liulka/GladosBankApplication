@@ -79,7 +79,7 @@ function RecordOperation(record) {
         .then((responce) => {
             var getResponse = responce.status;
             if (getResponse == 200) {
-                alert("Was recorded successfully !");
+                console.log("Was recorded successfully !");
             }
         })
         .catch((error) => {
