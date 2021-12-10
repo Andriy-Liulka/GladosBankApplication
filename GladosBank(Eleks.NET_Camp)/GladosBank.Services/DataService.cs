@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    public sealed class DataService
+    public sealed class DataService : IDataService
     {
         public DataService(ApplicationContext context)
         {
@@ -26,7 +26,7 @@ namespace GladosBank.Services
             string login = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name))?.Value;
             int customerId = _context.Customers
                 .Include(cus => cus.User)
-                .SingleOrDefault(us=>us.User.Login.Equals(login))
+                .SingleOrDefault(us => us.User.Login.Equals(login))
                 .Id;
             return customerId;
         }
@@ -49,18 +49,18 @@ namespace GladosBank.Services
             return claim?.Value;
         }
 
-        public bool IsYourAccount(IEnumerable<Claim> claims,int accountId)
+        public bool IsYourAccount(IEnumerable<Claim> claims, int accountId)
         {
             Claim claim = claims.FirstOrDefault(us => us.Type.Equals(ClaimTypes.Name));
-            string Login= claim?.Value;
+            string Login = claim?.Value;
 
             return _context.Accounts
                 .Include(cus => cus.Customer)
                 .ThenInclude(us => us.User)
-                .Where(acc=>acc.Id.Equals(accountId))
+                .Where(acc => acc.Id.Equals(accountId))
                 .Any(us => us.Customer.User.Login.Equals(Login));
 
-            
+
         }
 
         private readonly ApplicationContext _context;

@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 
 namespace GladosBank.Services
 {
-    public sealed class UserService
+    public sealed class UserService : IUserService
     {
         public UserService(ApplicationContext context)
         {
             _context = context;
         }
         #region Create  
-        public int CreateUser(User user,string role)
+
+        public int CreateUser(User user, string role)
         {
             //Just to work,becouse FluentAPI has buggs.
             user.IsActive = true;
@@ -26,7 +27,7 @@ namespace GladosBank.Services
             {
                 throw new AddingExistUserException();
             }
-            else if(IsSuchLoginInDatabase(user.Login))
+            else if (IsSuchLoginInDatabase(user.Login))
             {
                 throw new ExistingUserLoginException(user.Login);
             }
@@ -55,19 +56,13 @@ namespace GladosBank.Services
 
 
         }
-
-
-        private bool IsSuchLoginInDatabase(string login)
-        {
-            return _context.Users.Any(us=>us.Login.Equals(login));
-        }
-        private void SetRoleToSpecifiedUser(User user, string role)
+        public void SetRoleToSpecifiedUser(User user, string role)
         {
             switch (role)
             {
                 case "Customer":
                     {
-                        _context.Customers.Add(new Customer {UserId= user.Id});
+                        _context.Customers.Add(new Customer { UserId = user.Id });
                         break;
                     }
                 case "Admin":
@@ -82,17 +77,11 @@ namespace GladosBank.Services
                     }
                 default:
                     {
-                        throw  new InvalidRoleException(role);
+                        throw new InvalidRoleException(role);
                     }
             }
 
         }
-
-        public bool CheckWhetherSuchUserExist(User user)
-        {
-            return _context.Users.Any<User>(us => us.Id == user.Id);
-        }
-
         public int KeepHistoryElementOfOperation(OperationsHistory operation)
         {
             if (!OperationPossible(operation.CustomerId))
@@ -101,21 +90,19 @@ namespace GladosBank.Services
             }
             _context.OperationsHistory.Add(operation);
             _context.SaveChanges();
-            var operationId= _context.OperationsHistory
+            var operationId = _context.OperationsHistory
                 .FirstOrDefault(cus => cus.CustomerId
                 .Equals(operation.CustomerId)).Id;
+
             return operationId;
         }
-        public bool OperationPossible(int CustomerId)
-        {
-            return _context.Customers.Any(cus=>cus.Id.Equals(CustomerId));
 
-        }
         #endregion
         #region Get
+
         public User GetUserByLogin(string Login)
         {
-            User searchedUser = _context.Users.FirstOrDefault<User>(user=>user.Login== Login);
+            User searchedUser = _context.Users.FirstOrDefault<User>(user => user.Login == Login);
             if (searchedUser == null)
             {
                 throw new InvalidUserLoginException(Login);
@@ -124,8 +111,8 @@ namespace GladosBank.Services
         }
         public string GetRole(string login)
         {
-            var existingUserId = _context.Users.FirstOrDefault(us=>us.Login == login).Id;
-            if(_context.Customers.Any(us=>us.UserId == existingUserId))
+            var existingUserId = _context.Users.FirstOrDefault(us => us.Login == login).Id;
+            if (_context.Customers.Any(us => us.UserId == existingUserId))
             {
                 return "Customer";
             }
@@ -145,34 +132,34 @@ namespace GladosBank.Services
             var users = _context.Users.ToArray();
             return users;
         }
-
-        public async Task<IEnumerable<User>> GetPaginatedUsersList(int pageIndex,int pageSize)
+        public IEnumerable<User> GetPaginatedUsersList(int pageIndex, int pageSize)
         {
             int generalSkipSize = pageIndex * pageSize;
-            var users = await _context.Users
+            var users = _context.Users
                 .Take((generalSkipSize) + pageSize)
                 .Skip(generalSkipSize)
-                .ToArrayAsync();
+                .ToArray();
             return users;
         }
-        public async Task<IEnumerable<Customer>> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize)
+        public IEnumerable<Customer> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize)
         {
             int generalSkipSize = pageIndex * pageSize;
-            var customers=await _context.Customers
-                .Include(us=>us.User)
+            var customers = _context.Customers
+                .Include(us => us.User)
                 .Take((generalSkipSize) + pageSize)
                 .Skip(generalSkipSize)
-                .ToArrayAsync();
+                .ToArray();
 
             return customers;
         }
-        
+
         #endregion
         #region Delete
+
         public int DeleteUser(int userId)
         {
-            User existingUser = _context.Users.FirstOrDefault<User>(u=>u.Id==userId);
-            if (existingUser==null)
+            User existingUser = _context.Users.FirstOrDefault<User>(u => u.Id == userId);
+            if (existingUser == null)
             {
                 throw new InvalidUserIdException(userId);
             }
@@ -180,12 +167,14 @@ namespace GladosBank.Services
             _context.SaveChanges();
             return userId;
         }
+
         #endregion
         #region Update
+
         public int UpdateUser(int UserId, User user)
         {
             var existingUser = _context.Users.SingleOrDefault(us => us.Id == UserId);
-            if (existingUser==null)
+            if (existingUser == null)
             {
                 throw new InvalidUserIdException(UserId);
             }
@@ -199,8 +188,7 @@ namespace GladosBank.Services
 
             return UserId;
         }
-
-        private static void UpdateFields(User source,User distination)
+        private static void UpdateFields(User source, User distination)
         {
             distination.Email = source.Email;
             distination.IsActive = source.IsActive;
@@ -210,7 +198,7 @@ namespace GladosBank.Services
         }
         public int BlockUnblockUser(int userId)
         {
-            User existingUser = _context.Users.SingleOrDefault(us=>us.Id.Equals(userId));
+            User existingUser = _context.Users.SingleOrDefault(us => us.Id.Equals(userId));
             if (existingUser == null)
             {
                 throw new InvalidAccountIdExcepion(userId);
@@ -220,16 +208,18 @@ namespace GladosBank.Services
             _context.SaveChanges();
             return existingUser.Id;
         }
+
         #endregion
         #region CheckNess
+
         public bool IsActive(string login)
         {
-           var existingUser= _context.Users.SingleOrDefault(us => us.Login.Equals(login));
+            var existingUser = _context.Users.SingleOrDefault(us => us.Login.Equals(login));
 
-           if (existingUser == null)
-           {
-               throw new InvalidUserLoginException(login);
-           }
+            if (existingUser == null)
+            {
+                throw new InvalidUserLoginException(login);
+            }
 
             if (!existingUser.IsActive)
             {
@@ -237,11 +227,24 @@ namespace GladosBank.Services
             }
             return true;
         }
-
         public bool SuchLoginExistOf(string login)
         {
-            return _context.Users.Any(us=>us.Login.Equals(login));
+            return _context.Users.Any(us => us.Login.Equals(login));
         }
+        public bool CheckWhetherSuchUserExist(User user)
+        {
+            return _context.Users.Any<User>(us => us.Id == user.Id);
+        }
+        public bool IsSuchLoginInDatabase(string login)
+        {
+            return _context.Users.Any(us => us.Login.Equals(login));
+        }
+        public bool OperationPossible(int CustomerId)
+        {
+            return _context.Customers.Any(cus => cus.Id.Equals(CustomerId));
+
+        }
+
         #endregion
 
         private readonly ApplicationContext _context;
