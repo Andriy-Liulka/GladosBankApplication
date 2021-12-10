@@ -20,6 +20,6 @@ namespace GladosBank.Services
         bool OperationPossible(int CustomerId);
         void SetRoleToSpecifiedUser(User user, string role);
         bool SuchLoginExistOf(string login);
-        int UpdateUser(int UserId, User user);
+        public int UpdateUser(int UserId, string previosLogin, User user);
     }
 }

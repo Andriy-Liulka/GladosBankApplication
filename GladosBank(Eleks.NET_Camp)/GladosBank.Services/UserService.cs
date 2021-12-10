@@ -171,14 +171,15 @@ namespace GladosBank.Services
         #endregion
         #region Update
 
-        public int UpdateUser(int UserId, User user)
+        public int UpdateUser(int UserId,string previosLogin, User user)
         {
             var existingUser = _context.Users.SingleOrDefault(us => us.Id == UserId);
             if (existingUser == null)
             {
                 throw new InvalidUserIdException(UserId);
             }
-            if (SuchLoginExistOf(user.Login))
+            if (previosLogin.Equals(user.Login)) { }
+            else if (SuchLoginExistOf(user.Login))
             {
                 throw new ExistingUserLoginException(user.Login);
             }

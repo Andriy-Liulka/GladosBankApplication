@@ -586,7 +586,7 @@ namespace GladosBank.Services.Tests
             #endregion
             #region act
 
-            var updatedUserId=userService.UpdateUser(1, updatedUser);
+            var updatedUserId=userService.UpdateUser(1,"Vasya", updatedUser);
             var findedUpdatedUser = mockContext.Object.Users.SingleOrDefault(us=>us.Id.Equals(updatedUserId));
             #endregion
             #region assert
