@@ -65,7 +65,7 @@ function TransferMoneyGetAllPossibleDistinationAccounts() {
             for (var i = 0; i < accounts.length; i++) {
                 var destinationAccountId = accounts[i].id;
                 document.getElementById("board").innerHTML += `<div onclick="TransactMoney(this.id)" id=${destinationAccountId} style = "margin: 10px; color:black;background-color: red; width: 400px; min-height: 80px;" >` +
-                    `<p>Account wwner -> ${destinationAccountLogin}</p>`+
+                    `<p>Account owner -> ${destinationAccountLogin}</p>`+
                     `<p>Number-> ${i + 1}</p>` +
                     `<p>Currency-> ${accounts[i].currencyCode} ` +
                     `</div>`;
