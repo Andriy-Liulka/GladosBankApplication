@@ -39,7 +39,7 @@
 
                 </select>
                 <script>
-                    axios.get("https://localhost:5001/api/Account/GetAllCurrencies", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
+                    axios.get("https://localhost:5001/api/Currency/GetAllCurrencies", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
                         .then((responce) => {
                             var getResponse = responce.status;
                             var currencies = responce.data;
