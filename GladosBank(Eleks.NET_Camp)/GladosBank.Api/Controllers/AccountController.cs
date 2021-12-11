@@ -94,54 +94,8 @@ namespace GladosBank.Api.Controllers
         }
 
         [Authorize(Roles = "Customer")]
-        [HttpGet(nameof(GetAllCurrencies))]
-        public IActionResult GetAllCurrencies()
-        {
-            try
-            {
-                var currenciesList = _service.GetAllCurrenciesService();
-                _logger.LogInformation("You have got all currencies !");
-                return Ok(currenciesList);
-            }
-            catch (BusinessLogicException ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [Authorize(Roles = "Customer")]
-        [HttpGet(nameof(GetCurrencyCodeFromAccountId))]
-        public IActionResult GetCurrencyCodeFromAccountId(int id)
-        {
-            try
-            {
-                var currency = _service.GetCurrencyFromId(id);
-                _logger.LogInformation("You have got all currencies !");
-                return Ok(currency);
-            }
-            catch (BusinessLogicException ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [Authorize(Roles = "Customer")]
-        [HttpGet(nameof(GetAccountsForCurrencyCode))]
-        public IActionResult GetAccountsForCurrencyCode([FromQuery]GetAccountsForCurrencyArgs args)
+        [HttpGet(nameof(GetAccountsFromCurrencyCode))]
+        public IActionResult GetAccountsFromCurrencyCode([FromQuery]GetAccountsFromCurrencyArgs args)
         {
             try
             {
@@ -218,28 +172,16 @@ namespace GladosBank.Api.Controllers
                 {
                     throw new NotYourAccountException(args.sourceId);
                 }
-                (int,int) resultIds=_service.TransferMoney(args.Amount,args.sourceId,args.destinationId);
-                return Ok($"Updated successfully from {resultIds.Item1} to {resultIds.Item2}");
-            }
-            catch (BusinessLogicException ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Roles = "Worker")]
-        [HttpGet(nameof(GetTransactionHistoryElements))]
-        public  IActionResult GetTransactionHistoryElements([FromQuery]PaginatedArgs args,int customerId)
-        {
-            try
-            {
-                var historyElements = _service.GetTransactionHistoryElementService(args.pageIndex, args.pageSize, customerId);
-                return Ok(historyElements);
+                var source = _service.GetAccountFromId(args.sourceId);
+                var destination = _service.GetAccountFromId(args.destinationId);
+
+                bool finishedSuccessfully= _service.TransferMoneySaver(args.Amount, source, destination);
+
+                if (finishedSuccessfully)
+                {
+                    return Ok($"Updated successfully from {args.sourceId} to {args.destinationId}");
+                }
+                return BadRequest("Operation failed !");
             }
             catch (BusinessLogicException ex)
             {
