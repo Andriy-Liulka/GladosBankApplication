@@ -71,7 +71,7 @@ function RecordOperation(record) {
         "Description": record
     };
 
-    axios.post("https://localhost:5001/api/User/KeepHistoryOfOperation", operationArgs,
+    axios.post("https://localhost:5001/api/OperationHistory/KeepHistoryOfOperation", operationArgs,
         {
 
             headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
