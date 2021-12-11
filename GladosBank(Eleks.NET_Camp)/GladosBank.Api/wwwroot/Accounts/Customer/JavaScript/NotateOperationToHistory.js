@@ -1,7 +1,7 @@
 ﻿function AccountReplenishmentRecord(DistinationId,Amount) {
     var currentUserLogin = localStorage.getItem("CurrentUserLogin");
 
-    axios.get("https://localhost:5001/api/Account/GetCurrencyCodeFromAccountId",
+    axios.get("https://localhost:5001/api/Currency/GetCurrencyCodeFromAccountId",
         {
             params: { id: DistinationId },
             headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
@@ -26,7 +26,7 @@ function TransferMoneyRecord(SourceId, DistinationId) {
     var destinationUserLogin = localStorage.getItem("DestinationLogin");
     var amount = localStorage.getItem("AmountToTransfer");``
 
-    axios.get("https://localhost:5001/api/Account/GetCurrencyCodeFromAccountId",
+    axios.get("https://localhost:5001/api/Currency/GetCurrencyCodeFromAccountId",
         {
             params: { id: DistinationId },
             headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }

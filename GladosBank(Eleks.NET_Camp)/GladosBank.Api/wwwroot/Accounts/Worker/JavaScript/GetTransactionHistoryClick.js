@@ -17,7 +17,7 @@ function GetTransactionHistoryElements() {
     var pageSize = localStorage.getItem("PaginationTransferHistoryPageSize");
     var pageIndex = localStorage.getItem("PaginationTransferHistoryPageIndex");
 
-    axios.get("https://localhost:5001/api/Account/GetTransactionHistoryElements",
+    axios.get("https://localhost:5001/api/OperationHistory/GetTransactionHistoryElements",
         {
             params:
             {
