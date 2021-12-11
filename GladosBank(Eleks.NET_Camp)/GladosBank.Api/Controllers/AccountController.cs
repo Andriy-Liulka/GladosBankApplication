@@ -48,12 +48,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
 
@@ -83,12 +83,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -106,12 +106,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -128,12 +128,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
 
@@ -152,12 +152,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -185,12 +185,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

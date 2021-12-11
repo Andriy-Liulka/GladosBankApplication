@@ -53,12 +53,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
 
@@ -90,22 +90,22 @@ namespace GladosBank.Api.Controllers
                 {
                     case InvalidUserLoginException:
                         {
-                            _logger.LogInformation("Incorrect login or password");
+                            _logger.LogWarning("Incorrect login or password");
                             return BadRequest("Incorrect login or password");
                         }
                     case UserWasBannedException:
                         {
-                            _logger.LogInformation("Your account was banned");
+                            _logger.LogWarning("Your account was banned");
                             return BadRequest("Your account was banned");
                         }
 
                 }
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -122,12 +122,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -168,12 +168,12 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
 
@@ -191,7 +191,7 @@ namespace GladosBank.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -207,7 +207,7 @@ namespace GladosBank.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -236,7 +236,7 @@ namespace GladosBank.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
 
@@ -253,18 +253,17 @@ namespace GladosBank.Api.Controllers
             }
             catch (BusinessLogicException ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
             
         }
 
-        
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
