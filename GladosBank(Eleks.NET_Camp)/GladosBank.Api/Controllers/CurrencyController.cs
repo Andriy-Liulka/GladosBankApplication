@@ -14,7 +14,7 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class CurrencyController : Controller
     {
-        public CurrencyController(ILogger<AccountController> logger, AccountService service)
+        public CurrencyController(ILogger<CurrencyController> logger, AccountService service)
         {
             _logger = logger;
             _service = service;
@@ -64,7 +64,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        private readonly ILogger<AccountController> _logger;
+        private readonly ILogger<CurrencyController> _logger;
         private readonly AccountService _service;
     }
 }

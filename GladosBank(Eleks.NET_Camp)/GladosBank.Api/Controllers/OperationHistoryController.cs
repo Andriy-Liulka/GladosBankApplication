@@ -19,7 +19,7 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class OperationHistoryController : Controller
     {
-        public OperationHistoryController(ILogger<AccountController> logger, AccountService service, ClaimReader claimReader, IMapper mapper,UserService uservice)
+        public OperationHistoryController(ILogger<OperationHistoryController> logger, AccountService service, ClaimReader claimReader, IMapper mapper,UserService uservice)
         {
             _logger = logger;
             _uservice = uservice;
@@ -75,7 +75,7 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        private readonly ILogger<AccountController> _logger;
+        private readonly ILogger<OperationHistoryController> _logger;
         private readonly AccountService _service;
         private readonly UserService _uservice;
         private readonly ClaimReader _claimReader;

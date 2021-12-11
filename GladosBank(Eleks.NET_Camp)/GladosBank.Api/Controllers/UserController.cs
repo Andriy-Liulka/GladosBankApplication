@@ -24,13 +24,13 @@ namespace GladosBank.Api.Controllers
     public sealed class UserController : ControllerBase
     {
         //TO DO fix bug with adding service of IMapper
-        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper, JwtGenerator jwtGenerator, ClaimReader dataService)
+        public UserController(ILogger<UserController> logger, UserService service, IMapper mapper, JwtGenerator jwtGenerator, ClaimReader claimReader)
         {
             _service = service;
             _logger = logger;
-            _mapper = mapper;
+            _mapper = mapper; 
             _jwtGenerator = jwtGenerator;
-            _dataService = dataService;
+            _claimReader = claimReader;
         }
 
         [AllowAnonymous]
@@ -139,7 +139,7 @@ namespace GladosBank.Api.Controllers
             try
             {
                 IEnumerable<Claim> claims = this.Request.HttpContext.User.Claims;
-                string currentLogin = _dataService.GetLogin(claims);
+                string currentLogin = _claimReader.GetLogin(claims);
                 User currentUser = default;
 
                 currentUser = _service.GetUserByLogin(currentLogin);
@@ -155,7 +155,7 @@ namespace GladosBank.Api.Controllers
                 {
                     currentUser.Email = user.Email;
                 }
-                _service.UpdateUser(currentUser.Id, currentUser);
+                _service.UpdateUser(currentUser.Id, currentLogin, currentUser);
 
 
                 var token = _jwtGenerator.CreateJwtToken(currentUser, user.Role);
@@ -211,23 +211,9 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Worker")]
-        [HttpGet(nameof(GetPaginatedListOfCustomers))]
-        public  IActionResult GetPaginatedListOfCustomers([FromQuery] PaginatedArgs args)
-        {
-            try
-            {
-                var users = _service.GetPaginatedUsersListOfCustomers(args.pageIndex, args.pageSize);
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-        }
 
         [Authorize]
+        [Obsolete("Must be on frontend")]
         [HttpGet(nameof(GetUserData))]
         public IActionResult GetUserData()
         {
@@ -235,13 +221,13 @@ namespace GladosBank.Api.Controllers
             {
                 var claims = this.Request.HttpContext.User.Claims;
 
-                var userLogin = _dataService.GetLogin(claims);
+                var userLogin = _claimReader.GetLogin(claims);
 
-                var userEmail = _dataService.GetEmail(claims);
+                var userEmail = _claimReader.GetEmail(claims);
 
-                var userRole = _dataService.GetRole(claims);
+                var userRole = _claimReader.GetRole(claims);
 
-                var userPhone = _dataService.GetPhone(claims);
+                var userPhone = _claimReader.GetPhone(claims);
 
                 var returnedData = new {Phone= userPhone, Name = userLogin, Email = userEmail, Role = userRole };
 
@@ -278,38 +264,11 @@ namespace GladosBank.Api.Controllers
             
         }
 
-        [Authorize(Roles = "Customer")]
-        [HttpPost(nameof(KeepHistoryOfOperation))]
-        public IActionResult KeepHistoryOfOperation(KeepHistoryOfOperationArgs args)
-        {
-            try
-            {
-                IEnumerable<Claim> claims = Request.HttpContext.User.Claims;
-                int customerId=_dataService.GetCustomerId(claims);
-
-                OperationsHistory newHistory = _mapper.Map<OperationsHistory>(args);
-                newHistory.DateTime = DateTime.UtcNow;
-                newHistory.CustomerId = customerId;
-
-                var savedElementId=_service.KeepHistoryElementOfOperation(newHistory);
-
-                return Ok(savedElementId);
-            }
-            catch (BusinessLogicException ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation(ex.Message);
-                return BadRequest(ex.Message);
-            }
-        }
+        
         private readonly IMapper _mapper;
         private readonly JwtGenerator _jwtGenerator;
         private readonly UserService _service;
-        private readonly ClaimReader _dataService;
+        private readonly ClaimReader _claimReader;
         private readonly ILogger<UserController> _logger;
     }
 }
