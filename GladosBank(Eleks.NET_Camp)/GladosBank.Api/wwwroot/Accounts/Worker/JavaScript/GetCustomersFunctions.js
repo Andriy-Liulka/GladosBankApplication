@@ -9,7 +9,7 @@
         }
     }
 
-    axios.get("https://localhost:5001/api/User/GetPaginatedListOfCustomers",
+    axios.get("https://localhost:5001/api/Customer/GetPaginatedListOfCustomers",
         {
             params:
             {

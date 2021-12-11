@@ -21,7 +21,7 @@ function SendClick() {
 
     var sourceId = localStorage.getItem("SourceAccountId");
 
-    axios.get("https://localhost:5001/api/Account/GetCurrencyCodeFromAccountId",
+    axios.get("https://localhost:5001/api/Currency/GetCurrencyCodeFromAccountId",
         {
             params: { id: sourceId} ,
             headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
