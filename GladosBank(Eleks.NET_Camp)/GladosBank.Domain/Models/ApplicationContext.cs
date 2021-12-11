@@ -38,6 +38,19 @@ namespace GladosBank.Domain
                 .HasDefaultValue(0.0)
                 .ValueGeneratedNever();
 
+            builder.Entity<Currency>().HasData(
+                new Currency {Code= "EUR",Symbol= "€" },
+                new Currency { Code = "UAN", Symbol = "₴" },
+                new Currency { Code = "USD", Symbol = "$" }
+                );
+
+            builder.Entity<User>().HasData(
+                new User { Email="admin@example.com",IsActive=true,Phone="06866414",PasswordHash= "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",Login="admin" ,Id=1024}
+            );
+            builder.Entity<Admin>().HasData(
+                new Admin {Id=1,UserId=1024}
+            );
+
             base.OnModelCreating(builder);
 
 
