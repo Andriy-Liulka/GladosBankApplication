@@ -19,10 +19,9 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class OperationHistoryController : Controller
     {
-        public OperationHistoryController(ILogger<OperationHistoryController> logger, AccountService service, ClaimReader claimReader, IMapper mapper,UserService uservice)
+        public OperationHistoryController(ILogger<OperationHistoryController> logger, OperationHistoryService service, ClaimReader claimReader, IMapper mapper)
         {
             _logger = logger;
-            _uservice = uservice;
             _service = service;
             _mapper = mapper;
             _claimReader = claimReader;
@@ -60,7 +59,7 @@ namespace GladosBank.Api.Controllers
                 newHistory.DateTime = DateTime.UtcNow;
                 newHistory.CustomerId = customerId;
 
-                var savedElementId = _uservice.KeepHistoryElementOfOperation(newHistory);
+                var savedElementId = _service.KeepHistoryElementOfOperation(newHistory);
 
                 return Ok(savedElementId);
             }
@@ -76,8 +75,7 @@ namespace GladosBank.Api.Controllers
             }
         }
         private readonly ILogger<OperationHistoryController> _logger;
-        private readonly AccountService _service;
-        private readonly UserService _uservice;
+        private readonly IOperationHistoryService _service;
         private readonly ClaimReader _claimReader;
         private readonly IMapper _mapper;
     }

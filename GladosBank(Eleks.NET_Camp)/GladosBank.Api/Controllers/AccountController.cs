@@ -196,7 +196,7 @@ namespace GladosBank.Api.Controllers
         }
 
         private readonly ILogger<AccountController> _logger;
-        private readonly AccountService _service;
+        private readonly IAccountService _service;
         private readonly ClaimReader _dataService;
         private readonly IMapper _mapper;
 

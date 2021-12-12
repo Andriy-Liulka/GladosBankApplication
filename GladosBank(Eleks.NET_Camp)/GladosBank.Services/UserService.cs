@@ -82,20 +82,6 @@ namespace GladosBank.Services
             }
 
         }
-        public int KeepHistoryElementOfOperation(OperationsHistory operation)
-        {
-            if (!CustomerExist(operation.CustomerId))
-            {
-                throw new InvalidCustomerException(operation.CustomerId);
-            }
-            _context.OperationsHistory.Add(operation);
-            _context.SaveChanges();
-            var operationId = _context.OperationsHistory
-                .FirstOrDefault(cus => cus.CustomerId
-                .Equals(operation.CustomerId)).Id;
-
-            return operationId;
-        }
 
         #endregion
         #region Get
@@ -141,17 +127,6 @@ namespace GladosBank.Services
                 .ToArray();
             return users;
         }
-        public IEnumerable<Customer> GetPaginatedUsersListOfCustomers(int pageIndex, int pageSize)
-        {
-            int generalSkipSize = pageIndex * pageSize;
-            var customers = _context.Customers
-                .Include(us => us.User)
-                .Take((generalSkipSize) + pageSize)
-                .Skip(generalSkipSize)
-                .ToArray();
-
-            return customers;
-        }
 
         #endregion
         #region Delete
@@ -171,7 +146,7 @@ namespace GladosBank.Services
         #endregion
         #region Update
 
-        public int UpdateUser(int UserId,string previosLogin, User user)
+        public int UpdateUser(int UserId, string previosLogin, User user)
         {
             var existingUser = _context.Users.SingleOrDefault(us => us.Id == UserId);
             if (existingUser == null)
@@ -239,11 +214,6 @@ namespace GladosBank.Services
         public bool IsSuchLoginInDatabase(string login)
         {
             return _context.Users.Any(us => us.Login.Equals(login));
-        }
-        public bool CustomerExist(int CustomerId)
-        {
-            return _context.Customers.Any(cus => cus.Id.Equals(CustomerId));
-
         }
 
         #endregion

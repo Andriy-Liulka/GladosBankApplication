@@ -16,7 +16,7 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
-        public CustomerController(ILogger<CustomerController> logger, UserService service)
+        public CustomerController(ILogger<CustomerController> logger, CustomerService service)
         {
             _service = service;
             _logger = logger;
@@ -37,7 +37,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        private readonly UserService _service;
+        private readonly ICustomerService _service;
         private readonly ILogger<CustomerController> _logger;
     }
 }

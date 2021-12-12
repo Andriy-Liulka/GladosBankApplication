@@ -100,19 +100,6 @@ namespace GladosBank.Services
 
 
         }
-        public IEnumerable<Currency> GetAllCurrenciesService()
-        {
-            return _context.Currency.ToArray();
-        }
-        public string GetCurrencyFromId(int id)
-        {
-            var currency = _context.Accounts.SingleOrDefault(us => us.Id.Equals(id)).CurrencyCode;
-            if (currency == null)
-            {
-                throw new InvalidAccountIdExcepion(id);
-            }
-            return currency;
-        }
         public IEnumerable<Account> GetAllAccountsForCurrencyCode(string currencyCode, string login)
         {
             var userId = _userService.GetUserByLogin(login).Id;
@@ -124,20 +111,11 @@ namespace GladosBank.Services
 
             return accounts;
         }
-        public IEnumerable<OperationsHistory> GetTransactionHistoryElementService(int pageIndex, int pageSize, int customerId)
-        {
-            int generalSkipSize = pageIndex * pageSize;
-            var historyElements = _context.OperationsHistory
-                .Where(op => op.CustomerId.Equals(customerId))
-                .Take((generalSkipSize) + pageSize)
-                .Skip(generalSkipSize)
-                .ToArray();
-            return historyElements;
-        }
         public Account GetAccountFromId(int accountId)
         {
             return _context.Accounts.SingleOrDefault(acc => acc.Id.Equals(accountId));
         }
+
         #endregion
         #region Update
 

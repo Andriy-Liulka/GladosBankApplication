@@ -180,7 +180,7 @@ namespace GladosBank.Api.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet(nameof(Get))]
+        [HttpGet(nameof(Get))] 
         public IActionResult Get()
         {
             try
