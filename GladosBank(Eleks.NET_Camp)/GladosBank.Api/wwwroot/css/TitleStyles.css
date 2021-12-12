@@ -1,1 +1,26 @@
-﻿
+﻿.bodyStyle {
+    display: inline-block;
+    background-color: #b6cbe8;
+    background-image: url('../img/dollarsWalls4.jpg');
+    animation: cloud 1s linear infinite;
+}
+
+
+@keyframes cloud {
+    from {
+        background-position-x: 0px;
+    }
+
+    to {
+        background-position-x: 1000px;
+    }
+}
+
+
+.gradientStyle {
+    background: linear-gradient(0.25turn, #2684ac, #6b8f50, #ad1436);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 100px;
+    margin-left: 450px;
+}
