@@ -8,8 +8,8 @@ namespace GladosBank.Domain.Models.Enums
 {
     public static class RolesEnum
     {
-        public static string Customer = "Customer";
-        public static string Admin = "Admin";
-        public static string Worker = "Worker";
+        public const string Customer = "Customer";
+        public const string Admin = "Admin";
+        public const string Worker = "Worker";
     }
 }
