@@ -152,8 +152,8 @@ namespace GladosBank.Services
         }
         public bool TransferMoney(decimal amount, Account source, Account destination)
         {
-            source = source ?? throw new ArgumentNullException(nameof(source), $"Account with id {source.Id} doesn't exist of");
-            destination = destination ?? throw new ArgumentNullException(nameof(destination), $"Account with id {destination.Id} doesn't exist of");
+            source = source ?? throw new ArgumentNullException(nameof(source), $"Object source is null");
+            destination = destination ?? throw new ArgumentNullException(nameof(destination), $"Object destination is null");
 
             if (amount <= 0)
             {
