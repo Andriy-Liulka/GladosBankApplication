@@ -84,7 +84,7 @@ namespace GladosBank.Services
         }
         public int KeepHistoryElementOfOperation(OperationsHistory operation)
         {
-            if (!OperationPossible(operation.CustomerId))
+            if (!CustomerExist(operation.CustomerId))
             {
                 throw new InvalidCustomerException(operation.CustomerId);
             }
@@ -240,7 +240,7 @@ namespace GladosBank.Services
         {
             return _context.Users.Any(us => us.Login.Equals(login));
         }
-        public bool OperationPossible(int CustomerId)
+        public bool CustomerExist(int CustomerId)
         {
             return _context.Customers.Any(cus => cus.Id.Equals(CustomerId));
 
