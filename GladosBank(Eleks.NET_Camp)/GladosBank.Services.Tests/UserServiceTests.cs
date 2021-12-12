@@ -19,7 +19,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockSet = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -50,7 +50,7 @@ namespace GladosBank.Services.Tests
             //Test Users
             var mockUserSet = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockUserSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockUserSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -120,7 +120,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockUserSet = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockUserSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockUserSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -152,71 +152,12 @@ namespace GladosBank.Services.Tests
             #endregion
         }
         [Fact]
-        public void KeepHistoryElementOfOperationTest()
-        {
-            #region arrange
-            //Operation Histories
-            var mockOperationHistoriesSet = new Mock<DbSet<OperationsHistory>>();
-
-            var testOperationHistories =new List<OperationsHistory>();
-
-            mockOperationHistoriesSet.As<IQueryable<OperationsHistory>>().Setup(m => m.Provider).Returns(testOperationHistories.AsQueryable().Provider);
-            mockOperationHistoriesSet.As<IQueryable<OperationsHistory>>().Setup(m => m.Expression).Returns(testOperationHistories.AsQueryable().Expression);
-            mockOperationHistoriesSet.As<IQueryable<OperationsHistory>>().Setup(m => m.ElementType).Returns(testOperationHistories.AsQueryable().ElementType);
-            mockOperationHistoriesSet.As<IQueryable<OperationsHistory>>().Setup(con => con.GetEnumerator()).Returns(testOperationHistories.GetEnumerator());
-            mockOperationHistoriesSet.Setup(m => m.Add(It.IsAny<OperationsHistory>())).Callback<OperationsHistory>((entity) => testOperationHistories.Add(entity));
-            
-            //Customers
-            var mockCustomersSet = new Mock<DbSet<Customer>>();
-
-            var testCustomers = new List<Customer>() 
-            { 
-                new Customer
-                {
-                    Id=1,
-                    UserId=1
-                }
-            };
-
-            mockCustomersSet.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(testCustomers.AsQueryable().Provider);
-            mockCustomersSet.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(testCustomers.AsQueryable().Expression);
-            mockCustomersSet.As<IQueryable<Customer>>().Setup(m => m.ElementType).Returns(testCustomers.AsQueryable().ElementType);
-            mockCustomersSet.As<IQueryable<Customer>>().Setup(con => con.GetEnumerator()).Returns(testCustomers.GetEnumerator());
-
-            var mockContext = new Mock<ApplicationContext>();
-
-            mockContext
-                .Setup(us => us.OperationsHistory)
-                .Returns(mockOperationHistoriesSet.Object);
-            mockContext
-                .Setup(us => us.Customers)
-                .Returns(mockCustomersSet.Object);
-
-            IUserService userService = new UserService(mockContext.Object);
-
-            var testOperationHistory = new OperationsHistory
-            {
-                Id = 1,
-                CustomerId = 1,
-                DateTime = DateTime.UtcNow,
-                Description="Test operation history"
-            };
-            #endregion
-            #region act
-            userService.KeepHistoryElementOfOperation(testOperationHistory);
-            #endregion
-            #region assert
-            Assert.True(mockContext.Object.OperationsHistory.Any(p=>p.Id.Equals(testOperationHistory.Id)));
-            Assert.Equal(1,mockContext.Object.OperationsHistory.Count());
-            #endregion
-        }
-        [Fact]
         public void DeleteUserTest()
         {
             #region arrange
 
             var mockSet = new Mock<DbSet<User>>();
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
             mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
             mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(testUsers.AsQueryable().ElementType);
@@ -253,7 +194,7 @@ namespace GladosBank.Services.Tests
             #region arrange
 
             var mockSet = new Mock<DbSet<User>>();
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
             mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
             mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(testUsers.AsQueryable().ElementType);
@@ -286,7 +227,7 @@ namespace GladosBank.Services.Tests
             //Users
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -296,7 +237,7 @@ namespace GladosBank.Services.Tests
             //Admins
             var mockSetAdmins = new Mock<DbSet<Admin>>();
 
-            var testAdmins = GetTestAdmins();
+            var testAdmins = TestData.GetTestAdmins();
 
             mockSetAdmins.As<IQueryable<Admin>>().Setup(m => m.Provider).Returns(testAdmins.AsQueryable().Provider);
             mockSetAdmins.As<IQueryable<Admin>>().Setup(m => m.Expression).Returns(testAdmins.AsQueryable().Expression);
@@ -306,7 +247,7 @@ namespace GladosBank.Services.Tests
             //Workers
             var mockSetWorkers = new Mock<DbSet<Worker>>();
 
-            var testWorkers = GetTestWorkers();
+            var testWorkers = TestData.GetTestWorkers();
 
             mockSetWorkers.As<IQueryable<Worker>>().Setup(m => m.Provider).Returns(testWorkers.AsQueryable().Provider);
             mockSetWorkers.As<IQueryable<Worker>>().Setup(m => m.Expression).Returns(testWorkers.AsQueryable().Expression);
@@ -316,7 +257,7 @@ namespace GladosBank.Services.Tests
             //Customers
             var mockSetCustomers = new Mock<DbSet<Customer>>();
 
-            var testCustomers = GetTestCustomers();
+            var testCustomers = TestData.GetTestCustomersForRole();
 
             mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(testCustomers.AsQueryable().Provider);
             mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(testCustomers.AsQueryable().Expression);
@@ -350,7 +291,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -381,7 +322,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -408,58 +349,13 @@ namespace GladosBank.Services.Tests
             #endregion
         }
         [Fact]
-        public void GetPaginatedUsersListOfCustomersTest()
-        {
-            #region arrange
-            //Users
-            var mockSetUser = new Mock<DbSet<User>>();
-
-            var testUsers = GetTestUsers();
-
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(testUsers.AsQueryable().ElementType);
-            mockSetUser.As<IQueryable<User>>().Setup(con => con.GetEnumerator()).Returns(testUsers.GetEnumerator());
-            //Customers
-            var mockSetCustomers = new Mock<DbSet<Customer>>();
-
-            var testCustomers = GetFullCustomersList();
-
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(testCustomers.AsQueryable().Provider);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(testCustomers.AsQueryable().Expression);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.ElementType).Returns(testCustomers.AsQueryable().ElementType);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(con => con.GetEnumerator()).Returns(testCustomers.GetEnumerator());
-
-            var mockContext = new Mock<ApplicationContext>();
-
-            mockContext.Setup(id => id.Users).Returns(mockSetUser.Object);
-            mockContext.Setup(id => id.Customers).Returns(mockSetCustomers.Object);
-
-            IUserService userService = new UserService(mockContext.Object);
-            #endregion
-            #region act
-
-            var firstUser = (userService.GetPaginatedUsersListOfCustomers(0, 1) as IList<Customer>)[0];
-            var secondUser = (userService.GetPaginatedUsersListOfCustomers(1, 1) as IList<Customer>)[0];
-            var thirdUser = (userService.GetPaginatedUsersListOfCustomers(2, 1) as IList<Customer>)[0];
-
-            #endregion
-            #region assert
-
-            Assert.Equal("Vitaliy", firstUser.User.Login);
-            Assert.Equal("Vasya", secondUser.User.Login);
-            Assert.Equal("Nikita", thirdUser.User.Login);
-            #endregion
-
-        }
-        [Fact]
         public void IsActiveTest()
         {
             #region arrange
 
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -488,7 +384,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -512,53 +408,12 @@ namespace GladosBank.Services.Tests
             #endregion
         }
         [Fact]
-        public void OperationPossibleTest()
-        {
-            #region arrange
-            //Users
-            var mockSetUser = new Mock<DbSet<User>>();
-
-            var testUsers = GetTestUsers();
-
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
-            mockSetUser.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(testUsers.AsQueryable().ElementType);
-            mockSetUser.As<IQueryable<User>>().Setup(con => con.GetEnumerator()).Returns(testUsers.GetEnumerator());
-            //Customers
-            var mockSetCustomers = new Mock<DbSet<Customer>>();
-
-            var testCustomers = GetFullCustomersList();
-
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(testCustomers.AsQueryable().Provider);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(testCustomers.AsQueryable().Expression);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(m => m.ElementType).Returns(testCustomers.AsQueryable().ElementType);
-            mockSetCustomers.As<IQueryable<Customer>>().Setup(con => con.GetEnumerator()).Returns(testCustomers.GetEnumerator());
-
-            var mockContext = new Mock<ApplicationContext>();
-
-            mockContext.Setup(id => id.Users).Returns(mockSetUser.Object);
-            mockContext.Setup(id => id.Customers).Returns(mockSetCustomers.Object);
-
-            IUserService userService = new UserService(mockContext.Object);
-            #endregion
-            #region act
-            bool possible1=userService.CustomerExist(1);
-            bool possible2=userService.CustomerExist(3);
-            bool impossible=userService.CustomerExist(10);
-            #endregion
-            #region assert
-            Assert.True(possible1);
-            Assert.True(possible2);
-            Assert.False(impossible);
-            #endregion
-        }
-        [Fact]
         public void UpdateUserTest()
         {
             #region arrange
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -604,7 +459,7 @@ namespace GladosBank.Services.Tests
             #region arrange
             var mockSetUser = new Mock<DbSet<User>>();
 
-            var testUsers = GetTestUsers();
+            var testUsers = TestData.GetTestUsers();
 
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Provider).Returns(testUsers.AsQueryable().Provider);
             mockSetUser.As<IQueryable<User>>().Setup(m => m.Expression).Returns(testUsers.AsQueryable().Expression);
@@ -630,101 +485,5 @@ namespace GladosBank.Services.Tests
             Assert.True(mockContext.Object.Users.SingleOrDefault(us => us.Id.Equals(updatedActiveStatusUserId2)).IsActive);
             #endregion
         }
-        #region FillDataMethods
-        private IList<User> GetTestUsers()
-        {
-            var users = new List<User>
-            {
-                new User{
-                        Id=1,
-                        Phone="111314181",
-                        Email="gdfg@example.com",
-                        Login="Vasya",
-                        PasswordHash="12345",
-                        IsActive=true },
-                new User{
-                        Id=2,
-                        Phone="111314181",
-                        Email="gdfg@example.com",
-                        Login="Vitaliy",
-                        PasswordHash="12345",
-                        IsActive=true },
-                new User{
-                        Id=3,
-                        Phone="111314181",
-                        Email="gdfg@example.com",
-                        Login="Nikita",
-                        PasswordHash="12345",
-                        IsActive=false }
-
-            };
-            return users;
-        }
-        private IList<Admin> GetTestAdmins()
-        {
-            var admins = new List<Admin>()
-            {
-                new Admin()
-                {
-                    Id=1,
-                    UserId=1
-                }
-            };
-            return admins;
-        }
-        private IList<Customer> GetTestCustomers()
-        {
-            var customers = new List<Customer>()
-            {
-                new Customer()
-                {
-                    Id=1,
-                    UserId=2,
-                }
-
-            };
-            return customers;
-        }
-        private IList<Worker> GetTestWorkers()
-        {
-            var workers = new List<Worker>()
-            {
-                new Worker()
-                {
-                    Id=1,
-                    UserId=3
-                }
-            };
-            return workers;
-        }
-        private IList<Customer> GetFullCustomersList()
-        {
-
-            var customers = new List<Customer>()
-            {
-                new Customer()
-                {
-                    Id=1,
-                    UserId=2,
-                    User = GetTestUsers()[1]
-                },
-                new Customer()
-                {
-                    Id = 2,
-                    UserId = 1,
-                    User = GetTestUsers()[0]
-                },
-                new Customer()
-                {
-                    Id = 3,
-                    UserId = 3,
-                    User = GetTestUsers()[2]
-                }
-             };
-            return customers;
-
-            
-        }
-        #endregion
     }
 }
