@@ -10,13 +10,14 @@ namespace GladosBank.Services
 {
     public class OperationHistoryService : IOperationHistoryService
     {
-        public OperationHistoryService(ApplicationContext context)
+        public OperationHistoryService(ApplicationContext context, CustomerService custService)
         {
             _context = context;
+            _custService = custService;
         }
         public int KeepHistoryElementOfOperation(OperationsHistory operation)
         {
-            if (!CustomerExist(operation.CustomerId))
+            if (!_custService.CustomerExist(operation.CustomerId))
             {
                 throw new InvalidCustomerException(operation.CustomerId);
             }
@@ -38,12 +39,8 @@ namespace GladosBank.Services
                 .ToArray();
             return historyElements;
         }
-        public bool CustomerExist(int CustomerId)
-        {
-            return _context.Customers.Any(cus => cus.Id.Equals(CustomerId));
-
-        }
 
         private readonly ApplicationContext _context;
+        private readonly CustomerService _custService;
     }
 }

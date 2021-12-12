@@ -13,9 +13,10 @@ namespace GladosBank.Services
 {
     public sealed class AccountService : IAccountService
     {
-        public AccountService(ApplicationContext context, UserService userService)
+        public AccountService(ApplicationContext context, UserService userService,CustomerService custService)
         {
             _userService = userService;
+            _custService = custService;
             _context = context;
         }
         #region Create
@@ -48,25 +49,9 @@ namespace GladosBank.Services
         #endregion
         #region Get
 
-        public int GetCustomerIdFromLogin(string login)
-        {
-
-            #region AnotherPossibleSolution
-            //var account =
-            //                from user in _context.Users
-            //                join Customers in _context.Customers on user.Id equals Customers.UserId
-            //                select new { CustomerId = Customers.Id, Login = user.Login };
-            #endregion
-            var account = _context.Customers
-                .Include(us => us.User)
-                .FirstOrDefault(cs => cs.User.Login.Equals(login));
-            //SingleOrDefault
-
-            return account.Id;
-        }
         public IEnumerable<Account> GetAllUserAccounts(string login)
         {
-            int? currentCustomerId = GetCustomerIdFromLogin(login);
+            int? currentCustomerId = _custService.GetCustomerIdFromLogin(login);
             if (currentCustomerId == null)
             {
                 throw new IsntCustomerException(login);
@@ -202,5 +187,7 @@ namespace GladosBank.Services
         #endregion
         private readonly ApplicationContext _context;
         private readonly UserService _userService;
+        private readonly CustomerService _custService;
+        
     }
 }

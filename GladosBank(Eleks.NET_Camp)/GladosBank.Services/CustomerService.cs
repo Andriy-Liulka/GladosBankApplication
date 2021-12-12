@@ -25,6 +25,20 @@ namespace GladosBank.Services
 
             return customers;
         }
+        public int GetCustomerIdFromLogin(string login)
+        {
+
+            var account = _context.Customers
+                .Include(us => us.User)
+                .FirstOrDefault(cs => cs.User.Login.Equals(login));
+
+            return account.Id;
+        }
+        public bool CustomerExist(int CustomerId)
+        {
+            return _context.Customers.Any(cus => cus.Id.Equals(CustomerId));
+
+        }
 
         private readonly ApplicationContext _context;
     }
