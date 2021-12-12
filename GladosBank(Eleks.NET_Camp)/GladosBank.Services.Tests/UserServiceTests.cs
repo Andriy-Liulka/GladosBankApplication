@@ -542,9 +542,9 @@ namespace GladosBank.Services.Tests
             IUserService userService = new UserService(mockContext.Object);
             #endregion
             #region act
-            bool possible1=userService.OperationPossible(1);
-            bool possible2=userService.OperationPossible(3);
-            bool impossible=userService.OperationPossible(10);
+            bool possible1=userService.CustomerExist(1);
+            bool possible2=userService.CustomerExist(3);
+            bool impossible=userService.CustomerExist(10);
             #endregion
             #region assert
             Assert.True(possible1);
