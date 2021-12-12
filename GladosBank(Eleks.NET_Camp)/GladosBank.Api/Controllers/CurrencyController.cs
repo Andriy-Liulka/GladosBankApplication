@@ -1,4 +1,5 @@
-﻿using GladosBank.Services;
+﻿using GladosBank.Domain.Models.Enums;
+using GladosBank.Services;
 using GladosBank.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace GladosBank.Api.Controllers
             _logger = logger;
             _service = service;
         }
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpGet(nameof(GetAllCurrencies))]
         public IActionResult GetAllCurrencies()
         {
@@ -41,7 +42,7 @@ namespace GladosBank.Api.Controllers
             }
 
         }
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpGet(nameof(GetCurrencyCodeFromAccountId))]
         public IActionResult GetCurrencyCodeFromAccountId(int id)
         {

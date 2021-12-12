@@ -15,6 +15,7 @@ using GladosBank.Api.Config.Athentication;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using GladosBank.Api.Models.Args.AccountControllerArgs;
+using GladosBank.Domain.Models.Enums;
 
 namespace GladosBank.Api.Controllers
 {
@@ -110,7 +111,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnum.Admin)]
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteUserArgs user)
         {
@@ -179,7 +180,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnum.Admin)]
         [HttpGet(nameof(Get))] 
         public IActionResult Get()
         {
@@ -196,7 +197,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnum.Admin)]
         [HttpGet(nameof(GetPaginatedList))]
         public IActionResult GetPaginatedList([FromQuery]PaginatedArgs args)
         {
@@ -242,7 +243,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = RolesEnum.Admin)]
         [HttpPost(nameof(BlockUnblockUser))]
         public IActionResult BlockUnblockUser([FromQuery]int UserId)
         {

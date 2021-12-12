@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GladosBank.Api.Config.Athentication;
 using GladosBank.Api.Models.Args.UserControllerArgs;
+using GladosBank.Domain.Models.Enums;
 using GladosBank.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace GladosBank.Api.Controllers
             _service = service;
             _logger = logger;
         }
-        [Authorize(Roles = "Worker")]
+        [Authorize(Roles = RolesEnum.Worker)]
         [HttpGet(nameof(GetPaginatedListOfCustomers))]
         public IActionResult GetPaginatedListOfCustomers([FromQuery] PaginatedArgs args)
         {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GladosBank.Domain;
+using GladosBank.Domain.Models.Enums;
 using GladosBank.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -100,15 +101,15 @@ namespace GladosBank.Services
             var existingUserId = _context.Users.FirstOrDefault(us => us.Login == login).Id;
             if (_context.Customers.Any(us => us.UserId == existingUserId))
             {
-                return "Customer";
+                return RolesEnum.Customer;
             }
             else if (_context.Workers.Any(us => us.UserId == existingUserId))
             {
-                return "Worker";
+                return RolesEnum.Worker;
             }
             else if (_context.Admins.Any(us => us.UserId == existingUserId))
             {
-                return "Admin";
+                return RolesEnum.Admin;
             }
             throw new DonotHaveRoleException(login);
         }

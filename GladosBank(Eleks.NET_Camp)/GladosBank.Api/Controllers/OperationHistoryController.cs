@@ -2,6 +2,7 @@
 using GladosBank.Api.Models.Args.AccountControllerArgs;
 using GladosBank.Api.Models.Args.UserControllerArgs;
 using GladosBank.Domain;
+using GladosBank.Domain.Models.Enums;
 using GladosBank.Services;
 using GladosBank.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,7 @@ namespace GladosBank.Api.Controllers
             _mapper = mapper;
             _claimReader = claimReader;
         }
-        [Authorize(Roles = "Worker")]
+        [Authorize(Roles = RolesEnum.Worker)]
         [HttpGet(nameof(GetTransactionHistoryElements))]
         public IActionResult GetTransactionHistoryElements([FromQuery] PaginatedArgs args, int customerId)
         {
@@ -46,7 +47,7 @@ namespace GladosBank.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpPost(nameof(KeepHistoryOfOperation))]
         public IActionResult KeepHistoryOfOperation(KeepHistoryOfOperationArgs args)
         {

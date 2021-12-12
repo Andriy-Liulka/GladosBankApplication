@@ -2,6 +2,7 @@
 using GladosBank.Api.Models.Args.AccountControllerArgs;
 using GladosBank.Api.Models.Args.UserControllerArgs;
 using GladosBank.Domain;
+using GladosBank.Domain.Models.Enums;
 using GladosBank.Services;
 using GladosBank.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@ namespace GladosBank.Api.Controllers
             _custService = custService;
         }
 
-        [Authorize(Roles ="Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateAccountArgs args)
         {
@@ -60,7 +61,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpGet(nameof(Get))]
         [AllowAnonymous]
         public  IActionResult Get()
@@ -94,7 +95,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpGet(nameof(GetAccountsFromCurrencyCode))]
         public IActionResult GetAccountsFromCurrencyCode([FromQuery]GetAccountsFromCurrencyArgs args)
         {
@@ -117,7 +118,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpPost(nameof(Delete))]
         public IActionResult Delete(DeleteAccountArgs account)
         {
@@ -141,7 +142,7 @@ namespace GladosBank.Api.Controllers
 
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpPost(nameof(Replenish))]
         public IActionResult Replenish(ReplenishAccountArgs account)
         {
@@ -163,7 +164,7 @@ namespace GladosBank.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = RolesEnum.Customer)]
         [HttpPost(nameof(TransactMoney))]
         public IActionResult TransactMoney(TransferMoneyArgs args)
         {
