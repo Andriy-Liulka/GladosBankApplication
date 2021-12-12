@@ -20,12 +20,13 @@ namespace GladosBank.Api.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        public AccountController(ILogger<AccountController> logger,AccountService service, IMapper mapper, ClaimReader dataService)
+        public AccountController(ILogger<AccountController> logger,AccountService service,CustomerService custService, IMapper mapper, ClaimReader dataService)
         {
             _logger = logger;
             _service = service;
             _mapper = mapper;
             _dataService = dataService;
+            _custService = custService;
         }
 
         [Authorize(Roles ="Customer")]
@@ -40,7 +41,7 @@ namespace GladosBank.Api.Controllers
                 var localAccount = _mapper.Map<Account>(args.Account);
 
                 localAccount.DateOfCreating = DateTime.Now;
-                localAccount.CustomerId = _service.GetCustomerIdFromLogin(userLogin);
+                localAccount.CustomerId = _custService.GetCustomerIdFromLogin(userLogin);
             
                 _service.CreateAccount(localAccount);
                 _logger.LogInformation($"Account with id->{localAccount.Id} was created successfully");
@@ -197,6 +198,7 @@ namespace GladosBank.Api.Controllers
 
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _service;
+        private readonly ICustomerService _custService;
         private readonly ClaimReader _dataService;
         private readonly IMapper _mapper;
 
