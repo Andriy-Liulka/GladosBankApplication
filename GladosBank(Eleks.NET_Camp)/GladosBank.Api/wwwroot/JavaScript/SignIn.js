@@ -13,6 +13,9 @@ function SignInClick() {
         Login: login,
         PasswordHash: passowrdHash,
     };
+    localStorage.setItem("CurrentLogin", login);
+    localStorage.setItem("CurrentPasswordHash", passowrdHash);
+
     SendRequest(userAuthenticationParameters);
 
 }
@@ -26,7 +29,9 @@ function SendRequest(userAuthenticationParameters) {
             var JwtToken = response.data.jwtToken;
 
             localStorage.setItem("jwtToken", JwtToken);
-            
+
+            localStorage.setItem("JwtTokenTimeLiving", 0);
+
             document.getElementById("ErrorLinkLog").innerText = "";
 
             window.location = "../Accounts/General/html/GenTitlePage.html";

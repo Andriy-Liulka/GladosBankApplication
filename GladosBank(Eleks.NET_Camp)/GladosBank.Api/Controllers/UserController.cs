@@ -33,7 +33,6 @@ namespace GladosBank.Api.Controllers
             _jwtGenerator = jwtGenerator;
             _claimReader = claimReader;
         }
-
         [AllowAnonymous]
         [HttpPost(nameof(Create))]
         public IActionResult Create(CreateUserArgs user)
