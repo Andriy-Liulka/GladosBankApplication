@@ -10,6 +10,7 @@
 </head>
 <body class="generalBackground">
     <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <script src="../../../JavaScript/Config/Tokens.js"></script>
     <div id="MainDiv">
         <div class="headerBackground">
             <br>
@@ -28,7 +29,7 @@
         </div>
         <script>
 
-            axios.get("https://localhost:5001/api/Account/Get", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }})
+            axios.get("https://localhost:5001/api/Account/Get", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
                 .then((responce) => {
                     var getResponse = responce.status;
                     var accounts = responce.data;
@@ -37,12 +38,12 @@
                     console.log("Cycle:");
                     for (var i = 0; i < accounts.length; i++) {
                         document.getElementById("board").innerHTML += `<div id=${accounts[i].id} style = "margin-left: 10px; color:black;background-color: red; width: 400px; min-height: 150px;" >` +
-                            `<p>Amount-> ${accounts[i].amount} ${accounts[i].currencyCode} `+
+                            `<p>Amount-> ${accounts[i].amount} ${accounts[i].currencyCode} ` +
                             `<button id=${accounts[i].id} onclick="DeleteClick(this.id)" style="margin-top: 7px;">Delete</button>&nbsp&nbsp&nbsp` +
                             `<button id=${accounts[i].id} onclick="RedirectReplenishPage(this.id)" style="margin-top: 7px;">Replenish</button> </p>` +
-                                `<p>Date-> ${accounts[i].dateOfCreating}</p>`+
-                                `<p>Note-> ${accounts[i].notes}</p>`+
-                                `</div>`;
+                            `<p>Date-> ${accounts[i].dateOfCreating}</p>` +
+                            `<p>Note-> ${accounts[i].notes}</p>` +
+                            `</div>`;
                     }
 
 

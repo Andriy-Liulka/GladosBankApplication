@@ -12,6 +12,7 @@
 </head>
 <body class="generalBackground">
     <script src="../JavaScript/CheckWhetherCustomer.js"></script>
+    <script src="../../../JavaScript/Config/Tokens.js"></script>
     <div id="MainDiv">
         <div class="headerBackground">
             <br>
@@ -36,7 +37,6 @@
             <div style="float:inline-start;">
                 <label style="font-size: 30px;" for="Currency">&nbsp&nbspChoose currency</label>
                 <select name="Currency" id="Currency">
-
                 </select>
                 <script>
                     axios.get("https://localhost:5001/api/Currency/GetAllCurrencies", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
@@ -48,7 +48,7 @@
                             console.log("Cycle:");
                             daySelect = document.getElementById('Currency');
                             for (var i = 0; i < currencies.length; i++) {
-                                
+
                                 myOption = document.createElement("option");
                                 myOption.text = `${currencies[i].symbol} (${currencies[i].code})`;
                                 myOption.value = `${currencies[i].symbol} (${currencies[i].code})`;
