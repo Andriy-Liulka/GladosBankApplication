@@ -13,5 +13,8 @@ namespace GladosBank.Domain.Models
         public string Code { get; set; }
         [Required]
         public string Symbol { get; set; }
+        [Required]
+        public decimal Coefficient { get; set; }
+        
     }
 }

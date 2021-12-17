@@ -39,9 +39,9 @@ namespace GladosBank.Domain
                 .ValueGeneratedNever();
 
             builder.Entity<Currency>().HasData(
-                new Currency {Code= "EUR",Symbol= "€" },
-                new Currency { Code = "UAN", Symbol = "₴" },
-                new Currency { Code = "USD", Symbol = "$" }
+                new Currency {Code= "EUR",Symbol= "€",Coefficient=32 },
+                new Currency { Code = "UAN", Symbol = "₴",Coefficient=1 },
+                new Currency { Code = "USD", Symbol = "$",Coefficient=28 }
                 );
 
             builder.Entity<User>().HasData(
