@@ -143,12 +143,25 @@ namespace GladosBank.Services
         #region Transaction
         public bool TransferMoneySaver(decimal amount, Account source, Account destination)
         {
-            bool result = TransferMoney(amount, source, destination);
-            _context.Update(source);
-            _context.Update(destination);
+            using (var transaction=_context.Database.BeginTransaction())
+            {
+                try
+                {
+                    bool result = TransferMoney(amount, source, destination);
+                    _context.Update(source);
+                    _context.Update(destination);
 
-            _context.SaveChanges();
-            return result;
+                    _context.SaveChanges();
+                    _context.Database.CommitTransaction();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+
         }
         public bool TransferMoney(decimal amount, Account source, Account destination)
         {
