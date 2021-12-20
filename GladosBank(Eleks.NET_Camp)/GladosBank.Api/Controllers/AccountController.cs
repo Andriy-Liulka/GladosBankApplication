@@ -197,6 +197,27 @@ namespace GladosBank.Api.Controllers
             }
         }
 
+        [Authorize(Roles = RolesEnum.Customer)]
+        [HttpPost(nameof(ConvertMoney))]
+        public IActionResult ConvertMoney(ConvertMoneyArgs args)
+        {
+            try
+            {
+                var finalAmount=_service.ConvertMoney(args.SourceCurrency, args.DestinationCurrency, args.Amount);
+                return Ok(finalAmount);
+            }
+            catch (BusinessLogicException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _service;
         private readonly ICustomerService _custService;
