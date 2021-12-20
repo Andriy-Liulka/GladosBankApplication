@@ -44,7 +44,7 @@ function SendClick() {
 }
 
 function TransferMoneyGetAllPossibleDistinationAccounts() {
-    var currency = localStorage.getItem("TransferCurrency");
+    var currency = localStorage.getItem("DestinationCurrency");
     var destinationLogin = localStorage.getItem("DestinationLogin");
     axios.get("https://localhost:5001/api/Account/GetAccountsFromCurrencyCode",
         {
@@ -61,6 +61,7 @@ function TransferMoneyGetAllPossibleDistinationAccounts() {
             console.log(responce.data);
             var accounts = responce.data;
             console.log(accounts);
+            document.getElementById("board").innerHTML = `<p style="font - size: 30px; text - align: center; background - color: orangered">Choose account to send money</p>`;
             var destinationAccountLogin = localStorage.getItem("DestinationLogin");
             for (var i = 0; i < accounts.length; i++) {
                 var destinationAccountId = accounts[i].id;
@@ -70,7 +71,7 @@ function TransferMoneyGetAllPossibleDistinationAccounts() {
                     `<p>Currency-> ${accounts[i].currencyCode} ` +
                     `</div>`;
             }
-            console.log(localStorage);
+            ConvertMoney();
         })
         .catch((error) => {
             console.log(error);
@@ -105,4 +106,34 @@ function TransactMoney(id) {
         .catch((error) => {
             console.log(error);
         });
+}
+
+function ConvertMoney() {
+
+    var sourceCurrency = localStorage.getItem("TransferCurrency");
+    var destinationCurrency = localStorage.getItem("DestinationCurrency");
+    var amount = localStorage.getItem("AmountToTransfer");
+
+    var operationArgs = {
+        "SourceCurrency": sourceCurrency,
+        "DestinationCurrency": destinationCurrency,
+        "Amount": amount
+    };
+
+    axios.post("https://localhost:5001/api/Account/ConvertMoney", operationArgs,
+        {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
+        })
+        .then((responce) => {
+            var getResponse = responce.status;
+            if (getResponse == 200) {
+                localStorage.setItem("FinalAmount", responce.data);
+                console.log(responce);
+                document.getElementById("AmountField").innerText = localStorage.getItem("FinalAmount");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
 }

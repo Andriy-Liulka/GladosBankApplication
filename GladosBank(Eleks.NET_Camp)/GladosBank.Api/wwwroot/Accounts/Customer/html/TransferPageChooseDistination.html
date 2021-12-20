@@ -9,6 +9,27 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../css/CustomerBaseStyles.css">
     <title>Your account</title>
+    <style>
+        .generalBackground {
+            background-image: url(../img/ff821762-a850-4661-a9f7-146c2b5f7792-views_llyn-llydaw.jpg);
+            background-size: cover;
+        }
+
+        .headerBackground {
+            background-image: url(../img/pexels-photo-2156881.jpeg);
+            background-size: cover;
+        }
+
+        .chooseAmountCentralElementBackground {
+            background-image: url(../img/0_1b7c09_506f1271_XL.jpg);
+            background-size: cover;
+        }
+
+        .menuBackground {
+            background-image: url(../img/1588415589_11-p-krasivie-foni-dlya-saitov-54.jpg);
+            background-size: cover;
+        }
+    </style>
 </head>
 <body class="generalBackground">
     <script src="../JavaScript/CheckWhetherCustomer.js"></script>
@@ -22,17 +43,56 @@
             </script>
             <br>
         </div>
+        <div style="display: flex;">
+            <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; margin-top:10px; float:left">
+                <button onclick=" RedirectTransferMoneyPageChooseAmountDestinationPage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin: 20px;"><b>Cancel</b></button>
+            </div>
 
-        <div id="SecondDiv" style="background-color: blueviolet; width: 252px; min-height: 825px; margin-top:10px; float:left">
-            <button onclick=" RedirectTransferMoneyPageChooseAmountDestinationPage()" style="font-size: 30px; font-family: 'Times New Roman', Times, serif; margin: 20px;"><b>Cancel</b></button>
+            <div id="board" class="chooseAmountCentralElementBackground" style="margin-top: 30px; min-height: 825px; min-width: 600px; margin: 10px; float:right; margin-left: 300px;">
+                <p style="font-size: 30px; text-align: center; background-color: orangered">Choose account to send money</p>
+            </div>
+            <div id="board" style="margin-top: 30px;  margin: 10px; display: inline-block;">
+                <div style="padding-right:500px; padding-left:100px;">
+                    <br><br><br>
+                    <select onchange="AddnewText();" name="Currency" id="Currency" style="font-size: 30px; "></select>
+                    <script>
+                        axios.get("https://localhost:5001/api/Currency/GetAllCurrencies", { headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
+                            .then((responce) => {
+                                var getResponse = responce.status;
+                                var currencies = responce.data;
+                                daySelect = document.getElementById('Currency');
+                                for (var i = 0; i < currencies.length; i++) {
+
+                                    myOption = document.createElement("option");
+                                    myOption.text = `${currencies[i].symbol} (${currencies[i].code})`;
+                                    myOption.value = `${currencies[i].code}`;
+                                    daySelect.appendChild(myOption);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                            });
+
+                    </script>
+                    <br><br><br><br><br>
+                    <label style="font-size: 30px;color: White; width:300px;" for="Distant">Final amount to transact:</label>
+                    <p id="AmountField" style="background-color: brown; font-size: 25px;"></p>
+
+                </div>
+            </div>
+            <script>
+                TransferMoneyGetAllPossibleDistinationAccounts();
+                document.getElementById("AmountField").innerText = localStorage.getItem("AmountToTransfer");
+
+                function AddnewText() {
+                    var choseCurrency = document.getElementById("Currency").value;
+                    localStorage.setItem("DestinationCurrency", choseCurrency);
+                    TransferMoneyGetAllPossibleDistinationAccounts();
+                    
+                    
+                }
+            </script>
         </div>
 
-        <div id="board" class="chooseAmountCentralElementBackground" style="margin-top: 30px; min-height: 825px; min-width: 600px; margin: 10px; margin-right:600px; float:right; ">
-            <p style="font-size: 30px; text-align: center; background-color: orangered">Choose account to send money</p>
-        </div>
-        <script>
-            TransferMoneyGetAllPossibleDistinationAccounts();
-        </script>
 
     </div>
 
