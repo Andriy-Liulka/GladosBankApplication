@@ -1,5 +1,7 @@
 ﻿using GladosBank.Domain;
+using GladosBank.Domain.Models;
 using GladosBank.Services.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -146,9 +148,21 @@ namespace GladosBank.Services.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => accountService.TransferMoney(-1000, account1, account2));
             Assert.Throws<ArgumentOutOfRangeException>(() => accountService.TransferMoney(0, account1, account2));
         }
+        #region TestCurrency
         [Fact]
-        public void TransferMoneyDifferentCurrencyExceptionTest()
+        public void TransferMoneyDifferentCurrencyTest()
         {
+            var mockSet = new Mock<DbSet<Currency>>();
+            var testCurrencies = TestData.GetTestCurrencies();
+
+            mockSet.As<IQueryable<Currency>>().Setup(m => m.Provider).Returns(testCurrencies.AsQueryable().Provider);
+            mockSet.As<IQueryable<Currency>>().Setup(m => m.Expression).Returns(testCurrencies.AsQueryable().Expression);
+            mockSet.As<IQueryable<Currency>>().Setup(m => m.ElementType).Returns(testCurrencies.AsQueryable().ElementType);
+            mockSet.As<IQueryable<Currency>>().Setup(con => con.GetEnumerator()).Returns(testCurrencies.GetEnumerator());
+
+            var mockContext = new Mock<ApplicationContext>();
+            mockContext.Setup(con => con.Currency).Returns(mockSet.Object);
+
             var account1 = new Account
             {
                 Id = 1,
@@ -171,7 +185,7 @@ namespace GladosBank.Services.Tests
                 Currency = new Domain.Models.Currency
                 {
                     Code = "UAN",
-                    Symbol = "$"
+                    Symbol = "₴"
                 },
                 Amount = 10000
             };
@@ -196,16 +210,20 @@ namespace GladosBank.Services.Tests
                 CurrencyCode = "EUR",
                 Currency = new Domain.Models.Currency
                 {
-                    Code = "UAN",
-                    Symbol = "$"
+                    Code = "EUR",
+                    Symbol = "€"
                 },
                 Amount = 10000
             };
 
-            IAccountService accountService = new AccountService(null, null, null);
+            IAccountService accountService = new AccountService(mockContext.Object, null, null);
 
-            Assert.Throws<DifferentCurrencyException>(() => accountService.TransferMoney(1000, account1, account2));
+            accountService.TransferMoney(1000, account1, account2);
+
+            Assert.Equal(9000,account1.Amount);
+            Assert.Equal("10031,25", $"{ account2.Amount}");
         }
+        #endregion
         [Fact]
         public void TransferMoneyTooLittleAccountAmountExceptionTest()
         {

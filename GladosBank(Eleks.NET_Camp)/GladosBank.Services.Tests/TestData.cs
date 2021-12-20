@@ -14,9 +14,9 @@ namespace GladosBank.Services.Tests
         {
             var currenies = new List<Currency>
             {
-                new Currency{Code="UAN",Symbol="₴" },
-                new Currency{Code="USD",Symbol="$" },
-                new Currency{Code="EUR",Symbol="€" }
+                new Currency{Code="UAN",Symbol="₴",Coefficient=1 },
+                new Currency{Code="USD",Symbol="$",Coefficient=28 },
+                new Currency{Code="EUR",Symbol="€",Coefficient=32 }
             };
             return currenies;
         }
