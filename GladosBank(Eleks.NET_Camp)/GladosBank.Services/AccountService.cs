@@ -13,7 +13,7 @@ namespace GladosBank.Services
 {
     public sealed class AccountService : IAccountService
     {
-        public AccountService(ApplicationContext context, UserService userService,CustomerService custService)
+        public AccountService(ApplicationContext context, UserService userService, CustomerService custService)
         {
             _userService = userService;
             _custService = custService;
@@ -143,7 +143,7 @@ namespace GladosBank.Services
         #region Transaction
         public bool TransferMoneySaver(decimal amount, Account source, Account destination)
         {
-            using (var transaction=_context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
@@ -167,6 +167,7 @@ namespace GladosBank.Services
         {
             source = source ?? throw new ArgumentNullException(nameof(source), $"Object source is null");
             destination = destination ?? throw new ArgumentNullException(nameof(destination), $"Object destination is null");
+            decimal? finalCurrency = null;
 
             if (amount <= 0)
             {
@@ -174,7 +175,9 @@ namespace GladosBank.Services
             }
             if (!source.CurrencyCode.Equals(destination.CurrencyCode))
             {
-                throw new DifferentCurrencyException(source.CurrencyCode, destination.CurrencyCode);
+                finalCurrency=ConvertMoney(source.CurrencyCode, destination.CurrencyCode,amount);
+
+
             }
             if (source.Amount < amount)
             {
@@ -188,7 +191,7 @@ namespace GladosBank.Services
             try
             {
                 source.Amount -= amount;
-                destination.Amount += amount;
+                destination.Amount += finalCurrency ??  amount;
 
                 return true;
             }
@@ -198,9 +201,34 @@ namespace GladosBank.Services
             }
         }
         #endregion
+        #region Convert
+        public decimal ConvertMoney(string sourceCode, string destinationCode, decimal amount)
+        {
+            if (sourceCode.Equals(destinationCode, StringComparison.OrdinalIgnoreCase))
+            {
+                return amount;
+            }
+            if (amount == 0)
+            {
+                return amount;
+            }
+            if (sourceCode == null || destinationCode == null)
+            {
+                throw new InvalidCurrencyException("null");
+            }
+
+            var sourceCurrency = _context.Currency.SingleOrDefault(cur => cur.Code.Equals(sourceCode));
+            var destinationCurrency = _context.Currency.SingleOrDefault(cur => cur.Code.Equals(destinationCode));
+
+            decimal amountInGeneralCurrency = amount * sourceCurrency.Coefficient;
+            decimal amountInDestinationCurrency = amountInGeneralCurrency / destinationCurrency.Coefficient;
+
+            return amountInDestinationCurrency;
+        }
+        #endregion
         private readonly ApplicationContext _context;
         private readonly UserService _userService;
         private readonly CustomerService _custService;
-        
+
     }
 }

@@ -5,6 +5,7 @@ namespace GladosBank.Services
 {
     public interface IAccountService
     {
+        decimal ConvertMoney(string sourceCode, string destinationCode, decimal amount);
         int CreateAccount(Account account);
         int DeleteAccount(int accountId);
         Account GetAccountFromId(int accountId);
