@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GladosBank.Domain.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211216222656_NewMigration8")]
-    partial class NewMigration8
+    [Migration("20220924184518_MyNewMigration")]
+    partial class MyNewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,13 +140,13 @@ namespace GladosBank.Domain.Migrations
                         new
                         {
                             Code = "UAN",
-                            Coefficient = 28m,
+                            Coefficient = 1m,
                             Symbol = "₴"
                         },
                         new
                         {
                             Code = "USD",
-                            Coefficient = 1m,
+                            Coefficient = 28m,
                             Symbol = "$"
                         });
                 });

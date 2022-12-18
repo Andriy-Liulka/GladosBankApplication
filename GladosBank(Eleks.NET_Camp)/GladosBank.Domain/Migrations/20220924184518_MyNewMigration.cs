@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GladosBank.Domain.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class MyNewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace GladosBank.Domain.Migrations
                 columns: table => new
                 {
                     Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Coefficient = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +30,7 @@ namespace GladosBank.Domain.Migrations
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Login = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -101,7 +102,7 @@ namespace GladosBank.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -143,6 +144,47 @@ namespace GladosBank.Domain.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OperationsHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationsHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperationsHistory_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Currency",
+                columns: new[] { "Code", "Coefficient", "Symbol" },
+                values: new object[,]
+                {
+                    { "EUR", 32m, "€" },
+                    { "UAN", 1m, "₴" },
+                    { "USD", 28m, "$" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "IsActive", "Login", "PasswordHash", "Phone" },
+                values: new object[] { 1024, "admin@example.com", true, "admin", "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5", "06866414" });
+
+            migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "Id", "UserId" },
+                values: new object[] { 1, 1024 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_CurrencyCode",
                 table: "Accounts",
@@ -169,6 +211,11 @@ namespace GladosBank.Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OperationsHistory_CustomerId",
+                table: "OperationsHistory",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Workers_UserId",
                 table: "Workers",
                 column: "UserId");
@@ -184,6 +231,9 @@ namespace GladosBank.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Informations");
+
+            migrationBuilder.DropTable(
+                name: "OperationsHistory");
 
             migrationBuilder.DropTable(
                 name: "Workers");

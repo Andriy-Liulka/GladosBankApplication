@@ -386,3 +386,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+GladosBank(Eleks.NET_Camp)/GladosBank.Api/bin/Debug
+GladosBank(Eleks.NET_Camp)/GladosBank.Api/obj/Debug
+GladosBank(Eleks.NET_Camp)/GladosBank.Api/obj
+GladosBank(Eleks.NET_Camp)/GladosBank.Services/obj/Debug
+GladosBank(Eleks.NET_Camp)/GladosBank.Services/bin
+GladosBank(Eleks.NET_Camp)/GladosBank.Domain/obj
+GladosBank(Eleks.NET_Camp)/GladosBank.Domain/bin/Debug
+GladosBank(Eleks.NET_Camp)/GladosBank.Services/obj
+GladosBank(Eleks.NET_Camp)/.vs/GladosBank(Eleks.NET_Camp)/DesignTimeBuild/.dtbcache.v2
